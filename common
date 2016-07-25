@@ -10,5 +10,4 @@ else
     return 0
 fi
 
-
-declare -F __init__ && __init__ || return 0
+declare -F __init__ &> /dev/null && __init__ || return 0
