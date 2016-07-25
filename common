@@ -2,7 +2,7 @@
 
 # lib-sh/common - Common functions for everyday use
 # Copyright (c) 2016 by Oleksii Tsvietnov, me@vorakl.name
-# Version: 0.1.0
+# Version: v0.1.0
 
 if [ "${__LIB_SH_COMMON__:-empty}" = "empty" ]; then
     export __LIB_SH_COMMON__="imported"
@@ -11,4 +11,4 @@ else
 fi
 
 
-__init__ || return 0
+declare -F __init__ && __init__ || return 0
