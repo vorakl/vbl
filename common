@@ -2,7 +2,7 @@
 
 # lib-sh/common - Common functions for everyday use
 # Copyright (c) 2016 by Oleksii Tsvietnov, me@vorakl.name
-# Version: v0.1.0
+# Version: v0.2.0
 
 if [ "${__LIB_SH_COMMON__:-empty}" = "empty" ]; then
     export __LIB_SH_COMMON__="imported"
@@ -10,4 +10,42 @@ else
     return 0
 fi
 
-declare -F __init__ &> /dev/null && __init__ || return 0
+
+say() {
+    echo "${SAY_PRE}$@${SAY_SUF}"
+}
+
+__say_conf__() {
+    export SAY_PRE
+    export SAY_SUF
+}
+
+err() {
+    say "${ERR_PRE}$@${ERR_SUF}" >&2
+}
+
+__err_conf__() {
+    export ERR_PRE
+    export ERR_SUF
+}
+
+die() {
+    err "${DIE_PRE}$@${DIE_SUF}"
+    exit ${DIE_EXITCODE}
+}
+
+__die_conf__() {
+    export DIE_PRE
+    export DIE_SUF
+    export DIE_EXITCODE=1
+}
+
+__common_conf__() {
+   __say_conf__
+   __err_conf__
+   __die_conf__
+}
+
+
+__common_conf__
+declare -F __common_init__ &> /dev/null && __common_init__ || return 0
