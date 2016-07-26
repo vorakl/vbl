@@ -12,19 +12,21 @@ fi
 
 
 say() {
-    echo "${SAY_PRE}$@${SAY_SUF}"
+    [ "${SAY_VERBOSE}" = "true" ] && echo "${SAY_PRE}$@${SAY_SUF}"
 }
 
 __say_conf__() {
+    export SAY_VERBOSE=true
     export SAY_PRE
     export SAY_SUF
 }
 
 err() {
-    say "${ERR_PRE}$@${ERR_SUF}" >&2
+    [ "${ERR_VERBOSE}" = "true" ] && say "${ERR_PRE}$@${ERR_SUF}" >&2
 }
 
 __err_conf__() {
+    export ERR_VERBOSE=true
     export ERR_PRE
     export ERR_SUF
 }
