@@ -1,53 +1,126 @@
-#!/bin/bash
+#!/bin/echo This file has to be soursed. Run: source 
 
 # lib-sh/common - Common functions for everyday use
 # Copyright (c) 2016 by Oleksii Tsvietnov, me@vorakl.name
-# Version: v0.2.0
+# Version: v1.0.0
 
-if [ "${__LIB_SH_COMMON__:-empty}" = "empty" ]; then
-    export __LIB_SH_COMMON__="imported"
-else
-    return 0
-fi
 
+cmd() {
+    # Do not try to run a function with the same name as a running command has.
+    # First, it checks in builtins. Then, it tries to find an external command.
+    #   -p  search in standard paths only
+    #   -v  check if a command exists
+
+    builtin command "$@"
+}
+
+assert_utils() {
+    :
+}
+
+run() {
+    # usage: 
+    #   run [--silent|--no-out|--no-err] \
+    #       [--save-out var|--save-err var] \
+    #       [--join-outerr] \
+    #       [--ignore|--warn|--ensure] \
+    #       [--] \
+    #       cmd arg ...
+
+    local _arg="" _line="" _channels=""
+    local _silent="0" _no_out="0" _no_err="0" _join_outerr="0"
+    local _save_out="run_out" _save_err="run_err"
+    local _ignore="0" _warn="0" _ensure="0"
+
+    while [[ "$@" ]]; do
+        case "$1" in
+            --) 
+                shift
+                break
+                ;;
+            --*) 
+                _arg="${1#--}"
+                case "${_arg}" in
+                    silent|no-out|no-err|join-outerr|ignore|warn|ensure) 
+                        eval _${_arg/-/_}="1"
+                        ;;
+                    save-out|save-err)
+                        shift
+                        eval _${_arg/-/_}="$1"
+                        ;;
+                esac
+                shift
+                ;;
+            *)  
+                break
+                ;;
+        esac
+    done
+
+    if (( _silent )); then
+        _channels="1>/dev/null 2>/dev/null"
+    elif (( _no_out )); then
+        _channels="1>/dev/null"
+    elif (( _no_err )); then
+        _channels="2>/dev/null"
+    elif (( _join_outerr )); then
+        _channels="2>&1"
+    fi
+
+    eval '"$@" ${_channels}'
+# _line=""; _fd=3; until { read -u ${_fd} _line; [[ "${_line}" == "-=STOP=-" ]]; } do echo "${_line}"; done
+}
 
 say() {
-    [ "${SAY_VERBOSE}" = "true" ] && echo "${SAY_PRE}$@${SAY_SUF}"
+    # Print to stdout
+
+    (( say_suppress )) || cmd printf "${say_format}" "$@"
 }
 
 __say_conf__() {
-    export SAY_VERBOSE=true
-    export SAY_PRE
-    export SAY_SUF
+    say_suppress=0
+    say_format="%s\n"
+}
+
+debug() {
+    # Print to stdout as `say` does but only if debug_suppress is turned off
+    # It's useful for having a higher level of verbosity
+
+    (( debug_suppress )) || cmd printf "${debug_format}" "$@"
+}
+
+__debug_conf__() {
+    debug_suppress=1
+    debug_format="%s\n"
 }
 
 err() {
-    [ "${ERR_VERBOSE}" = "true" ] && say "${ERR_PRE}$@${ERR_SUF}" >&2
+    # Print to stderr
+
+    (( err_suppress )) || cmd printf "${err_format}" "$@" >&2
 }
 
 __err_conf__() {
-    export ERR_VERBOSE=true
-    export ERR_PRE
-    export ERR_SUF
+    err_suppress=0
+    err_format="%s\n"
 }
 
 die() {
-    err "${DIE_PRE}$@${DIE_SUF}"
-    exit ${DIE_EXITCODE}
+    err "$@"
+    cmd exit ${die_exitcode}
 }
 
 __die_conf__() {
-    export DIE_PRE
-    export DIE_SUF
-    export DIE_EXITCODE=1
+    die_exitcode=1
 }
 
 __common_conf__() {
-   __say_conf__
-   __err_conf__
-   __die_conf__
+    unset builtin
+    __say_conf__
+    __debug_conf__
+    __err_conf__
+    __die_conf__
 }
 
-
 __common_conf__
-declare -F __common_init__ &> /dev/null && __common_init__ || return 0
+cmd declare -F __common_init__ &> /dev/null && __common_init__ || cmd true
