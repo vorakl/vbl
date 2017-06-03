@@ -84,16 +84,18 @@ run() {
 
     if [[ "${_save_out}" ]]; then
         cmd -p mkfifo -m 600 ${_pipe_out} &>/dev/null || die "cannot create ${_pipe_out}"
-        trap 'cmd -p rm -f ${_pipe_out} || err "cannot delete ${_pipe_out}"; trap RETURN' RETURN
         exec 3<>${_pipe_out} || die "cannot assign fd 3 to ${_pipe_out}"
         _save_vars="${_save_vars} 1>${_pipe_out}"
     fi
 
     if [[ "${_save_err}" ]]; then
         cmd -p mkfifo -m 600 ${_pipe_err} &>/dev/null || die "cannot create ${_pipe_err}"
-        trap 'cmd -p rm -f ${_pipe_err} || err "cannot delete ${_pipe_err}"; trap RETURN' RETURN
         exec 4<>${_pipe_err} || die "cannot assign fd 4 to ${_pipe_err}"
         _save_vars="${_save_vars} 2>${_pipe_err}"
+    fi
+
+    if [[ "${_save_out}" || "${_save_err}" ]]; then
+        trap 'cmd -p rm -f ${_pipe_out} ${_pipe_err} &>/dev/null; trap -- RETURN; trap -- ERR' RETURN ERR
     fi
 
     if (( _ignore )); then
@@ -117,7 +119,6 @@ run() {
         done
 
         exec 3>&-
-        cmd -p rm -f ${_pipe_out} || err "cannot delete ${_pipe_out}"
     fi
 
     if [[ "${_save_err}" ]]; then
@@ -128,18 +129,12 @@ run() {
         done
 
         exec 4>&-
-        cmd -p rm -f ${_pipe_err} || err "cannot delete ${_pipe_err}"
     fi
 
     cmd return ${_rc}
 }
 
 assert_utils() {
-    :
-}
-
-format() {
-# echo -e "test\nmessage" | printf "[%s]\n" "$(cat)"
     :
 }
 
@@ -190,14 +185,6 @@ __die_conf__() {
     die_exitcode="1"
 }
 
-__common_conf__() {
-    unset builtin
-    __say_conf__
-    __debug_conf__
-    __err_conf__
-    __die_conf__
-}
-
 readline() {
     # A wrapper for 'read' command.
     # It reads properly the last string in a stream if there is no '\n' at the end
@@ -239,6 +226,19 @@ readlines() {
     eval ${_var}='"${_var_all}"'
 }
 
+format() {
+# echo -e "test\nmessage" | printf "[%s]\n" "$(cat)"
+    :
+}
+
+__common_conf__() {
+    unset builtin
+    __say_conf__
+    __debug_conf__
+    __err_conf__
+    __die_conf__
+}
+
 common_main() {
     __common_conf__  # Set default values and behaior for functions.
 
@@ -252,4 +252,3 @@ common_main() {
 
 # The entrypoint
 common_main
-
