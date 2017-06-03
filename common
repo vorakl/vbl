@@ -1,12 +1,17 @@
 #!/bin/echo This file has to be soursed. Run: source 
 
 # lib-sh/common - Common functions for everyday use
-# Copyright (c) 2016 by Oleksii Tsvietnov, me@vorakl.name
+# Copyright (c) 2016,17 by Oleksii Tsvietnov, me@vorakl.name
 # Version: v1.0.0
 
 
 cmd() {
-    # Do not try to run a function with the same name as a running command has.
+    # A wrapper for the builtin 'command' to minimize a risk of reloading functions
+    # It works together with 'unset builtin' in the __common_conf__() and 
+    # the whole idea will work only if Bash is run with the '--posix' option which
+    # doesn't allow to reload 'unset' builtin function. 
+    # Anyway, you decide how deep is your paranoia ;)
+    # It's intended to be used for running builtin commands or standard utilities.
     # First, it checks in builtins. Then, it tries to find an external command.
     #   -p  search in standard paths only
     #   -v  check if a command exists
@@ -14,23 +19,33 @@ cmd() {
     builtin command "$@"
 }
 
-assert_utils() {
-    :
-}
-
 run() {
+    # A wrapper to run commands and control output, exit status, etc
+    #
     # usage: 
     #   run [--silent|--no-out|--no-err] \
     #       [--save-out var|--save-err var] \
     #       [--join-outerr] \
     #       [--ignore|--warn|--ensure] \
     #       [--] \
-    #       cmd arg ...
+    #       cmd [arg [...]]
+    #
+    # parameters:
+    #   --silent        suppress stdout and stderr
+    #   --no-out        suppress stdout
+    #   --no-err        suppress stderr
+    #   --save-out var  save stdout into 'var' variable (up to 64 KB)
+    #   --save-err var  save stderr into 'var' variable (up to 64 KB)
+    #   --join-outerr   join stdout and stderr in one stream of stdout 
+    #   --ignore        ignore non zero exit status
+    #   --warn          ignore non zero exit status and write an error message
+    #   --ensure        exit on any non zero exit status
 
-    local _arg="" _line="" _channels=""
+    local _arg="" _line="" _channels="" _status="" _save_vars="" _rc=""
     local _silent="0" _no_out="0" _no_err="0" _join_outerr="0"
-    local _save_out="run_out" _save_err="run_err"
+    local _save_out="" _save_err=""
     local _ignore="0" _warn="0" _ensure="0"
+    local _pipe_out="/tmp/lib-sh-common-$$-$RANDOM-out.pipe" _pipe_err="/tmp/lib-sh-common-$$-$RANDOM-err.pipe"
 
     while [[ "$@" ]]; do
         case "$1" in
@@ -67,51 +82,112 @@ run() {
         _channels="2>&1"
     fi
 
-    eval '"$@" ${_channels}'
-# _line=""; _fd=3; until { read -u ${_fd} _line; [[ "${_line}" == "-=STOP=-" ]]; } do echo "${_line}"; done
+    if [[ "${_save_out}" ]]; then
+        cmd -p mkfifo -m 600 ${_pipe_out} &>/dev/null || die "cannot create ${_pipe_out}"
+        trap 'cmd -p rm -f ${_pipe_out} || err "cannot delete ${_pipe_out}"; trap RETURN' RETURN
+        exec 3<>${_pipe_out} || die "cannot assign fd 3 to ${_pipe_out}"
+        _save_vars="${_save_vars} 1>${_pipe_out}"
+    fi
+
+    if [[ "${_save_err}" ]]; then
+        cmd -p mkfifo -m 600 ${_pipe_err} &>/dev/null || die "cannot create ${_pipe_err}"
+        trap 'cmd -p rm -f ${_pipe_err} || err "cannot delete ${_pipe_err}"; trap RETURN' RETURN
+        exec 4<>${_pipe_err} || die "cannot assign fd 4 to ${_pipe_err}"
+        _save_vars="${_save_vars} 2>${_pipe_err}"
+    fi
+
+    if (( _ignore )); then
+        _status="|| cmd true"
+    elif (( _warn )); then
+        _status='|| err "command '\''$1'\'' failed with exit status $?. Ignoring..."'
+    elif (( _ensure )); then
+        _status='|| die "command '\''$1'\'' failed with exit status $?. Exiting (exitcode=${die_exitcode})..."'
+    fi
+
+    [[ "$@" ]] || die "there is nothing to run!"
+
+    eval '"$@"' ${_save_vars} ${_channels} ${_status}
+    _rc="$?"
+
+    if [[ "${_save_out}" ]]; then
+        cmd echo "-=STOP=-" > ${_pipe_out}
+
+        until { read -u 3 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
+            eval printf -v ${_save_out} '"$'${_save_out}'${_line}\n"'
+        done
+
+        exec 3>&-
+        cmd -p rm -f ${_pipe_out} || err "cannot delete ${_pipe_out}"
+    fi
+
+    if [[ "${_save_err}" ]]; then
+        cmd echo "-=STOP=-" > ${_pipe_err}
+
+        until { read -u 4 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
+            eval printf -v ${_save_err} '"$'${_save_err}'${_line}\n"'
+        done
+
+        exec 4>&-
+        cmd -p rm -f ${_pipe_err} || err "cannot delete ${_pipe_err}"
+    fi
+
+    cmd return ${_rc}
+}
+
+assert_utils() {
+    :
+}
+
+format() {
+# echo -e "test\nmessage" | printf "[%s]\n" "$(cat)"
+    :
 }
 
 say() {
-    # Print to stdout
+    # Print to stdout with an ability to set a format and turn off an output
+    # by setting appropriate variables.
 
     (( say_suppress )) || cmd printf "${say_format}" "$@"
 }
 
 __say_conf__() {
-    say_suppress=0
+    say_suppress="0"
     say_format="%s\n"
 }
 
 debug() {
-    # Print to stdout as `say` does but only if debug_suppress is turned off
-    # It's useful for having a higher level of verbosity
+    # Print to stdout as 'say' does but only if debug_suppress is turned off.
+    # It's useful for having a controlled higher level of verbosity.
 
     (( debug_suppress )) || cmd printf "${debug_format}" "$@"
 }
 
 __debug_conf__() {
-    debug_suppress=1
+    debug_suppress="1"
     debug_format="%s\n"
 }
 
 err() {
-    # Print to stderr
+    # Print to stderr with an ability to set a format and turn off an output
+    # by setting appropriate variables.
 
     (( err_suppress )) || cmd printf "${err_format}" "$@" >&2
 }
 
 __err_conf__() {
-    err_suppress=0
+    err_suppress="0"
     err_format="%s\n"
 }
 
 die() {
+    # Print an error message to the stderr and exit with an appropriate exit code.
+
     err "$@"
     cmd exit ${die_exitcode}
 }
 
 __die_conf__() {
-    die_exitcode=1
+    die_exitcode="1"
 }
 
 __common_conf__() {
@@ -122,5 +198,58 @@ __common_conf__() {
     __die_conf__
 }
 
-__common_conf__
-cmd declare -F __common_init__ &> /dev/null && __common_init__ || cmd true
+readline() {
+    # A wrapper for 'read' command.
+    # It reads properly the last string in a stream if there is no '\n' at the end
+    #
+    # usage:
+    #    readline [arg [...]] var [var [...]]
+    #
+    # parameters:
+    #    arg - arguments for the 'read' command 
+    #    var - one or more variable names. At least one has to be defined!
+    
+    eval local _var="\${$#}" # set to a variable name (the last parameter).
+
+    if ! cmd read "$@"; then # 'read' command faced to the EOF
+        eval '[[ "$'${_var}'" ]]' # check if there is a string without "\n" at the end 
+    fi
+}
+
+readlines() {
+    # A wrapper for 'read' command.
+    # It reads properly the last string in a stream if there is no '\n' at the end
+    # Instead of a common 'read' or 'readline' commands,
+    # this one saves the whole stream into one variable
+    #
+    # usage:
+    #    readlines [arg [...]] var
+    #
+    # parameters:
+    #    arg - arguments for the 'read' command 
+    #    var - the only one variable name. It has to be defined!
+
+    local _var_all=""
+    eval local _var="\${$#}" # set to a variable name (the last parameter).
+
+    while readline "$@"; do
+        eval printf -v _var_all '"${_var_all}${'${_var}'}\n"'
+    done
+
+    eval ${_var}='"${_var_all}"'
+}
+
+common_main() {
+    __common_conf__  # Set default values and behaior for functions.
+
+    if cmd declare -F __common_init__ &> /dev/null; then
+        # If the function is defined in the code, then execute it.
+        # This is the way to configure functions for your needs in a particular code.
+
+        __common_init__ 
+    fi
+}
+
+# The entrypoint
+common_main
+
