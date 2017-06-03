@@ -4,7 +4,6 @@
 # Copyright (c) 2016,17 by Oleksii Tsvietnov, me@vorakl.name
 # Version: v1.0.0
 
-
 cmd() {
     # A wrapper for the builtin 'command' to minimize a risk of reloading functions
     # It works together with 'unset builtin' in the __common_conf__() and 
@@ -114,7 +113,7 @@ run() {
     if [[ "${_save_out}" ]]; then
         cmd echo "-=STOP=-" > ${_pipe_out}
 
-        until { read -u 3 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
+        until { cmd read -u 3 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
             eval printf -v ${_save_out} '"$'${_save_out}'${_line}\n"'
         done
 
@@ -124,7 +123,7 @@ run() {
     if [[ "${_save_err}" ]]; then
         cmd echo "-=STOP=-" > ${_pipe_err}
 
-        until { read -u 4 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
+        until { cmd read -u 4 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
             eval printf -v ${_save_err} '"$'${_save_err}'${_line}\n"'
         done
 
@@ -142,47 +141,47 @@ say() {
     # Print to stdout with an ability to set a format and turn off an output
     # by setting appropriate variables.
 
-    (( say_suppress )) || cmd printf "${say_format}" "$@"
+    (( SAY_SUPPRESS )) || cmd printf "${SAY_FORMAT}" "$@"
 }
 
 __say_conf__() {
-    say_suppress="0"
-    say_format="%s\n"
+    export SAY_SUPPRESS="0"
+    export SAY_FORMAT="%s\n"
 }
 
 debug() {
     # Print to stdout as 'say' does but only if debug_suppress is turned off.
     # It's useful for having a controlled higher level of verbosity.
 
-    (( debug_suppress )) || cmd printf "${debug_format}" "$@"
+    (( DEBUG_SUPPRESS )) || cmd printf "${DEBUG_FORMAT}" "$@"
 }
 
 __debug_conf__() {
-    debug_suppress="1"
-    debug_format="%s\n"
+    export DEBUG_SUPPRESS="1"
+    export DEBUG_FORMAT="%s\n"
 }
 
 err() {
     # Print to stderr with an ability to set a format and turn off an output
     # by setting appropriate variables.
 
-    (( err_suppress )) || cmd printf "${err_format}" "$@" >&2
+    (( ERR_SUPPRESS )) || cmd printf "${ERR_FORMAT}" "$@" >&2
 }
 
 __err_conf__() {
-    err_suppress="0"
-    err_format="%s\n"
+    export ERR_SUPPRESS="0"
+    export ERR_FORMAT="%s\n"
 }
 
 die() {
     # Print an error message to the stderr and exit with an appropriate exit code.
 
     err "$@"
-    cmd exit ${die_exitcode}
+    cmd exit ${DIE_EXITCODE}
 }
 
 __die_conf__() {
-    die_exitcode="1"
+    export DIE_EXITCODE="1"
 }
 
 readline() {
@@ -239,7 +238,15 @@ __common_conf__() {
     __die_conf__
 }
 
-common_main() {
+__common_export__() {
+    local _func=""
+    
+    for _func in ${__common_export}; do
+        cmd declare -fx ${_func}
+    done
+}
+
+__common_main__() {
     __common_conf__  # Set default values and behaior for functions.
 
     if cmd declare -F __common_init__ &> /dev/null; then
@@ -248,7 +255,14 @@ common_main() {
 
         __common_init__ 
     fi
+
+    if ! cmd declare -p __common_export &> /dev/null; then
+        # a list of fuctions to be exported
+        __common_export="cmd run say debug err die readline readlines"
+    fi
+
+    __common_export__
 }
 
 # The entrypoint
-common_main
+__common_main__
