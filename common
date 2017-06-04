@@ -305,6 +305,8 @@ __common_main__() {
     if ! cmd declare -p __common_export &> /dev/null; then
         # a list of functions to be exported
 
+        # All these functions are going to be exported if the variable hasn't been set before
+        # It can be set in the __common_init__ function in an application code
         __common_export="cmd run say debug err die readline readlines format lstrip rstrip"
     fi
 
