@@ -137,6 +137,10 @@ assert_utils() {
     :
 }
 
+check_status() {
+    :
+}
+
 say() {
     # Print to stdout with an ability to set a format and turn off an output
     # by setting appropriate variables.
@@ -185,8 +189,10 @@ __die_conf__() {
 }
 
 readline() {
-    # A wrapper for 'read' command.
-    # It reads properly the last string in a stream if there is no '\n' at the end
+    # A wrapper around the 'read' command. It reads from STDIN only one string.
+    # It doesn't matter if it ends with a specified delimiter (like \n) or not.
+    # That's why it's safe to be used in a while loop to read a stream
+    # which may not have '\n' at the end of a last string.
     #
     # usage:
     #    readline [arg [...]] var [var [...]]
@@ -197,16 +203,18 @@ readline() {
     
     eval local _var="\${$#}" # set to a variable name (the last parameter).
 
-    if ! cmd read "$@"; then # 'read' command faced to the EOF
-        eval '[[ "$'${_var}'" ]]' # check if there is a string without "\n" at the end 
+    if ! cmd read "$@"; then # the 'read' command has faced to the EOF
+        eval '[[ "$'${_var}'" ]]' # check if there is a string without '\n' at the end 
     fi
 }
 
 readlines() {
-    # A wrapper for 'read' command.
-    # It reads properly the last string in a stream if there is no '\n' at the end
-    # Instead of a common 'read' or 'readline' commands,
-    # this one saves the whole stream into one variable
+    # A wrapper around 'read' command.
+    # Instead of the 'readline' command it reads from STDIN the whole stream
+    # which consists of one or more strings and saves it in a specified variable 'var'.
+    # It also behaves correctly if there is no '\n' at the end of a last string.
+    # IMPORTANT: each string of the stream is always extended by '\n' before saving it to
+    # the 'var' variable.
     #
     # usage:
     #    readlines [arg [...]] var
@@ -219,15 +227,53 @@ readlines() {
     eval local _var="\${$#}" # set to a variable name (the last parameter).
 
     while readline "$@"; do
-        eval printf -v _var_all '"${_var_all}${'${_var}'}\n"'
+        eval printf -v _var_all '"%s\n"' '"${_var_all}${'${_var}'}"'
     done
 
     eval ${_var}='"${_var_all}"'
 }
 
 format() {
-# echo -e "test\nmessage" | printf "[%s]\n" "$(cat)"
-    :
+    local _out="" _format="$1" _return="$2"
+
+    readline -r -d '' _out
+    if [[ "${_return}" ]]; then
+        cmd printf -v "${_return}" "${_format}" "${_out}"
+    else
+        cmd printf "${_format}" "${_out}"
+    fi 
+}
+
+rstrip() {
+    local _out="" _tmp="" _pattern="$1" _return="$2"
+    
+    readline -r -d '' _out
+
+    until { _tmp="${_out%$_pattern}"; [[ "${_out}" == "${_tmp}" ]]; } do 
+        _out="${_tmp}"
+    done
+
+    if [[ "${_return}" ]]; then
+        cmd printf -v "${_return}" "%s" "${_out}"
+    else
+        cmd printf "%s" "${_out}"
+    fi 
+}
+
+lstrip() {
+    local _out="" _tmp="" _pattern="$1" _return="$2"
+    
+    readline -r -d '' _out
+
+    until { _tmp="${_out#$_pattern}"; [[ "${_out}" == "${_tmp}" ]]; } do 
+        _out="${_tmp}"
+    done
+
+    if [[ "${_return}" ]]; then
+        cmd printf -v "${_return}" "%s" "${_out}"
+    else
+        cmd printf "%s" "${_out}"
+    fi 
 }
 
 __common_conf__() {
@@ -257,8 +303,9 @@ __common_main__() {
     fi
 
     if ! cmd declare -p __common_export &> /dev/null; then
-        # a list of fuctions to be exported
-        __common_export="cmd run say debug err die readline readlines"
+        # a list of functions to be exported
+
+        __common_export="cmd run say debug err die readline readlines format lstrip rstrip"
     fi
 
     __common_export__
