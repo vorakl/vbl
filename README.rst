@@ -15,7 +15,7 @@ The installation is as easy as
 The list of libraries
 =====================
 
-* common_  the library with often used functions
+* common_, the library with often used functions
 
 .. Links
 
