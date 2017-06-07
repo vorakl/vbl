@@ -7,7 +7,7 @@ Instead of copy-pasting the same functions from one script to another it's much 
 Installation
 ============
 
-The installation is as easy as
+The installation process is as easy as
 
 1. Download the latest version of the library from this collection
 2. Include it into your script.

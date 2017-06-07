@@ -1,0 +1,317 @@
+#!/bin/echo This file has to be soursed. Run: source 
+
+# lib-sh/common - Common functions for everyday use
+# Copyright (c) 2016,17 by Oleksii Tsvietnov, me@vorakl.name
+# Version: v1.0.0
+
+cmd() {
+    # A wrapper for the builtin 'command' to minimize a risk of reloading functions
+    # It works together with 'unset builtin' in the __common_conf__() and 
+    # the whole idea will work only if Bash is run with the '--posix' option which
+    # doesn't allow to reload 'unset' builtin function. 
+    # Anyway, you decide how deep is your paranoia ;)
+    # It's intended to be used for running builtin commands or standard utilities.
+    # First, it checks in builtins. Then, it tries to find an external command.
+    #   -p  search in standard paths only
+    #   -v  check if a command exists
+
+    builtin command "$@"
+}
+
+run() {
+    # A wrapper to run commands and control output, exit status, etc
+    #
+    # usage: 
+    #   run [--silent|--no-out|--no-err] \
+    #       [--save-out var|--save-err var] \
+    #       [--join-outerr] \
+    #       [--ignore|--warn|--ensure] \
+    #       [--] \
+    #       cmd [arg [...]]
+    #
+    # parameters:
+    #   --silent        suppress stdout and stderr
+    #   --no-out        suppress stdout
+    #   --no-err        suppress stderr
+    #   --save-out var  save stdout into 'var' variable (up to 64 KB)
+    #   --save-err var  save stderr into 'var' variable (up to 64 KB)
+    #   --join-outerr   join stdout and stderr in one stream of stdout 
+    #   --ignore        ignore non zero exit status
+    #   --warn          ignore non zero exit status and write an error message
+    #   --ensure        exit on any non zero exit status
+
+    local _arg="" _line="" _channels="" _status="" _save_vars="" _rc=""
+    local _silent="0" _no_out="0" _no_err="0" _join_outerr="0"
+    local _save_out="" _save_err=""
+    local _ignore="0" _warn="0" _ensure="0"
+    local _pipe_out="/tmp/lib-sh-common-$$-$RANDOM-out.pipe" _pipe_err="/tmp/lib-sh-common-$$-$RANDOM-err.pipe"
+
+    while [[ "$@" ]]; do
+        case "$1" in
+            --) 
+                shift
+                break
+                ;;
+            --*) 
+                _arg="${1#--}"
+                case "${_arg}" in
+                    silent|no-out|no-err|join-outerr|ignore|warn|ensure) 
+                        eval _${_arg/-/_}="1"
+                        ;;
+                    save-out|save-err)
+                        shift
+                        eval _${_arg/-/_}="$1"
+                        ;;
+                esac
+                shift
+                ;;
+            *)  
+                break
+                ;;
+        esac
+    done
+
+    if (( _silent )); then
+        _channels="1>/dev/null 2>/dev/null"
+    elif (( _no_out )); then
+        _channels="1>/dev/null"
+    elif (( _no_err )); then
+        _channels="2>/dev/null"
+    elif (( _join_outerr )); then
+        _channels="2>&1"
+    fi
+
+    if [[ "${_save_out}" ]]; then
+        cmd -p mkfifo -m 600 ${_pipe_out} &>/dev/null || die "cannot create ${_pipe_out}"
+        exec 3<>${_pipe_out} || die "cannot assign fd 3 to ${_pipe_out}"
+        _save_vars="${_save_vars} 1>${_pipe_out}"
+    fi
+
+    if [[ "${_save_err}" ]]; then
+        cmd -p mkfifo -m 600 ${_pipe_err} &>/dev/null || die "cannot create ${_pipe_err}"
+        exec 4<>${_pipe_err} || die "cannot assign fd 4 to ${_pipe_err}"
+        _save_vars="${_save_vars} 2>${_pipe_err}"
+    fi
+
+    if [[ "${_save_out}" || "${_save_err}" ]]; then
+        trap 'cmd -p rm -f ${_pipe_out} ${_pipe_err} &>/dev/null; trap -- RETURN; trap -- ERR' RETURN ERR
+    fi
+
+    if (( _ignore )); then
+        _status="|| cmd true"
+    elif (( _warn )); then
+        _status='|| err "command '\''$1'\'' failed with exit status $?. Ignoring..."'
+    elif (( _ensure )); then
+        _status='|| die "command '\''$1'\'' failed with exit status $?. Exiting (exitcode=${die_exitcode})..."'
+    fi
+
+    [[ "$@" ]] || die "there is nothing to run!"
+
+    eval '"$@"' ${_save_vars} ${_channels} ${_status}
+    _rc="$?"
+
+    if [[ "${_save_out}" ]]; then
+        cmd echo "-=STOP=-" > ${_pipe_out}
+
+        until { cmd read -u 3 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
+            eval printf -v ${_save_out} '"$'${_save_out}'${_line}\n"'
+        done
+
+        exec 3>&-
+    fi
+
+    if [[ "${_save_err}" ]]; then
+        cmd echo "-=STOP=-" > ${_pipe_err}
+
+        until { cmd read -u 4 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
+            eval printf -v ${_save_err} '"$'${_save_err}'${_line}\n"'
+        done
+
+        exec 4>&-
+    fi
+
+    cmd return ${_rc}
+}
+
+assert_utils() {
+    :
+}
+
+check_status() {
+    :
+}
+
+say() {
+    # Print to stdout with an ability to set a format and turn off an output
+    # by setting appropriate variables.
+
+    (( SAY_SUPPRESS )) || cmd printf "${SAY_FORMAT}" "$@"
+}
+
+__say_conf__() {
+    export SAY_SUPPRESS="0"
+    export SAY_FORMAT="%s\n"
+}
+
+debug() {
+    # Print to stdout as 'say' does but only if debug_suppress is turned off.
+    # It's useful for having a controlled higher level of verbosity.
+
+    (( DEBUG_SUPPRESS )) || cmd printf "${DEBUG_FORMAT}" "$@"
+}
+
+__debug_conf__() {
+    export DEBUG_SUPPRESS="1"
+    export DEBUG_FORMAT="%s\n"
+}
+
+err() {
+    # Print to stderr with an ability to set a format and turn off an output
+    # by setting appropriate variables.
+
+    (( ERR_SUPPRESS )) || cmd printf "${ERR_FORMAT}" "$@" >&2
+}
+
+__err_conf__() {
+    export ERR_SUPPRESS="0"
+    export ERR_FORMAT="%s\n"
+}
+
+die() {
+    # Print an error message to the stderr and exit with an appropriate exit code.
+
+    err "$@"
+    cmd exit ${DIE_EXITCODE}
+}
+
+__die_conf__() {
+    export DIE_EXITCODE="1"
+}
+
+readline() {
+    # A wrapper around the 'read' command. It reads from STDIN only one string.
+    # It doesn't matter if it ends with a specified delimiter (like \n) or not.
+    # That's why it's safe to be used in a while loop to read a stream
+    # which may not have '\n' at the end of a last string.
+    #
+    # usage:
+    #    readline [arg [...]] var [var [...]]
+    #
+    # parameters:
+    #    arg - arguments for the 'read' command 
+    #    var - one or more variable names. At least one has to be defined!
+    
+    eval local _var="\${$#}" # set to a variable name (the last parameter).
+
+    if ! cmd read "$@"; then # the 'read' command has faced to the EOF
+        eval '[[ "$'${_var}'" ]]' # check if there is a string without '\n' at the end 
+    fi
+}
+
+readlines() {
+    # A wrapper around 'read' command.
+    # Instead of the 'readline' command it reads from STDIN the whole stream
+    # which consists of one or more strings and saves it in a specified variable 'var'.
+    # It also behaves correctly if there is no '\n' at the end of a last string.
+    # IMPORTANT: each string of the stream is always extended by '\n' before saving it to
+    # the 'var' variable.
+    #
+    # usage:
+    #    readlines [arg [...]] var
+    #
+    # parameters:
+    #    arg - arguments for the 'read' command 
+    #    var - the only one variable name. It has to be defined!
+
+    local _var_all=""
+    eval local _var="\${$#}" # set to a variable name (the last parameter).
+
+    while readline "$@"; do
+        eval printf -v _var_all '"%s\n"' '"${_var_all}${'${_var}'}"'
+    done
+
+    eval ${_var}='"${_var_all}"'
+}
+
+format() {
+    local _out="" _format="$1" _return="$2"
+
+    readline -r -d '' _out
+    if [[ "${_return}" ]]; then
+        cmd printf -v "${_return}" "${_format}" "${_out}"
+    else
+        cmd printf "${_format}" "${_out}"
+    fi 
+}
+
+rstrip() {
+    local _out="" _tmp="" _pattern="$1" _return="$2"
+    
+    readline -r -d '' _out
+
+    until { _tmp="${_out%$_pattern}"; [[ "${_out}" == "${_tmp}" ]]; } do 
+        _out="${_tmp}"
+    done
+
+    if [[ "${_return}" ]]; then
+        cmd printf -v "${_return}" "%s" "${_out}"
+    else
+        cmd printf "%s" "${_out}"
+    fi 
+}
+
+lstrip() {
+    local _out="" _tmp="" _pattern="$1" _return="$2"
+    
+    readline -r -d '' _out
+
+    until { _tmp="${_out#$_pattern}"; [[ "${_out}" == "${_tmp}" ]]; } do 
+        _out="${_tmp}"
+    done
+
+    if [[ "${_return}" ]]; then
+        cmd printf -v "${_return}" "%s" "${_out}"
+    else
+        cmd printf "%s" "${_out}"
+    fi 
+}
+
+__common_conf__() {
+    unset builtin
+    __say_conf__
+    __debug_conf__
+    __err_conf__
+    __die_conf__
+}
+
+__common_export__() {
+    local _func=""
+    
+    for _func in ${__common_export}; do
+        cmd declare -fx ${_func}
+    done
+}
+
+__common_main__() {
+    __common_conf__  # Set default values and behaior for functions.
+
+    if cmd declare -F __common_init__ &> /dev/null; then
+        # If the function is defined in the code, then execute it.
+        # This is the way to configure functions for your needs in a particular code.
+
+        __common_init__ 
+    fi
+
+    if ! cmd declare -p __common_export &> /dev/null; then
+        # a list of functions to be exported
+
+        # All these functions are going to be exported if the variable hasn't been set before
+        # It can be set in the __common_init__ function in an application code
+        __common_export="cmd run say debug err die readline readlines format lstrip rstrip"
+    fi
+
+    __common_export__
+}
+
+# The entrypoint
+__common_main__
