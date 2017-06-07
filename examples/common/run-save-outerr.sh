@@ -3,7 +3,7 @@
 main() {
     source /home/vorakl/repos/my/github/lib-sh/src/common
 
-    run --save-out my_out --save-err my_err eval '{ say "$(ls /)"; err "$(ls -l /)"; }'
+    run --save-out my_out --save-err my_err eval '{ say "$(top -bn1)"; err "$(ls -l /)"; }'
 
     say "StdOut:"
     say "${my_out}"

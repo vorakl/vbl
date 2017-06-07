@@ -115,7 +115,7 @@ run() {
     if [[ "${_save_out}" ]]; then
         cmd echo "-=STOP=-" > ${_pipe_out}
 
-        until { cmd read -u 3 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
+        until { IFS= read -u 3 -r _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
             eval printf -v ${_save_out} '"%s\n"' '"${'${_save_out}'}${_line}"'
         done
 
@@ -125,7 +125,7 @@ run() {
     if [[ "${_save_err}" ]]; then
         cmd echo "-=STOP=-" > ${_pipe_err}
 
-        until { cmd read -u 4 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
+        until { IFS= read -u 4 -r _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
             eval printf -v ${_save_err} '"%s\n"' '"${'${_save_err}'}${_line}"'
         done
 
@@ -205,8 +205,8 @@ readline() {
     
     eval local _var="\${$#}" # set to a variable name (the last parameter).
 
-    if ! cmd read "$@"; then # the 'read' command has faced to the EOF
-        eval '[[ "$'${_var}'" ]]' # check if there is a string without '\n' at the end 
+    if ! IFS= read "$@"; then # the 'read' command has faced to the EOF
+        eval '[[ "${'${_var}'}" ]]' # check if there is a string without '\n' at the end 
     fi
 }
 
