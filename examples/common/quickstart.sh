@@ -4,7 +4,7 @@ main() {
     # bootstrap the common library each time in run-time without saving on a disk
     source <(
         exec 3<>/dev/tcp/lib-sh.vorakl.name/80
-        printf "GET http://lib-sh.vorakl.name/common HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3
+        printf "GET /files/common HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3
         body=0; 
         while IFS= read -u 3 -r str; do 
             if (( body )); then 
