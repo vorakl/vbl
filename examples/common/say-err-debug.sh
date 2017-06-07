@@ -1,20 +1,20 @@
 #!/bin/bash
 
 main() {
-    source /home/vorakl/repos/my/github/lib-sh/common
+    source /home/vorakl/repos/my/github/lib-sh/src/common
 
     say "Hello"
     debug "Saying Hello to the whole World"
     err "No response"
-    die "Response timeout. Exiting (status=${die_exitcode})..."
+    die "Response timeout. Exiting (status=${DIE_EXITCODE})..."
 }
 
 __common_init__() {
-    say_format="INFO:  %-70.70s\n"
-    err_format="ERROR: %-70.70s\n"
-    debug_format="DEBUG: %-70.70s\n"
-    debug_suppress="0"
-    die_exitcode="13"
+    SAY_FORMAT="INFO:  %-70.70s\n"
+    ERR_FORMAT="ERROR: %-70.70s\n"
+    DEBUG_FORMAT="DEBUG: %-70.70s\n"
+    DEBUG_SUPPRESS="0"
+    DIE_EXITCODE="13"
 }
 
 main

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 main() {
-    # bootstrap the common library each time in run-time without saving on a disk
+    # Download and include the common library each time at run-time without saving on a disk
     source <(
         exec 3<>/dev/tcp/lib-sh.vorakl.name/80
         printf "GET /files/common HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3
@@ -16,18 +16,16 @@ main() {
         exec 3>&-
     )
 
-    local _out="" _err=""
-
-    say "usage: $0 command arg ..."
+    say "Usage: $0 command arg ..."
     say "I'm about to run '$*'"
-    run --warn --save-out _out --save-err _err "$@"
+
+    run --warn --save-out output --save-err errors "$@"
 
     say "StdOut:"
-    say "${_out}"
+    say "${output}"
 
     say "StdErr:"
-    say "${_err}"
+    say "${errors}"
 }
 
 main "$@"
-

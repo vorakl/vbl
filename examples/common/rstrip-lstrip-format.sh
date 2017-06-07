@@ -1,7 +1,7 @@
 #!/bin/bash
 
 main() {
-    source /home/vorakl/repos/my/github/lib-sh/common
+    source /home/vorakl/repos/my/github/lib-sh/src/common
 
     readlines -r out < <(date)
     printf "\nRaw results:\n"

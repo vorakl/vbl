@@ -116,7 +116,7 @@ run() {
         cmd echo "-=STOP=-" > ${_pipe_out}
 
         until { cmd read -u 3 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
-            eval printf -v ${_save_out} '"%s\n"' '"${_save_out}${'${_line}'}"'
+            eval printf -v ${_save_out} '"%s\n"' '"${'${_save_out}'}${_line}"'
         done
 
         exec 3>&-
@@ -126,7 +126,7 @@ run() {
         cmd echo "-=STOP=-" > ${_pipe_err}
 
         until { cmd read -u 4 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
-            eval printf -v ${_save_err} '"%s\n"' '"${_save_err}${'${_line}'}"'
+            eval printf -v ${_save_err} '"%s\n"' '"${'${_save_err}'}${_line}"'
         done
 
         exec 4>&-
