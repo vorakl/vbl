@@ -33,6 +33,7 @@ usage:
 	@${ECHO_BIN} "  setver         Set a new version (is taken from environment or file)."
 	@${ECHO_BIN} "  settag         Set a new version as a tag to the last commit."
 	@${ECHO_BIN} "  push           Push to the repo (with tags)."
+	@${ECHO_BIN} "  publish        Publish all libbraries to the static site with sha256 sums."
 	@${ECHO_BIN} "  release        Set a version, tag and push to the repo."
 	@${ECHO_BIN} "  test           Run all tests"
 	@${ECHO_BIN} ""
@@ -56,8 +57,8 @@ push:
 	@${GIT_BIN} push origin ${VERSION}
 
 publish:
-	@${CP_BIN} -f src/* docs/
-	@(cd docs && find . -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee -a $${_file}.sha256' \;)
+	@${CP_BIN} -f src/* docs/files/
+	@(cd docs/files/ && find . ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
 
 cirelease: test setver settag publish
 	@${GIT_BIN} add .

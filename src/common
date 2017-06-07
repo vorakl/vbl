@@ -2,7 +2,7 @@
 
 # lib-sh/common - Common functions for everyday use
 # Copyright (c) 2016,17 by Oleksii Tsvietnov, me@vorakl.name
-# Version: v1.0.0
+# Version: 1.0.1
 
 cmd() {
     # A wrapper for the builtin 'command' to minimize a risk of reloading functions
@@ -82,12 +82,14 @@ run() {
     fi
 
     if [[ "${_save_out}" ]]; then
+        cmd -v mkfifo &>/dev/null || die "The 'mkfifo' tool does not exist"
         cmd -p mkfifo -m 600 ${_pipe_out} &>/dev/null || die "cannot create ${_pipe_out}"
         exec 3<>${_pipe_out} || die "cannot assign fd 3 to ${_pipe_out}"
         _save_vars="${_save_vars} 1>${_pipe_out}"
     fi
 
     if [[ "${_save_err}" ]]; then
+        cmd -v mkfifo &>/dev/null || die "The 'mkfifo' tool does not exist"
         cmd -p mkfifo -m 600 ${_pipe_err} &>/dev/null || die "cannot create ${_pipe_err}"
         exec 4<>${_pipe_err} || die "cannot assign fd 4 to ${_pipe_err}"
         _save_vars="${_save_vars} 2>${_pipe_err}"
@@ -102,7 +104,7 @@ run() {
     elif (( _warn )); then
         _status='|| err "command '\''$1'\'' failed with exit status $?. Ignoring..."'
     elif (( _ensure )); then
-        _status='|| die "command '\''$1'\'' failed with exit status $?. Exiting (exitcode=${die_exitcode})..."'
+        _status='|| die "command '\''$1'\'' failed with exit status $?. Exiting (exitcode=${DIE_EXITCODE})..."'
     fi
 
     [[ "$@" ]] || die "there is nothing to run!"
@@ -114,7 +116,7 @@ run() {
         cmd echo "-=STOP=-" > ${_pipe_out}
 
         until { cmd read -u 3 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
-            eval printf -v ${_save_out} '"$'${_save_out}'${_line}\n"'
+            eval printf -v ${_save_out} '"%s\n"' '"${_save_out}${'${_line}'}"'
         done
 
         exec 3>&-
@@ -124,7 +126,7 @@ run() {
         cmd echo "-=STOP=-" > ${_pipe_err}
 
         until { cmd read -u 4 _line; [[ "${_line}" == "-=STOP=-" ]]; } do 
-            eval printf -v ${_save_err} '"$'${_save_err}'${_line}\n"'
+            eval printf -v ${_save_err} '"%s\n"' '"${_save_err}${'${_line}'}"'
         done
 
         exec 4>&-
