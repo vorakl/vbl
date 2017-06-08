@@ -199,7 +199,7 @@ readline() {
     # A wrapper around the 'read' command. It reads from STDIN only one string.
     # It doesn't matter if it ends with a specified delimiter (like \n) or not.
     # That's why it's safe to be used in a while loop to read a stream
-    # which may not have '\n' at the end of a last string.
+    # which may not have a delimiter at the end of a last string.
     #
     # usage:
     #    readline [arg [...]] var [var [...]]
@@ -218,10 +218,12 @@ readline() {
 readlines() {
     # A wrapper around 'read' command.
     # Instead of the 'readline' command it reads from STDIN the whole stream
-    # which consists of one or more strings and saves it in a specified variable 'var'.
-    # It also behaves correctly if there is no '\n' at the end of a last string.
-    # IMPORTANT: each string of the stream is always extended by '\n' before saving it to
-    # the 'var' variable.
+    # which consists of one or more strings (a string's delimiter can be set as usual for read
+    # command, using -d option) and saves it in a specified variable 'var'.
+    # It also behaves correctly if there is no a delimiter at the end of a last string.
+    # IMPORTANT: each string on the output is always extended by '\n' before saving it to
+    # the 'var' variable. That means, a specified variable will have all common strings ending
+    # with '\n' (and the last string also!) and no matter how these string were separated on the input.
     #
     # usage:
     #    readlines [arg [...]] var
@@ -241,6 +243,22 @@ readlines() {
 }
 
 format() {
+    # This is a wrapper around printf which allows you to have a formated output 
+    # for data taken from stdin. In this case the whole stream is considered
+    # as one blob until it faces '\0' or EOF. Although, it's possible to use
+    # a specified variable as an input data. An output can be directed to 
+    # another variable or to the stdout if '-' was used as a variable's name.
+    #
+    # usage:
+    #   format format_string [output_var|-] [input]
+    #
+    # parameters:
+    #   format_string       a common printf's format string
+    #   output_var or -     a variable where to save output.
+    #                       If it's empty or '-', then prints to the stdout
+    #   input               if set, then it's used as an input data.
+    #                       In this case, the second parameter cannot be empty!
+    
     local _format="$1" _return="$2" _input="$3"
 
     if [[ -z "${_input}" ]]; then
