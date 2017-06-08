@@ -2,7 +2,7 @@
 
 # lib-sh/common - Common functions for everyday use
 # Copyright (c) 2016,17 by Oleksii Tsvietnov, me@vorakl.name
-# Version: 1.0.1
+# Version: 1.0.2
 
 cmd() {
     # A wrapper for the builtin 'command' to minimize a risk of reloading functions
@@ -236,13 +236,16 @@ readlines() {
 }
 
 format() {
-    local _out="" _format="$1" _return="$2"
+    local _format="$1" _return="$2" _input="$3"
 
-    readline -r -d '' _out
-    if [[ "${_return}" ]]; then
-        cmd printf -v "${_return}" "${_format}" "${_out}"
+    if [[ -z "${_input}" ]]; then
+        readline -r -d '' _input
+    fi
+
+    if [[ "${_return}" != -* ]]; then
+        cmd printf -v "${_return}" "${_format}" "${_input}"
     else
-        cmd printf "${_format}" "${_out}"
+        cmd printf "${_format}" "${_input}"
     fi 
 }
 
