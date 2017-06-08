@@ -6,7 +6,7 @@ main() {
     local _myvar
 
     readlines -r -d '' _myvar < /proc/$$/environ
-    echo "[${_myvar}]"
+    echo "\"${_myvar}\""
 }
 
 main

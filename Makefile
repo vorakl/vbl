@@ -3,6 +3,7 @@
 # Variables:
 ECHO_BIN ?= echo
 CP_BIN ?= cp
+LN_BIN ?= ln
 SED_BIN ?= sed
 PWD_BIN ?= pwd
 BASENAME_BIN ?= basename
@@ -57,7 +58,7 @@ push:
 	@${GIT_BIN} push origin ${VERSION}
 
 publish:
-	@${CP_BIN} -f src/* docs/files/
+	@${LN_BIN} -f src/* docs/files/
 	@(cd docs/files/ && find . ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
 
 cirelease: test setver settag publish

@@ -16,16 +16,22 @@ main() {
         exec 3>&-
     )
 
-    say "Usage: $0 command arg ..."
-    say "I'm about to run '$*'"
+    say "Usage:   $0 command arg ..."
+    say "Example: $0 ls -l /"
+    say "         $0 ls -l /nonexistent"
+    say "\nI'm about to run '$*'"
 
     run --warn --save-out output --save-err errors "$@"
 
-    say "StdOut:"
+    say "\nStdOut:"
     say "${output}"
 
-    say "StdErr:"
+    say "\nStdErr:"
     say "${errors}"
+}
+
+__common_init__() {
+    SAY_FORMAT="%b\n"
 }
 
 main "$@"
