@@ -242,7 +242,7 @@ format() {
         readline -r -d '' _input
     fi
 
-    if [[ "${_return}" != -* ]]; then
+    if [[ -n "${_return}" && "${_return}" != "-" ]]; then
         cmd printf -v "${_return}" "${_format}" "${_input}"
     else
         cmd printf "${_format}" "${_input}"

@@ -13,7 +13,7 @@ main() {
     local _envs="" _i="0"
 
     while ((++_i)); readline -r -d '' _envs; do
-        echo "${_envs}" | format "env ${_i}: %s"
+        format "env ${_i}: %s\n" - "${_envs}"
     done < /proc/$$/environ
 }
 
