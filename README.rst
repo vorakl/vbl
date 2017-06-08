@@ -20,7 +20,7 @@ These are just a few possible examples of how you can download and include libs 
 Download using wget without saving on a disk
 --------------------------------------------
 
-This code downloads the common library on each run, reads all lines ended by '\0', saves them all in one variable as normal lines (ended by '\n') and then prints to the stdout
+This code downloads the common library on each run, reads all lines ended by ``\0``, saves them all in one variable as normal lines (ended by ``\n``) and then prints to the stdout
 
 .. code-block:: bash
 
@@ -39,7 +39,7 @@ This code downloads the common library on each run, reads all lines ended by '\0
 Download using curl and Check an integrity by comparing sha256 hash
 -------------------------------------------------------------------
 
-This example downloads the lib and sets a trap on success for deleting the file on exit. Then, it downloads a correct sha256 hash and checks an integrity of the lib. if everything is fine, it could download and save a file, check an integrity, then it reads in a loop strings which are ended by '\0' and prints them out using a specified format.
+This example downloads the lib and sets a trap on success for deleting the file on exit. Then, it downloads a correct sha256 hash and checks an integrity of the lib. if everything is fine, it could download and save a file, check an integrity, then it reads in a loop strings which are ended by ``\0`` and prints them out using a specified format.
 
 .. code-block:: bash
 
