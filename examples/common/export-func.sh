@@ -1,7 +1,7 @@
 #!/bin/bash
 
 main() {
-    source /home/vorakl/repos/my/github/lib-sh/src/common
+    source <(curl -sSLf http://lib-sh.vorakl.name/files/common)
 
     say "The function 'say' is exported"
     bash -c 'say hello'

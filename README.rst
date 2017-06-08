@@ -2,7 +2,15 @@ A collection of Bash libraries
 ##############################
 
 An each library from this set collects many useful functions for simplifying a development in Bash.
-Instead of copy-pasting the same functions from one script to another it's much better to include once an external library and reuse the same code everywhere.
+Instead of copy/pasting the same functions from one script to another it's much better to include once an external library and reuse the same code everywhere.
+
+* Installation_
+* `Quick start`_
+    * `Download using wget without saving on a disk`_
+    * `Download using curl and Check an integrity by comparing sha256 hash`_
+    * `Download using a pure Bash code without saving on a disk`_
+* `The list of libraries`_
+
 
 Installation
 ============
@@ -65,14 +73,13 @@ This example downloads the lib and sets a trap on success for deleting the file 
 Download using a pure Bash code without saving on a disk
 --------------------------------------------------------
 
-This example is a little bit more complicated. For downloading files it doesn't use any external tools, just a pure Bash code. Then, it shows how to configure a behaviour of functions from the lib by defining __common_init__() function, how to do a formated printing nad how to run command under a wrapper to control exit status and save stdout/stderr separately in variables. 
+This example is a little bit more complicated. For downloading files it doesn't use any external tools, just a pure Bash code. Then, it shows how to configure a behaviour of functions from the lib by defining ``__common_init__()`` function, how to do a formated printing nad how to run command under a wrapper to control exit status and save stdout/stderr separately in variables. 
 
 .. code-block:: bash
 
     #!/bin/bash
 
     main() {
-        # Download and include the common library each time at run-time without saving on a disk
         source <(
             exec 3<>/dev/tcp/lib-sh.vorakl.name/80
             printf "GET /files/common HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3

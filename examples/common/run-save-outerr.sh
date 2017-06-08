@@ -1,7 +1,7 @@
 #!/bin/bash
 
 main() {
-    source /home/vorakl/repos/my/github/lib-sh/src/common
+    source <(curl -sSLf http://lib-sh.vorakl.name/files/common)
 
     run --save-out my_out --save-err my_err eval '{ say "$(top -bn1)"; err "$(ls -l /)"; }'
 
