@@ -102,9 +102,9 @@ run() {
     if (( _ignore )); then
         _status="|| cmd true"
     elif (( _warn )); then
-        _status='|| err "command '\''$1'\'' failed with exit status $?. Ignoring..."'
+        _status='|| ERR_FORMAT="${RUN_WARN_FORMAT}" err "$1" "$?"'
     elif (( _ensure )); then
-        _status='|| die "command '\''$1'\'' failed with exit status $?. Exiting (exitcode=${DIE_EXITCODE})..."'
+        _status='|| ERR_FORMAT="${RUN_ENSURE_FORMAT}" die "$1" "$?" "${DIE_EXITCODE}"'
     fi
 
     [[ "$@" ]] || die "there is nothing to run!"
@@ -133,6 +133,11 @@ run() {
     fi
 
     cmd return ${_rc}
+}
+
+__run_conf__() {
+    export RUN_WARN_FORMAT="Command \'%s\' has failed with exit status %d. Ignoring..."
+    export RUN_ENSURE_FORMAT="Command \'%s\' has failed with exit status %d. Exiting (exitcode=%d)..."
 }
 
 assert_utils() {
@@ -287,6 +292,7 @@ __common_conf__() {
     __debug_conf__
     __err_conf__
     __die_conf__
+    __run_conf__
 }
 
 __common_export__() {
