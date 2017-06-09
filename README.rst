@@ -1,15 +1,27 @@
 A collection of Bash libraries
 ##############################
 
-An each library from this set collects many useful functions for simplifying a development in Bash.
-Instead of copy/pasting the same functions from one script to another it's much better to include once an external library and reuse the same code everywhere.
-
+* Introduction_
 * Installation_
-* `Quick start`_
     * `Download using wget without saving on a disk`_
     * `Download using curl and Check an integrity by comparing sha256 hash`_
     * `Download using a pure Bash code without saving on a disk`_
 * `The list of libraries`_
+
+Introduction
+============
+
+Bash is a powerful programming language and very useful for operational tasks. Without any doubts, this is the first "tool" you use in system administering of Unix-like operating systems. Unfortunately, it doesn't have a "Standard library" with all that functions which make a development process easy, faster and more efficient in all senses.
+
+Suddenly, I realized that I use same functions, same blocks of code everywhere and, obviusly, copy-pasting them from one script to another is not a right approach. That's why I decided to organize the most often used functions in a few libraries and place them on a publicaly available over http resource. This makes possible to find all needed files in one place, download them using simple tools or even a pure Bash code, always download the latest version of each library or even get stuck to a specific version in terms of stability and reliability.
+
+Basically, for me using these functions helps:
+
+* to reuse the same code everywhere which is checked and proved by the time
+* to simplify and speed up a development
+* to increase a readability of code
+
+Besides all mentioned benefits, I would recommend to spend a little time and dig into the code to get a full understanding of how it works. Actually, this is a good practice before using any kind of libraries or functions.
 
 
 Installation
@@ -17,18 +29,15 @@ Installation
 
 In general, the installation process looks as follows:
 
-1. Download the latest version of a library from this collection
+1. Download the latest version of a library from this collection.
 2. Include it into your script.
 
-Quick start
-===========
-
-These are just a few possible examples of how you can download and include libs from the remote resource.
+These are just a few possible examples of how ito do that.
 
 Download using wget without saving on a disk
 --------------------------------------------
 
-This code downloads the common library on each run, reads all lines ended by ``\0``, saves them all in one variable as normal lines (ended by ``\n``) and then prints to the stdout
+This code downloads the 'common' library from the Internet on each run and doesn't save it in any file,
 
 .. code-block:: bash
 
@@ -37,17 +46,16 @@ This code downloads the common library on each run, reads all lines ended by ``\
     main() {
         source <(wget -qO - http://lib-sh.vorakl.name/files/common)
 
-        readlines -r -d '' envs < /proc/$$/environ
-        echo -n "${envs}"
+        # your code
     }
 
-    main
+    main "$@"
 
 
-Download using curl and Check an integrity by comparing sha256 hash
--------------------------------------------------------------------
+Download using curl and Check an integrity by sha256sum tool
+------------------------------------------------------------
 
-This example downloads the lib and sets a trap on success for deleting the file on exit. Then, it downloads a correct sha256 hash and checks an integrity of the lib. if everything is fine, it could download and save a file, check an integrity, then it reads in a loop strings which are ended by ``\0`` and prints them out using a specified format.
+This example downloads the library, saves it in a working directory with the original name. If it's happened, then a trap for deleting this file on exit is being set. Then, a correct sha256 hash is downloaded and checked an integrity. If everything is fine, then the library is included. Otherwise, the script exits with an error message.
 
 .. code-block:: bash
 
@@ -60,14 +68,10 @@ This example downloads the lib and sets a trap on success for deleting the file 
         source common || \
         { echo "The library hasn't been loaded" >&2; exit 1; }
 
-        local _envs="" _i="0"
-
-        while ((++_i)); readline -r -d '' _envs; do
-            echo "${_envs}" | format "env ${_i}: %s"
-        done < /proc/$$/environ
+        # your code
     }
 
-    main
+    main "$@"
 
 
 Download using a pure Bash code without saving on a disk
