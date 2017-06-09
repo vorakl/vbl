@@ -4,7 +4,7 @@ A collection of Bash libraries
 * Introduction_
 * Installation_
     * `Download using wget without saving on a disk`_
-    * `Download using curl and Check an integrity by comparing sha256 hash`_
+    * `Download using curl and Check an integrity by sha256sum tool`_
     * `Download using a pure Bash code without saving on a disk`_
 * `The list of libraries`_
 
@@ -53,7 +53,7 @@ This code downloads the 'common' library from the Internet on each run and doesn
 
 
 Download using curl and Check an integrity by sha256sum tool
-------------------------------------------------------------
+-------------------------------------------------------------------
 
 This example downloads the library, saves it in a working directory with the original name. If it's happened, then a trap for deleting this file on exit is being set. Then, a correct sha256 hash is downloaded and checked an integrity. If everything is fine, then the library is included. Otherwise, the script exits with an error message.
 
