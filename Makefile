@@ -61,7 +61,7 @@ publish:
 	@${LN_BIN} -f src/* docs/files/
 	@(cd docs/files/ && find . ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
 
-cirelease: test setver settag publish
+cirelease: setver settag publish
 	@${GIT_BIN} add .
 	@${GIT_BIN} ci -m "Release new version: ${VERSION}"
 
