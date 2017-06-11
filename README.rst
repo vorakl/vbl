@@ -3,8 +3,8 @@ A collection of Bash libraries
 
 * Introduction_
 * Installation_
-    * `Download using wget without saving on a disk`_
-    * `Download using curl and Check an integrity by sha256sum tool`_
+    * `Download the latest version using curl or wget without saving on a disk`_
+    * `Download the latest common lib using curl and Check an integrity by sha256sum tool`_
     * `Download using a pure Bash code without saving on a disk`_
 * `The list of libraries`_
 
@@ -30,32 +30,68 @@ Installation
 In general, the installation process looks as follows:
 
 1. Download the latest version of a library from this collection.
+    The URL to a file can be constructed from three parts by gluing them together: 
+    
+    - The base URL: ``http://lib-sh.vorakl.name/files/``
+    - A version. This is optional and if it's not specified, then the latest version will be requested. Basically, it follows the `Semantic Versioning`_, e.g. v1.2.3 
+    - The name of a library: it's exactly the same name as in `The list of libraries`_
+
+    For example:
+
+    - ``http://lib-sh.vorakl.name/files/common``, the ``common`` library and the latest version.
+    - ``http://lib-sh.vorakl.name/files/v1.0.4/common``, the ``common`` library and it's always a v1.0.4 version.
+   
+
 2. Include it into your script.
+    Usually, external files with Bash code are included by ``source /path/to/file`` or ``. /path/to/file`` instuctions.
 
-These are just a few possible examples of how ito do that.
 
-Download using wget without saving on a disk
---------------------------------------------
+These are just a few possible examples of how to do that.
 
-This code downloads the 'common' library from the Internet on each run and doesn't save it in any file,
+Download the latest version using curl or wget without saving on a disk
+-----------------------------------------------------------------------
+
+This code downloads the ``common`` library from the Internet on each run and doesn't save it in any file.
+Usually, this snippet needs to be added some where in the beggining of a bash script.
+
+.. code-block:: bash
+
+    source <(curl -sSLf http://lib-sh.vorakl.name/files/common)
+
+or
+
+.. code-block:: bash
+
+    source <(wget -qO - http://lib-sh.vorakl.name/files/common)
+
+For instance, it can be used as following
 
 .. code-block:: bash
 
     #!/bin/bash
 
     main() {
-        source <(wget -qO - http://lib-sh.vorakl.name/files/common)
+        source <(curl -sSL fhttp://lib-sh.vorakl.name/files/common)
 
-        # your code
+        # add your code here
     }
 
     main "$@"
 
 
-Download using curl and Check an integrity by sha256sum tool
--------------------------------------------------------------------
+Download the latest common lib using curl and Check an integrity by sha256sum tool
+----------------------------------------------------------------------------------
 
-This example downloads the library, saves it in a working directory with the original name. If it's happened, then a trap for deleting this file on exit is being set. Then, a correct sha256 hash is downloaded and checked an integrity. If everything is fine, then the library is included. Otherwise, the script exits with an error message.
+This snippet downloads the library, saves it in a working directory with the original name. Then, a correct sha256 hash is downloaded and an integrity is checked. If everything is fine, then the library is included. Otherwise, the script exits with an error message. 
+
+.. code-block:: bash
+
+        curl -sSLfo common http://lib-sh.vorakl.name/files/common && \
+        curl -sSLf http://lib-sh.vorakl.name/files/common.sha256 | sha256sum --quiet -c && \
+        source common || \
+        { echo "The library hasn't been loaded" >&2; exit 1; }
+
+For instance, it can be used as following
 
 .. code-block:: bash
 
@@ -63,12 +99,11 @@ This example downloads the library, saves it in a working directory with the ori
 
     main() {
         curl -sSLfo common http://lib-sh.vorakl.name/files/common && \
-        trap 'rm -f common' EXIT TERM HUP INT && \
         curl -sSLf http://lib-sh.vorakl.name/files/common.sha256 | sha256sum --quiet -c && \
         source common || \
         { echo "The library hasn't been loaded" >&2; exit 1; }
 
-        # your code
+        # add your code here
     }
 
     main "$@"
@@ -77,7 +112,25 @@ This example downloads the library, saves it in a working directory with the ori
 Download using a pure Bash code without saving on a disk
 --------------------------------------------------------
 
-This example is a little bit more complicated. For downloading files it doesn't use any external tools, just a pure Bash code. Then, it shows how to configure a behaviour of functions from the lib by defining ``__common_init__()`` function, how to do a formated printing nad how to run command under a wrapper to control exit status and save stdout/stderr separately in variables. 
+For downloading the library this snippet doesn't use any external tools, just a pure Bash code.
+
+.. code-block:: bash
+
+        source <(
+            exec 3<>/dev/tcp/lib-sh.vorakl.name/80
+            printf "GET /files/common HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3
+            body=0;
+            while IFS= read -u 3 -r str; do
+                if (( body )); then
+                    printf "%s\n" "${str}"
+                else
+                    [[ -z "${str%$'\r'}" ]] && body=1
+                fi
+            done
+            exec 3>&-
+        )
+
+This is the example of how the snippet can be used. In addition, it shows how to configure a behaviour of functions from the library by defining ``__common_init__()`` function, how to do a formated printing and how to run a command under the wrapper for controling an exit status and save stdout/stderr separately in variables. 
 
 .. code-block:: bash
 
@@ -126,4 +179,5 @@ The list of libraries
 
 .. Links
 
-.. _common: https://github.com/vorakl/lib-sh/blob/master/common.rst 
+.. _common: https://github.com/vorakl/lib-sh/blob/master/common.rst
+..._`Semantic Versioning` : http://semver.org/
