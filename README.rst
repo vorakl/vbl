@@ -5,7 +5,7 @@ A collection of Bash libraries
 * Installation_
     * `Download the latest version using curl or wget without saving on a disk`_
     * `Download the latest common lib using curl and Check an integrity by sha256sum tool`_
-    * `Download using a pure Bash code without saving on a disk`_
+    * `Download the latest common using a pure Bash code without saving on a disk`_
 * `The list of libraries`_
 
 Introduction
@@ -109,8 +109,8 @@ For instance, it can be used as following
     main "$@"
 
 
-Download using a pure Bash code without saving on a disk
---------------------------------------------------------
+Download the latest common using a pure Bash code without saving on a disk
+--------------------------------------------------------------------------
 
 For downloading the library this snippet doesn't use any external tools, just a pure Bash code.
 
