@@ -11,15 +11,15 @@ A collection of Bash libraries
 Introduction
 ============
 
-Bash is a powerful programming language and very useful for operational tasks. Without any doubts, this is the first "tool" you use in system administering of Unix-like operating systems. Unfortunately, it doesn't have a "Standard library" with all that functions which make a development process easy, faster and more efficient in all senses.
+Bash is a powerful programming language and very useful for operational tasks. Without any doubts, this is the first "tool" you use in system administering of Unix-like operating systems. Unfortunately, it doesn't have a "Standard library" with all that functions which make a development process easier, faster and more efficient in all senses.
 
-Suddenly, I realized that I use same functions, same blocks of code everywhere and, obviusly, copy-pasting them from one script to another is not a right approach. That's why I decided to organize the most often used functions in a few libraries and place them on a publicaly available over http resource. This makes possible to find all needed files in one place, download them using simple tools or even a pure Bash code, always download the latest version of each library or even get stuck to a specific version in terms of stability and reliability.
+Suddenly, I realized that I use the same functions, same blocks of code everywhere. Apparently, copy-pasting them from one script to another is not a right approach. That's why I decided to organize the most used functions in a few libraries and place them on a publicly available resource over http. This makes possible to find all needed files in one place, download them using simple tools or even a pure Bash code, always download the latest version of each library or even get stuck to a specific version in terms of stability and reliability.
 
-Basically, for me using these functions helps:
+Basically, for me use these functions helps to
 
-* to reuse the same code everywhere which is checked and proved by the time
-* to simplify and speed up a development
-* to increase a readability of code
+* reuse the same code everywhere which is checked and proved by the time
+* simplify and speed up a development
+* increase a readability of code
 
 Besides all mentioned benefits, I would recommend to spend a little time and dig into the code to get a full understanding of how it works. Actually, this is a good practice before using any kind of libraries or functions.
 
