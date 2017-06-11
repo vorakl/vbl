@@ -180,4 +180,4 @@ The list of libraries
 .. Links
 
 .. _common: https://github.com/vorakl/lib-sh/blob/master/common.rst
-..._`Semantic Versioning` : http://semver.org/
+.. _`Semantic Versioning`: http://semver.org/
