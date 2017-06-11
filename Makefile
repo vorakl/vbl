@@ -3,6 +3,7 @@
 # Variables:
 ECHO_BIN ?= echo
 CP_BIN ?= cp
+MKDIR_BIN ?= mkdir
 LN_BIN ?= ln
 SED_BIN ?= sed
 PWD_BIN ?= pwd
@@ -50,6 +51,7 @@ setver:
 settag:
 	@${ECHO_BIN} "Setting ${VERSION} as a tag to ${LAST_COMMIT}"
 	@${GIT_BIN} tag ${VERSION} ${LAST_COMMIT} 2>/dev/null || true
+	@${MKDIR_BIN} docs/files/${VERSION}
 
 push:
 	@${ECHO_BIN} "Pushing commits..."
@@ -61,7 +63,11 @@ publish:
 	@${LN_BIN} -f src/* docs/files/
 	@(cd docs/files/ && find . ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
 
-cirelease: setver settag publish
+publish-tag:
+	@${LN_BIN} -f src/* docs/files/${VERSION}/
+	@(cd docs/files/${VERSION}/ && find . ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
+
+cirelease: setver settag publish publish-tag
 	@${GIT_BIN} add .
 	@${GIT_BIN} ci -m "Release new version: ${VERSION}"
 

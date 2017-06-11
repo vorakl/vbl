@@ -2,7 +2,7 @@
 
 # lib-sh/common - Common functions for everyday use
 # Copyright (c) 2016,17 by Oleksii Tsvietnov, me@vorakl.name
-# Version: 1.0.3
+# Version: v1.0.4
 
 cmd() {
     # A wrapper for the builtin 'command' to minimize a risk of reloading functions
