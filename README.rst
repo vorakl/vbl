@@ -30,7 +30,6 @@ Installation
 In general, the installation process looks as follows:
 
 1. Download the latest version of a library from this collection.
-
     The URL to a library's file should be constructed from three parts by gluing them together: 
     
     - **The base URL**. It is ``http://lib-sh.vorakl.name/files/``
@@ -52,7 +51,6 @@ In general, the installation process looks as follows:
     - ``http://lib-sh.vorakl.name/files/v1.0.5/common.sha256``
 
 2. Include it into your script.
-
     Usually, external files with Bash code are included by ``source /path/to/file`` or ``. /path/to/file`` instuctions.
 
 
