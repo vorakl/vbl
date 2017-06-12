@@ -4,7 +4,7 @@ A collection of Bash libraries
 * Introduction_
 * Installation_
     * `The simplest one-liner which uses curl/wget to dowload a file without saving on a disk`_
-    * `Download a specific version of the library using curl and Check an integrity`_
+    * `Download a library by curl and check an integrity by sha256sum`_
     * `Download the latest common using a pure Bash code without saving on a disk`_
 * `The list of libraries`_
 
@@ -44,7 +44,6 @@ In general, the installation process looks as follows:
     - ``http://lib-sh.vorakl.name/files/v1.0.4/common``, for the ``common`` library and the v1.0.4 version.
    
     In addition, each library comes with a sha256 hash. A file name for it looks like ${LIBNAME}.sha256
-
     For example, these are URLs for a sha256 hashes of the ``common`` library: 
     
     - ``http://lib-sh.vorakl.name/files/common.sha256``
@@ -89,31 +88,56 @@ For instance, it can be used as follows:
     main "$@"
 
 
-Download a specific version of the library using curl and Check an integrity
-----------------------------------------------------------------------------
+Download a library by curl and check an integrity by sha256sum
+--------------------------------------------------------------
 
-This snippet downloads the library, saves it in a working directory with the original name. Then, a correct sha256 hash is downloaded and an integrity is checked. If everything is fine, then the library is included. Otherwise, the script exits with an error message. 
+This snippet uses two external commands (curl and sha256sum) to download a library (a version can be also specified), checks its sha256 hash and keeps everything in memory, without saveing files on a disk. If everything is fine, then the library is included. Otherwise, the script exits with an error message. To simplify things, it's represented as a separate function ``import_lib``:
 
 .. code-block:: bash
 
-        curl -sSLfo common http://lib-sh.vorakl.name/files/v1.0.5/common && \
-        curl -sSLf http://lib-sh.vorakl.name/files/v1.0.5/common.sha256 | sha256sum --quiet -c && \
-        source common || \
-        { echo "The library hasn't been loaded" >&2; exit 1; }
+    import_lib() {
+        local _lib_name _ver _lib_content _lib_hash _origlib_hash
 
-For instance, it can be used as following
+        _lib_name="${1?The lib name is empty}"
+        [[ -n "$2" ]] && _ver="$2/" || _ver=""
+        _lib_content="$(curl -sSLf http://lib-sh.vorakl.name/files/${_ver}${_lib_name})"
+        _lib_hash="$(set -- $(sha256sum <(echo "${_lib_content}") ); echo "$1")"
+        _origlib_hash="$(set -- $(curl -sSLf http://lib-sh.vorakl.name/files/${_ver}${_lib_name}.sha256); echo "$1")"
+        if [[ "${_lib_hash}" == "${_origlib_hash}" ]]; then
+            source <(echo "${_lib_content}")
+        else
+            echo "The '${_ver}${_lib_name}' library hasn't been loaded" >&2
+            exit 1
+        fi
+    }
+
+
+This is how it can be used:
 
 .. code-block:: bash
 
     #!/bin/bash
 
     main() {
-        curl -sSLfo common http://lib-sh.vorakl.name/files/v1.0.5/common && \
-        curl -sSLf http://lib-sh.vorakl.name/files/v1.0.5/common.sha256 | sha256sum --quiet -c && \
-        source common || \
-        { echo "The library hasn't been loaded" >&2; exit 1; }
+        import_lib common
+        #import_lib common v1.0.5
 
         # add your code here
+    }
+
+    import_lib() {
+        local _lib_name _lib_content _lib_hash _origlib_hash
+
+        _lib_name="${1?The lib name is empty}"
+        _lib_content="$(curl -sSLf http://lib-sh.vorakl.name/files/${_lib_name})"
+        _lib_hash="$(set -- $(sha256sum <(echo "${_lib_content}") ); echo "$1")"
+        _origlib_hash="$(set -- $(curl -sSLf http://lib-sh.vorakl.name/files/${_lib_name}.sha256); echo "$1")"
+        if [[ "${_lib_hash}" == "${_origlib_hash}" ]]; then
+            source <(echo "${_lib_content}")
+        else
+            echo "The '${_lib_name}' library hasn't been loaded" >&2
+            exit 1
+        fi
     }
 
     main "$@"
