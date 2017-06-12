@@ -111,7 +111,6 @@ This snippet uses two external commands (curl and sha256sum) to download a libra
         fi
     }
 
-
 This is how it can be used:
 
 .. code-block:: bash
@@ -126,16 +125,17 @@ This is how it can be used:
     }
 
     import_lib() {
-        local _lib_name _lib_content _lib_hash _origlib_hash
+        local _lib_name _ver _lib_content _lib_hash _origlib_hash
 
         _lib_name="${1?The lib name is empty}"
-        _lib_content="$(curl -sSLf http://lib-sh.vorakl.name/files/${_lib_name})"
+        [[ -n "$2" ]] && _ver="$2/" || _ver=""
+        _lib_content="$(curl -sSLf http://lib-sh.vorakl.name/files/${_ver}${_lib_name})"
         _lib_hash="$(set -- $(sha256sum <(echo "${_lib_content}") ); echo "$1")"
-        _origlib_hash="$(set -- $(curl -sSLf http://lib-sh.vorakl.name/files/${_lib_name}.sha256); echo "$1")"
+        _origlib_hash="$(set -- $(curl -sSLf http://lib-sh.vorakl.name/files/${_ver}${_lib_name}.sha256); echo "$1")"
         if [[ "${_lib_hash}" == "${_origlib_hash}" ]]; then
             source <(echo "${_lib_content}")
         else
-            echo "The '${_lib_name}' library hasn't been loaded" >&2
+            echo "The '${_ver}${_lib_name}' library hasn't been loaded" >&2
             exit 1
         fi
     }
