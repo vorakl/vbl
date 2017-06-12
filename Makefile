@@ -10,6 +10,7 @@ PWD_BIN ?= pwd
 BASENAME_BIN ?= basename
 GIT_BIN ?= git
 SHA256SUM_BIN ?= sha256sum 
+FIND_BIN ?= find
 
 # -------------------------------------------------------------------------
 # Set a default target
@@ -59,15 +60,17 @@ push:
 	@${ECHO_BIN} "Pushing tags..."
 	@${GIT_BIN} push origin ${VERSION}
 
-publish:
-	@${LN_BIN} -f src/* docs/files/
-	@(cd docs/files/ && find . ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
+publish: publish-latest publish-tag
+
+publish-latest:
+	@${LN_BIN} -vf src/* docs/files/
+	@(cd docs/files/ && ${FIND_BIN} . -maxdepth 1 ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
 
 publish-tag:
-	@${LN_BIN} -f src/* docs/files/${VERSION}/
-	@(cd docs/files/${VERSION}/ && find . ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
+	@${CP_BIN} -vf src/* docs/files/${VERSION}/
+	@(cd docs/files/${VERSION}/ && ${FIND_BIN} . -maxdepth 1 ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
 
-cirelease: setver settag publish publish-tag
+cirelease: setver settag publish
 	@${GIT_BIN} add .
 	@${GIT_BIN} ci -m "Release new version: ${VERSION}"
 

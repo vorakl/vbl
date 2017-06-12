@@ -130,6 +130,15 @@ For downloading the library this snippet doesn't use any external tools, just a 
             exec 3>&-
         )
 
+or a shorter version
+
+.. code-block:: bash
+
+    source <(exec 3<>/dev/tcp/lib-sh.vorakl.name/80; printf "GET /files/common HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n
+" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi do
+ne; exec 3>&-)
+
+
 This is the example of how the snippet can be used. In addition, it shows how to configure a behaviour of functions from the library by defining ``__common_init__()`` function, how to do a formated printing and how to run a command under the wrapper for controling an exit status and save stdout/stderr separately in variables. 
 
 .. code-block:: bash

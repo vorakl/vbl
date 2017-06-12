@@ -1,8 +1,8 @@
 #!/bin/echo This file has to be soursed. Run: source 
 
-# lib-sh/common - Common functions for everyday use
+# lib-sh/common - The most used common functions
 # Copyright (c) 2016,17 by Oleksii Tsvietnov, me@vorakl.name
-# Version: v1.0.4
+# Version: v1.0.5
 
 cmd() {
     # A wrapper for the builtin 'command' to minimize a risk of reloading functions
@@ -83,15 +83,15 @@ run() {
 
     if [[ "${_save_out}" ]]; then
         cmd -v mkfifo &>/dev/null || die "The 'mkfifo' tool does not exist"
-        cmd -p mkfifo -m 600 ${_pipe_out} &>/dev/null || die "cannot create ${_pipe_out}"
-        exec 3<>${_pipe_out} || die "cannot assign fd 3 to ${_pipe_out}"
+        cmd -p mkfifo -m 600 ${_pipe_out} &>/dev/null || die "Cannot create ${_pipe_out}"
+        exec 3<>${_pipe_out} || die "Cannot assign fd 3 to ${_pipe_out}"
         _save_vars="${_save_vars} 1>${_pipe_out}"
     fi
 
     if [[ "${_save_err}" ]]; then
         cmd -v mkfifo &>/dev/null || die "The 'mkfifo' tool does not exist"
         cmd -p mkfifo -m 600 ${_pipe_err} &>/dev/null || die "cannot create ${_pipe_err}"
-        exec 4<>${_pipe_err} || die "cannot assign fd 4 to ${_pipe_err}"
+        exec 4<>${_pipe_err} || die "Cannot assign fd 4 to ${_pipe_err}"
         _save_vars="${_save_vars} 2>${_pipe_err}"
     fi
 
@@ -107,7 +107,7 @@ run() {
         _status='|| ERR_FORMAT="${RUN_ENSURE_FORMAT}" die "$1" "$?" "${DIE_EXITCODE}"'
     fi
 
-    [[ "$@" ]] || die "there is nothing to run!"
+    [[ "$@" ]] || die "There is nothing to run!"
 
     eval '"$@"' ${_save_vars} ${_channels} ${_status}
     _rc="$?"
