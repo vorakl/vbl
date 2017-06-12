@@ -4,7 +4,7 @@ A collection of Bash libraries
 * Introduction_
 * Installation_
     * `Download the latest version using curl or wget without saving on a disk`_
-    * `Download the latest common lib using curl and Check an integrity by sha256sum tool`_
+    * `Download a specific version of the library using curl and Check an integrity`_
     * `Download the latest common using a pure Bash code without saving on a disk`_
 * `The list of libraries`_
 
@@ -33,13 +33,15 @@ In general, the installation process looks as follows:
     The URL to a file can be constructed from three parts by gluing them together: 
     
     - The base URL: ``http://lib-sh.vorakl.name/files/``
-    - A version. This is optional and if it's not specified, then the latest version will be requested. Basically, it follows the `Semantic Versioning`_, e.g. v1.2.3 
+    - The version. The list of all available versions is `here`__. This is optional and if it's not specified, then the latest version will be requested. Basically, it follows the `Semantic Versioning`_, e.g. v1.2.3 
     - The name of a library: it's exactly the same name as in `The list of libraries`_
+
+    __ https://github.com/vorakl/lib-sh/releases
 
     For example:
 
     - ``http://lib-sh.vorakl.name/files/common``, the ``common`` library and the latest version.
-    - ``http://lib-sh.vorakl.name/files/v1.0.4/common``, the ``common`` library and it's always a v1.0.4 version.
+    - ``http://lib-sh.vorakl.name/files/v1.0.4/common``, the ``common`` library and it's always the v1.0.4 version.
    
 
 2. Include it into your script.
@@ -79,15 +81,15 @@ For instance, it can be used as following
     main "$@"
 
 
-Download the latest common lib using curl and Check an integrity by sha256sum tool
-----------------------------------------------------------------------------------
+Download a specific version of the library using curl and Check an integrity
+----------------------------------------------------------------------------
 
 This snippet downloads the library, saves it in a working directory with the original name. Then, a correct sha256 hash is downloaded and an integrity is checked. If everything is fine, then the library is included. Otherwise, the script exits with an error message. 
 
 .. code-block:: bash
 
-        curl -sSLfo common http://lib-sh.vorakl.name/files/common && \
-        curl -sSLf http://lib-sh.vorakl.name/files/common.sha256 | sha256sum --quiet -c && \
+        curl -sSLfo common http://lib-sh.vorakl.name/files/v1.0.5/common && \
+        curl -sSLf http://lib-sh.vorakl.name/files/v1.0.5/common.sha256 | sha256sum --quiet -c && \
         source common || \
         { echo "The library hasn't been loaded" >&2; exit 1; }
 
@@ -98,8 +100,8 @@ For instance, it can be used as following
     #!/bin/bash
 
     main() {
-        curl -sSLfo common http://lib-sh.vorakl.name/files/common && \
-        curl -sSLf http://lib-sh.vorakl.name/files/common.sha256 | sha256sum --quiet -c && \
+        curl -sSLfo common http://lib-sh.vorakl.name/files/v1.0.5/common && \
+        curl -sSLf http://lib-sh.vorakl.name/files/v1.0.5/common.sha256 | sha256sum --quiet -c && \
         source common || \
         { echo "The library hasn't been loaded" >&2; exit 1; }
 
