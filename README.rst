@@ -3,7 +3,7 @@ A collection of Bash libraries
 
 * Introduction_
 * Installation_
-    * `Download the latest version using curl or wget without saving on a disk`_
+    * `The simplest one-liner which uses curl/wget to dowload a file without saving on a disk`_
     * `Download a specific version of the library using curl and Check an integrity`_
     * `Download the latest common using a pure Bash code without saving on a disk`_
 * `The list of libraries`_
@@ -30,31 +30,41 @@ Installation
 In general, the installation process looks as follows:
 
 1. Download the latest version of a library from this collection.
-    The URL to a file can be constructed from three parts by gluing them together: 
+
+    The URL to a library's file should be constructed from three parts by gluing them together: 
     
-    - The base URL: ``http://lib-sh.vorakl.name/files/``
-    - The version. The list of all available versions is `here`__. This is optional and if it's not specified, then the latest version will be requested. Basically, it follows the `Semantic Versioning`_, e.g. v1.2.3 
-    - The name of a library: it's exactly the same name as in `The list of libraries`_
+    - **The base URL**. It is ``http://lib-sh.vorakl.name/files/``
+    - **The version**. The list of all available versions is `here`__. This is optional and if it's not specified, then the latest version will be requested. Basically, it follows the `Semantic Versioning`_, e.g. v1.2.3 
+    - **The name of a library**. It's exactly the same name as in `The list of libraries`_
 
     __ https://github.com/vorakl/lib-sh/releases
 
     For example:
 
-    - ``http://lib-sh.vorakl.name/files/common``, the ``common`` library and the latest version.
-    - ``http://lib-sh.vorakl.name/files/v1.0.4/common``, the ``common`` library and it's always the v1.0.4 version.
+    - ``http://lib-sh.vorakl.name/files/common``, for the ``common`` library and the latest version.
+    - ``http://lib-sh.vorakl.name/files/v1.0.4/common``, for the ``common`` library and the v1.0.4 version.
    
+    In addition, each library comes with a sha256 hash. A file name for it looks like ${LIBNAME}.sha256
+
+    For example, these are URLs for a sha256 hashes of the ``common`` library: 
+    
+    - ``http://lib-sh.vorakl.name/files/common.sha256``
+    - ``http://lib-sh.vorakl.name/files/v1.0.5/common.sha256``
 
 2. Include it into your script.
+
     Usually, external files with Bash code are included by ``source /path/to/file`` or ``. /path/to/file`` instuctions.
 
 
-These are just a few possible examples of how to do that.
+There are plenty of ways to do these two steps.
+I'm gonna show just a few examples of how to download and include a library to some bash script.
 
-Download the latest version using curl or wget without saving on a disk
------------------------------------------------------------------------
 
-This code downloads the ``common`` library from the Internet on each run and doesn't save it in any file.
-Usually, this snippet needs to be added some where in the beggining of a bash script.
+The simplest one-liner which uses curl/wget to dowload a file without saving on a disk
+--------------------------------------------------------------------------------------
+
+This code downloads the ``common`` library from the remote resource on each run and doesn't save it in any file.
+Usually, this snippet needs to be added some where in the begining of a bash script.
 
 .. code-block:: bash
 
@@ -66,14 +76,14 @@ or
 
     source <(wget -qO - http://lib-sh.vorakl.name/files/common)
 
-For instance, it can be used as following
+For instance, it can be used as follows:
 
 .. code-block:: bash
 
     #!/bin/bash
 
     main() {
-        source <(curl -sSL fhttp://lib-sh.vorakl.name/files/common)
+        source <(curl -sSLf fhttp://lib-sh.vorakl.name/files/common)
 
         # add your code here
     }
