@@ -65,13 +65,15 @@ Usually, this snippet needs to be added some where in the begining of a bash scr
 
 .. code-block:: bash
 
-    source <(curl -sSLf http://lib-sh.vorakl.name/files/common)
+    lib_name="common"
+    source <(curl -sSLf http://lib-sh.vorakl.name/files/${lib_name})
 
 or
 
 .. code-block:: bash
 
-    source <(wget -qO - http://lib-sh.vorakl.name/files/common)
+    lib_name="v1.0.5/common"
+    source <(wget -qO - http://lib-sh.vorakl.name/files/${lib_name})
 
 For instance, it can be used as follows:
 
@@ -80,7 +82,8 @@ For instance, it can be used as follows:
     #!/bin/bash
 
     main() {
-        source <(curl -sSLf fhttp://lib-sh.vorakl.name/files/common)
+        lib_name="common"
+        source <(curl -sSLf http://lib-sh.vorakl.name/files/${lib_name})
 
         # add your code here
     }
@@ -91,10 +94,11 @@ For instance, it can be used as follows:
 Download a library by curl and check an integrity by sha256sum
 --------------------------------------------------------------
 
-This snippet uses two external commands (curl and sha256sum) to download a library (a version can be also specified), checks its sha256 hash and keeps everything in memory, without saveing files on a disk. If everything is fine, then the library is included. Otherwise, the script exits with an error message. To simplify things, it's represented as a separate function ``import_lib``:
+This snippet uses two external commands (``curl`` and ``sha256sum``) to download a library (a version can be also specified), checks its sha256 hash and keeps everything in memory, without saving files on a disk. If everything is fine, then the library is included. Otherwise, the script exits with an error message. To simplify things, it's represented as a separate function ``import_lib``:
 
 .. code-block:: bash
 
+    # usage: import_lib lib_name [version]
     import_lib() {
         local _lib_name _ver _lib_content _lib_hash _origlib_hash
 
@@ -119,7 +123,7 @@ This is how it can be used:
 
     main() {
         import_lib common
-        #import_lib common v1.0.5
+        # import_lib common v1.0.5
 
         # add your code here
     }
@@ -143,9 +147,10 @@ This is how it can be used:
     main "$@"
 
 
-Download the latest common using a pure Bash code without saving on a disk
---------------------------------------------------------------------------
+Download a library using a pure Bash without saving on a disk
+-------------------------------------------------------------
 
+This one is quite interesting.
 For downloading the library this snippet doesn't use any external tools, just a pure Bash code.
 
 .. code-block:: bash
