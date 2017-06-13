@@ -47,7 +47,7 @@ In general, the installation process looks as follows:
     For example, these are URLs for a sha256 hashes of the ``common`` library: 
     
     - ``http://lib-sh.vorakl.name/files/common.sha256``
-    - ``http://lib-sh.vorakl.name/files/v1.0.5/common.sha256``
+    - ``http://lib-sh.vorakl.name/files/v1.0.4/common.sha256``
 
 2. Include it into your script.
     Usually, external files with Bash code are included by ``source /path/to/file`` or ``. /path/to/file`` instuctions.
@@ -71,7 +71,7 @@ or
 
 .. code-block:: bash
 
-    lib_name="v1.0.5/common"; . <(wget -qO - http://lib-sh.vorakl.name/files/${lib_name})
+    lib_name="v1.0.4/common"; . <(wget -qO - http://lib-sh.vorakl.name/files/${lib_name})
 
 For instance, it can be used as follows:
 
@@ -121,7 +121,7 @@ This is how it can be used:
 
     main() {
         import_lib common
-        # import_lib common v1.0.5
+        # import_lib common v1.0.4
 
         # add your code here
     }
@@ -152,7 +152,7 @@ This one is quite interesting. For downloading a library it doesn't use any exte
 
 .. code-block:: bash
 
-    lib_name="v1.0.5/common" 
+    lib_name="v1.0.4/common" 
     source <(
         exec 3<>/dev/tcp/lib-sh.vorakl.name/80
         printf "GET /files/${lib_name} HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3
