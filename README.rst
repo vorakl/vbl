@@ -5,7 +5,7 @@ A collection of Bash libraries
 * Installation_
     * `The simplest one-liner which uses curl/wget to dowload a file without saving on a disk`_
     * `Download a library by curl and check an integrity by sha256sum`_
-    * `Download the latest common using a pure Bash code without saving on a disk`_
+    * `Download a library using a pure Bash without saving on a disk`_
 * `The list of libraries`_
 
 Introduction
@@ -148,30 +148,30 @@ This is how it can be used:
 Download a library using a pure Bash without saving on a disk
 -------------------------------------------------------------
 
-This one is quite interesting.
-For downloading the library this snippet doesn't use any external tools, just a pure Bash code.
+This one is quite interesting. For downloading a library it doesn't use any external commands like ``curl`` or ``wget``, just a pure Bash code. It also doesn't store a file on a disk.
 
 .. code-block:: bash
 
-        source <(
-            exec 3<>/dev/tcp/lib-sh.vorakl.name/80
-            printf "GET /files/common HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3
-            body=0;
-            while IFS= read -u 3 -r str; do
-                if (( body )); then
-                    printf "%s\n" "${str}"
-                else
-                    [[ -z "${str%$'\r'}" ]] && body=1
-                fi
-            done
-            exec 3>&-
-        )
+    lib_name="v1.0.5/common" 
+    source <(
+        exec 3<>/dev/tcp/lib-sh.vorakl.name/80
+        printf "GET /files/${lib_name} HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3
+        body=0;
+        while IFS= read -u 3 -r str; do
+            if (( body )); then
+                printf "%s\n" "${str}"
+            else
+                [[ -z "${str%$'\r'}" ]] && body=1
+            fi
+        done
+        exec 3>&-
+    )
 
-or a shorter version, as a one-liner
+or a shorter form, as a one-liner
 
 .. code-block:: bash
 
-    source <(exec 3<>/dev/tcp/lib-sh.vorakl.name/80; printf "GET /files/common HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+   lib_name="common"; source <(exec 3<>/dev/tcp/lib-sh.vorakl.name/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
 
 This is the example of how the snippet can be used. In addition, it shows how to configure a behaviour of functions from the library by defining ``__common_init__()`` function, how to do a formated printing and how to run a command under the wrapper for controling an exit status and save stdout/stderr separately in variables. 
@@ -181,19 +181,8 @@ This is the example of how the snippet can be used. In addition, it shows how to
     #!/bin/bash
 
     main() {
-        source <(
-            exec 3<>/dev/tcp/lib-sh.vorakl.name/80
-            printf "GET /files/common HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3
-            body=0;
-            while IFS= read -u 3 -r str; do
-                if (( body )); then
-                    printf "%s\n" "${str}"
-                else
-                    [[ -z "${str%$'\r'}" ]] && body=1
-                fi
-            done
-            exec 3>&-
-        )
+        lib_name="common"
+        source <(exec 3<>/dev/tcp/lib-sh.vorakl.name/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
         say "Usage:   $0 command arg ..."
         say "Example: $0 ls -l /"
