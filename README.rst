@@ -167,7 +167,7 @@ This one is quite interesting. For downloading a library it doesn't use any exte
         exec 3>&-
     )
 
-or a shorter form, as a one-liner
+or in a shorter form, as a one-liner
 
 .. code-block:: bash
 
