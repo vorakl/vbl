@@ -65,15 +65,13 @@ Usually, this snippet needs to be added some where in the begining of a bash scr
 
 .. code-block:: bash
 
-    lib_name="common"
-    source <(curl -sSLf http://lib-sh.vorakl.name/files/${lib_name})
+    lib_name="common"; source <(curl -sSLf http://lib-sh.vorakl.name/files/${lib_name})
 
 or
 
 .. code-block:: bash
 
-    lib_name="v1.0.5/common"
-    source <(wget -qO - http://lib-sh.vorakl.name/files/${lib_name})
+    lib_name="v1.0.5/common"; . <(wget -qO - http://lib-sh.vorakl.name/files/${lib_name})
 
 For instance, it can be used as follows:
 
