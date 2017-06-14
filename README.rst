@@ -7,6 +7,8 @@ A collection of Bash libraries
     * `Download a library by curl and check an integrity by sha256sum`_
     * `Download a library using a pure Bash without saving on a disk`_
 * `The list of libraries`_
+* `How to reconfigure the functions`_
+
 
 Introduction
 ============
@@ -209,6 +211,33 @@ The list of libraries
 =====================
 
 * common_, the library with often used functions
+
+
+How to reconfigure the functions
+================================
+
+Many functions in libraries can be reconfigured at run-time by setting appropriate parameters. All available for changing parameters can be found in the description to a function. This allows to use the same code everywhere and change a function's behavior (e.g. messages format, exit codes) for a particular need. It's possible to do either at global scope by setting them once in the beginning of a script or in-line to modify a specific call. 
+
+It works as follows. Every library has an entrypoint, a function which is called like ``__${LIB}_main__``. It's executed automaticaly when a library is included. In the next step, ``__${LIB}_conf__`` is executed which runs all available ``__${FUNC}_conf__`` functions for for setting default values. Then, ``__${LIB}_main__`` checks if the ``__${LIB}_init__`` function has been previosly defined (in a script which includes a library). If so, it's also executed. This is exactly the function where all needed parameters should be redefined. In the last step, the ``__${LIB}_export__`` function is executed to export all functions which are mentioned in the ``__${LIB}_export`` variable. This variable, actually, can be also redefined in the ``__${LIB}_init__`` function. By changing the ``__${LIB}_export`` variable, you can controll which functions will be available only in the script and which in all sub-processes.
+
+.. code-block:: bash
+
+    #!/bin/bash
+
+    main() {
+        lib_name="common"
+        source <(exec 3<>/dev/tcp/lib-sh.vorakl.name/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+
+        say "The 'say' function works in this script..."
+        bash -c say "... and doesn't work in a sub-processes because it wasn't exported"
+    }
+
+    __common_init__() {
+        __common_export="cmd run"
+    }
+
+    main "$@"
+
 
 .. Links
 
