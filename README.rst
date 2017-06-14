@@ -216,7 +216,7 @@ This is the example of how the snippet can be used. In addition, it shows how to
 How to reconfigure the functions
 ================================
 
-Many functions in libraries can be reconfigured at run-time by setting appropriate parameters. All available for changing parameters can be found in the description to a function. This allows to use the same code everywhere and change a function's behavior (e.g. messages format, exit codes) for a particular need. It's possible to do either at global scope by setting them once in the beginning of a script or in-line to modify a specific call. 
+Many functions in libraries can be reconfigured at run-time by setting appropriate parameters. All available for changing parameters can be found in the description to a function. This allows to use the same code everywhere and change a function's behavior (e.g. messages format, exit codes) for a particular need. It's possible to do either at global scope by setting them once in the beginning of a script (example1_) or in-line to modify a specific call (example2_). 
 
 It works as follows. Every library has an entrypoint, a function which is called like ``__${LIB}_main__``. It's executed automaticaly when a library is included. In the next step, ``__${LIB}_conf__`` is executed which runs all available ``__${FUNC}_conf__`` functions for for setting default values. Then, ``__${LIB}_main__`` checks if the ``__${LIB}_init__`` function has been previosly defined (in a script which includes a library). If so, it's also executed. This is exactly the function where all needed parameters should be redefined. In the last step, the ``__${LIB}_export__`` function is executed to export all functions which are mentioned in the ``__${LIB}_export`` variable. This variable, actually, can be also redefined in the ``__${LIB}_init__`` function. By changing the ``__${LIB}_export`` variable, you can controll which functions will be available only in the script and which in all sub-processes.
 
@@ -243,3 +243,5 @@ It works as follows. Every library has an entrypoint, a function which is called
 
 .. _common: https://github.com/vorakl/lib-sh/blob/master/common.rst
 .. _`Semantic Versioning`: http://semver.org/
+.. _example1: https://github.com/vorakl/lib-sh/blob/master/examples/common/say-err-debug.sh
+.. _example2: https://github.com/vorakl/lib-sh/blob/master/examples/common/run-output.sh
