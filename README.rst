@@ -2,11 +2,11 @@ A collection of Bash libraries
 ##############################
 
 * Introduction_
+* `The list of libraries`_
 * Installation_
     * `The simplest one-liner which uses curl/wget to dowload a file without saving on a disk`_
     * `Download a library by curl and check an integrity by sha256sum`_
     * `Download a library using a pure Bash without saving on a disk`_
-* `The list of libraries`_
 * `How to reconfigure the functions`_
 
 
@@ -24,6 +24,12 @@ Basically, for me use these functions helps to
 * increase a readability of code
 
 Besides all mentioned benefits, I would recommend to spend a little time and dig into the code to get a full understanding of how it works. Actually, this is a good practice before using any kind of libraries or functions.
+
+
+The list of libraries
+=====================
+
+* common_, the library with often used functions
 
 
 Installation
@@ -205,12 +211,6 @@ This is the example of how the snippet can be used. In addition, it shows how to
     }
 
     main "$@"
-
-
-The list of libraries
-=====================
-
-* common_, the library with often used functions
 
 
 How to reconfigure the functions
