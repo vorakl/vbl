@@ -42,7 +42,11 @@ usage:
 	@${ECHO_BIN} ""
 
 test:
-	@(cd tests && roundup)
+	@bash -c '\
+	    lib_name="common"; \
+	    source <(curl -sSLf http://lib-sh.vorakl.name/files/$${lib_name}) && \
+	    cd tests && \
+	    roundup'
 
 setver:
 	@${ECHO_BIN} "Setting version to ${VERSION}"
