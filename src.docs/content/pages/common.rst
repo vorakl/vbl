@@ -1,5 +1,5 @@
 common - the library with often used functions
-##################################################
+##############################################
 
 :slug: common
 :summary: The library with often used functions
