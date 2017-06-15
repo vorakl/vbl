@@ -42,9 +42,10 @@ usage:
 	@${ECHO_BIN} ""
 
 test:
-	@bash -c '\
+	bash -c '\
 	    lib_name="common"; \
 	    source <(curl -sSLf http://lib-sh.vorakl.name/files/$${lib_name}) && \
+	    declare -fp && \
 	    cd tests && \
 	    roundup'
 
