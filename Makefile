@@ -47,7 +47,7 @@ test:
 	    source <(curl -sSLf http://lib-sh.vorakl.name/files/$${lib_name}) && \
 	    declare -fp && \
 	    cd tests && \
-	    roundup'
+	    bash $$(which roundup)'
 
 setver:
 	@${ECHO_BIN} "Setting version to ${VERSION}"
