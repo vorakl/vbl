@@ -5,7 +5,7 @@ main() {
 
     local _myvar
 
-    while readline -r -d '' _myvar; do
+    while IFS= readline -r -d '' _myvar; do
         echo "${_myvar}"
     done < /proc/$$/environ
 }

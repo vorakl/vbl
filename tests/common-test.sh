@@ -100,3 +100,11 @@ it_checks_run_status_ensure() {
     fi
 }
 
+it_checks_readline() {
+    text="Hello"$'\n'"World"
+    output="$(echo -n "${text}" | while IFS= read -r str; do echo "${str}"; done)"
+    [[ "${output}" == "Hello" ]]
+
+    output="$(echo -n "${text}" | while IFS= readline -r str; do echo "${str}"; done)"
+    [[ "${output}" == "Hello"$'\n'"World" ]]
+}
