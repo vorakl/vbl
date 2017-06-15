@@ -4,6 +4,8 @@ A collection of Bash libraries
 :slug: info
 :summary: A collection of Bash libraries
 
+|build-status|
+
 * Introduction_
 * `The list of libraries`_
 * Installation_
@@ -248,3 +250,6 @@ It works as follows. Every library has an entrypoint, a function which is called
 .. _`Semantic Versioning`: http://semver.org/
 .. _example1: https://github.com/vorakl/lib-sh/blob/master/examples/common/say-err-debug.sh
 .. _example2: https://github.com/vorakl/lib-sh/blob/master/examples/common/run-output.sh
+.. |build-status| image:: https://travis-ci.org/vorakl/lib-sh.svg?branch=master
+   :target: https://travis-ci.org/vorakl/lib-sh
+   :alt: Travis CI: continuous integration status
