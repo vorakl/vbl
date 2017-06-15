@@ -1,6 +1,7 @@
 # (c) Oleksii Tsvietnov, me@vorakl.name
 #
 # Variables:
+SHELL = bash
 ECHO_BIN ?= echo
 CP_BIN ?= cp
 MKDIR_BIN ?= mkdir
@@ -42,12 +43,10 @@ usage:
 	@${ECHO_BIN} ""
 
 test:
-	bash -c '\
-	    lib_name="common"; \
-	    source <(curl -sSLf http://lib-sh.vorakl.name/files/$${lib_name}) && \
-	    declare -fp && \
-	    cd tests && \
-	    bash $$(which roundup)'
+	@lib_name="common"; \
+	 source <(curl -sSLf http://lib-sh.vorakl.name/files/$${lib_name}) && \
+	 cd tests && \
+	 ${SHELL} $$(which roundup)
 
 setver:
 	@${ECHO_BIN} "Setting version to ${VERSION}"
