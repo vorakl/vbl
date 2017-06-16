@@ -108,3 +108,37 @@ it_checks_readline() {
     output="$(echo -n "${text}" | while IFS= readline -r str; do echo "${str}"; done)"
     [[ "${output}" == "Hello"$'\n'"World" ]]
 }
+
+it_checks_readlines() {
+    text="Hello"$'\n'"World"
+    IFS= readlines -r output <<< "${text}"
+    [[ "${output}" == "Hello"$'\n'"World"$'\n' ]]
+}
+
+it_checks_rstrip() {
+    output="$(echo -n "Hello...." | rstrip ".")"
+    [[ "${output}" == "Hello" ]]
+
+    rstrip "." output < <( echo -n "Hello....")
+    [[ "${output}" == "Hello" ]]
+}
+
+it_checks_lstrip() {
+    output="$(echo -n ".....Hello" | lstrip ".")"
+    [[ "${output}" == "Hello" ]]
+
+    lstrip "." output < <( echo -n "....Hello")
+    [[ "${output}" == "Hello" ]]
+}
+
+it_checks_format() {
+    output="$(echo -n "Hello" | format "...%s...")"
+    [[ "${output}" == "...Hello..." ]]
+
+    output="$(format "%05d" - 12)"
+    [[ "${output}" == "00012" ]]
+
+    format "%+05d" output "-123"
+    [[ "${output}" == "-0123" ]]
+}
+

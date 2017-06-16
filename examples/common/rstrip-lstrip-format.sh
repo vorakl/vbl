@@ -3,32 +3,33 @@
 main() {
     source <(curl -sSLf http://lib-sh.vorakl.name/files/common)
 
-    readlines -r out < <(date)
-    printf "\nRaw results:\n"
-    printf "($out)\n"
+    echo -n "Hello..." | rstrip "."
+    echo
 
-    rstrip $'\n' out <<< "$out"
-    printf "\nStrip new line at the end:\n"
-    printf "($out)\n"
+    echo "Hello..." | rstrip $'\n' | rstrip "."
+    echo
 
+    { rstrip $'\n' | rstrip "."; } <<< "Hello...."
+    echo
 
-    printf "\nAdd extra symbols \"........\"\n"
-    date | rstrip $'\n' | format "(%s.......)\n"
-    date | rstrip $'\n' | format "%s.......\n" | rstrip "." out
-    printf "\nStrip \"........\" from the right\n"
-    printf "($out)\n"
+    rstrip "." out < <( echo -n "Hello....")
+    echo "${out}"
 
-    date '+%s' | rstrip $'\n' | format "\nThe current time: %(%H:%M:%S)T\n"
+    lstrip " " <<< "   Hello"
 
-    format "%14.2f" out "1.4899999"
-    printf "\nA formated digit \"1.4899999\": (${out})\n"
+    lstrip "." out < <( echo -n ".....Hello")
+    echo "${out}"
 
-    format "\nAnother formated digit: %08.2f\n" - "-1.34567"
+    date '+%s' | rstrip $'\n' | format "The current time: %(%H:%M:%S)T\n"
 
-    str="        Hello"
-    lstrip " " out <<< "${str}"
-    printf "\nThe raw string (${str})\n"
-    printf "Strip spaces from the left (${out})\n"
+    format "%14.2f" out "1.48732599"
+    echo "A formated digit \"1.48732599\": \"${out}\""
+
+    format "Another formated digit: %08.2f\n" - "-1.33867"
+
+    printf "Hello\nWorld" | format "[%s]\n"
+
+    format "Here is only first line because lines in the file end by NULL:\n%s\n" < /proc/$$/environ
 }
 
 main
