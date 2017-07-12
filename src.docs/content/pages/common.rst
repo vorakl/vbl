@@ -1,10 +1,10 @@
 common - the library with often used functions
-##############################################
+##################################################
 
 :slug: common
 :summary: The library with often used functions
 
-You can find out how to use these function by taking a look on examples_.
+You can quickly get started using this library by taking a look on the examples_.
 
 Functions
 =========
