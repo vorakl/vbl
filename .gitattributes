@@ -1,0 +1,6 @@
+* text=auto
+
+docs/* linguist-documentation
+src.docs/* linguist-documentation
+Makefile linguist-detectable=false
+src/* linguist-language=Shell
