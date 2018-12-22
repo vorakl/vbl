@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-    <loc>http://lib-sh.vorakl.name/</loc>
+    <loc>https://bashlib.cf/</loc>
     <priority>0.8</priority>
     <changefreq>daily</changefreq>
 </url>
 <url>
-    <loc>http://lib-sh.vorakl.name/pages/common/</loc>
+    <loc>https://bashlib.cf/pages/common/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
 </url>
 <url>
-    <loc>http://lib-sh.vorakl.name/pages/info/</loc>
+    <loc>https://bashlib.cf/pages/info/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
 </url>
