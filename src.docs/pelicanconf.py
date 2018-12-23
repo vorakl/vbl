@@ -7,7 +7,7 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Oleksii Tsvietnov'
 SITENAME = u"Bash Libraries"
-SITEURL = 'http://lib-sh.vorakl.name'
+SITEURL = 'https://bashlib.cf'
 SITEDESC = u'A collection of Bash libraries'
 SITE_VERSION = '1497518367'
 SITE_KEYWORDS = 'bash,shell,library,bash-library,shell-library'
