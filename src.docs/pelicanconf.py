@@ -13,7 +13,7 @@ SITE_VERSION = '1497518367'
 SITE_KEYWORDS = 'bash,shell,library,bash-library,shell-library'
 ARTICLE_PATHS = ['articles'] # a place for articles under the content location
 PAGE_PATHS = ['pages']
-CONTACT_URL = 'http://vorakl.name/pages/about/'
+CONTACT_URL = 'https://vorakl.name/pages/about/'
 START_URL = 'pages/info/' # What's a start point of a site (like 'news/' or 'pages/about/')?
 TIMEZONE = 'Europe/Berlin'
 DEFAULT_LANG = u'en'
@@ -53,8 +53,8 @@ DISPLAY_LINKS_ON_SIDEBAR = True # Links are set in the LINKS variable below
 
 MENUITEMS = [
     ("repo", "https://github.com/vorakl/lib-sh"),
-    ("blog", "http://vorakl.name/"),
-    ("author", "http://vorakl.name/pages/about/"),
+    ("blog", "https://vorakl.name/"),
+    ("author", "https://vorakl.name/pages/about/"),
     ]
 LINKS = [("common", "/pages/common/")]
 DISPLAY_AUTHOR = False # Add an author in a article's metadata
@@ -84,13 +84,11 @@ TAG_FEED_RSS = None
 
 STATIC_PATHS = [
     'static/robots.txt', 
-    'static/google747986e3861ca881.html', 
     'static/favicon.ico',
     ]
 # and sprecial output paths for them
 EXTRA_PATH_METADATA = {
     'static/robots.txt': {'path': 'robots.txt'},
-    'static/google747986e3861ca881.html': {'path': 'google747986e3861ca881.html'},
     'static/favicon.ico': {'path': 'favicon.ico'},
     }
 
