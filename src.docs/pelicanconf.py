@@ -125,7 +125,7 @@ AUTHOR_URL = 'author/{slug}/'
 # a list of templates for rendering blog posts. Not all of them, just an index and groups of entities (tags, categories, ...)
 # other templates for blog posts rendering (for a tag, a category, ...) are activated by *_SAVE_AS variables below
 DIRECT_TEMPLATES = []
-PAGINATED_DIRECT_TEMPLATES = []
+PAGINATED_TEMPLATES = {'tag': None, 'category': None, 'author': None}
 
 INDEX_SAVE_AS = 'news/index.html'
 AUTHORS_SAVE_AS = 'author/index.html'  # defines where to save an authors page, it's activated by DIRECT_TEMPLATES 
