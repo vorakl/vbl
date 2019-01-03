@@ -7,9 +7,9 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Oleksii Tsvietnov'
 SITENAME = u"Bash Libraries"
-SITEURL = 'http://libs.cf'
+SITEURL = 'https://libs.cf'
 SITEDESC = u'A collection of Bash libraries'
-SITE_VERSION = '1497518368'
+SITE_VERSION = '1497518369'
 SITE_KEYWORDS = 'bash,shell,library,bash-library,shell-library'
 ARTICLE_PATHS = ['articles'] # a place for articles under the content location
 PAGE_PATHS = ['pages']
@@ -52,7 +52,7 @@ DISPLAY_SITE_ON_SIDEBAR = False
 DISPLAY_LINKS_ON_SIDEBAR = True # Links are set in the LINKS variable below
 
 MENUITEMS = [
-    ("repo", "https://github.com/vorakl/lib-sh"),
+    ("repo", "https://github.com/vorakl/bash-libs"),
     ("blog", "https://vorakl.name/"),
     ("author", "https://vorakl.name/pages/about/"),
     ]

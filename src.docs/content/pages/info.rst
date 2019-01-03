@@ -45,22 +45,22 @@ In general, the installation process looks as follows:
 1. Download the latest version of a library from this collection.
     The URL to a library's file should be constructed from three parts by gluing them together: 
     
-    - **The base URL**. It is ``http://bashlib.cf/files/``
+    - **The base URL**. It is ``http://libs.cf/files/``
     - **The version**. The list of all available versions is `here`__. This is optional and if it's not specified, then the latest version will be requested. Basically, it follows the `Semantic Versioning`_, e.g. v1.2.3 
     - **The name of a library**. It's exactly the same name as in `The list of libraries`_
 
-    __ https://github.com/vorakl/bashlib/releases
+    __ https://github.com/vorakl/bash-libs/releases
 
     For example:
 
-    - ``http://bashlib.cf/files/common``, for the ``common`` library and the latest version.
-    - ``http://bashlib.cf/files/v1.0.4/common``, for the ``common`` library and the v1.0.4 version.
+    - ``http://libs.cf/files/common``, for the ``common`` library and the latest version.
+    - ``http://libs.cf/files/v1.0.4/common``, for the ``common`` library and the v1.0.4 version.
    
     In addition, each library comes with a sha256 hash. A file name for it looks like ${LIBNAME}.sha256
     For example, these are URLs for a sha256 hashes of the ``common`` library: 
     
-    - ``http://bashlib.cf/files/common.sha256``
-    - ``http://bashlib.cf/files/v1.0.4/common.sha256``
+    - ``http://libs.cf/files/common.sha256``
+    - ``http://libs.cf/files/v1.0.4/common.sha256``
 
 2. Include it into your script.
     Usually, external files with Bash code are included by ``source /path/to/file`` or ``. /path/to/file`` instuctions.
@@ -231,7 +231,7 @@ It works as follows. Every library has an entrypoint, a function which is called
 
     main() {
         lib_name="common"
-        source <(exec 3<>/dev/tcp/bashlib.cf/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: bashlib.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+        source <(exec 3<>/dev/tcp/libs.cf/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
         say "The 'say' function works in this script..."
         bash -c say "... and doesn't work in a sub-processes because it wasn't exported"
@@ -248,8 +248,8 @@ It works as follows. Every library has an entrypoint, a function which is called
 
 .. _common: /pages/common/
 .. _`Semantic Versioning`: http://semver.org/
-.. _example1: https://github.com/vorakl/bashlib/blob/master/examples/common/say-err-debug.sh
-.. _example2: https://github.com/vorakl/bashlib/blob/master/examples/common/run-output.sh
-.. |build-status| image:: https://travis-ci.org/vorakl/bashlib.svg?branch=master
-   :target: https://travis-ci.org/vorakl/bashlib
+.. _example1: https://github.com/vorakl/bash-libs/blob/master/examples/common/say-err-debug.sh
+.. _example2: https://github.com/vorakl/bash-libs/blob/master/examples/common/run-output.sh
+.. |build-status| image:: https://travis-ci.org/vorakl/bash-libs.svg?branch=master
+   :target: https://travis-ci.org/vorakl/bash-libs
    :alt: Travis CI: continuous integration status
