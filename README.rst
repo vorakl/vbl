@@ -247,6 +247,6 @@ It works as follows. Every library has an entrypoint, a function which is called
 .. _`Semantic Versioning`: http://semver.org/
 .. _example1: https://github.com/vorakl/lib-sh/blob/master/examples/common/say-err-debug.sh
 .. _example2: https://github.com/vorakl/lib-sh/blob/master/examples/common/run-output.sh
-.. |build-status| image:: https://travis-ci.org/vorakl/lib-sh.svg?branch=master
-   :target: https://travis-ci.org/vorakl/lib-sh
+.. |build-status| image:: https://travis-ci.org/vorakl/bash-libs.svg?branch=master
+   :target: https://travis-ci.org/vorakl/bash-libs
    :alt: Travis CI: continuous integration status
