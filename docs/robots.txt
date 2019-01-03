@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /unknown/
 
-Sitemap: https://bashlib.cf/sitemap.xml
+Sitemap: https://libs.cf/sitemap.xml
