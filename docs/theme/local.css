@@ -67,6 +67,20 @@ a:hover { text-decoration: none; }
     border-radius: 2px;
 }
 
+.btn-info.xsmall.left {
+    padding: 1px 3px 1px;
+    font-size: 11px;
+    float: left;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.img.right {
+    fload: right;
+    padding: 10px 15px 10px 15px;
+}
+
 /* Article summary */
 .summary { margin-bottom: 4em; }
 .summary pre { display: none; }
