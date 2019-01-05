@@ -7,9 +7,9 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Oleksii Tsvietnov'
 SITENAME = u"Bash Libraries"
-SITEURL = 'https://libs.cf'
+SITEURL = 'https://bash.libs.cf'
 SITEDESC = u'A collection of Bash libraries'
-SITE_VERSION = '1497518369'
+SITE_VERSION = '1497518370'
 SITE_KEYWORDS = 'bash,shell,library,bash-library,shell-library'
 ARTICLE_PATHS = ['articles'] # a place for articles under the content location
 PAGE_PATHS = ['pages']

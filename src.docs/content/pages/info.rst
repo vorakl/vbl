@@ -45,7 +45,7 @@ In general, the installation process looks as follows:
 1. Download the latest version of a library from this collection.
     The URL to a library's file should be constructed from three parts by gluing them together: 
     
-    - **The base URL**. It is ``http://libs.cf/files/``
+    - **The base URL**. It is ``http://bash.libs.cf/files/``
     - **The version**. The list of all available versions is `here`__. This is optional and if it's not specified, then the latest version will be requested. Basically, it follows the `Semantic Versioning`_, e.g. v1.2.3 
     - **The name of a library**. It's exactly the same name as in `The list of libraries`_
 
@@ -53,14 +53,14 @@ In general, the installation process looks as follows:
 
     For example:
 
-    - ``http://libs.cf/files/common``, for the ``common`` library and the latest version.
-    - ``http://libs.cf/files/v1.0.4/common``, for the ``common`` library and the v1.0.4 version.
+    - ``http://bash.libs.cf/files/common``, for the ``common`` library and the latest version.
+    - ``http://bash.libs.cf/files/v1.0.4/common``, for the ``common`` library and the v1.0.4 version.
    
     In addition, each library comes with a sha256 hash. A file name for it looks like ${LIBNAME}.sha256
     For example, these are URLs for a sha256 hashes of the ``common`` library: 
     
-    - ``http://libs.cf/files/common.sha256``
-    - ``http://libs.cf/files/v1.0.4/common.sha256``
+    - ``http://bash.libs.cf/files/common.sha256``
+    - ``http://bash.libs.cf/files/v1.0.4/common.sha256``
 
 2. Include it into your script.
     Usually, external files with Bash code are included by ``source /path/to/file`` or ``. /path/to/file`` instuctions.
@@ -231,7 +231,7 @@ It works as follows. Every library has an entrypoint, a function which is called
 
     main() {
         lib_name="common"
-        source <(exec 3<>/dev/tcp/libs.cf/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+        source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
         say "The 'say' function works in this script..."
         bash -c say "... and doesn't work in a sub-processes because it wasn't exported"

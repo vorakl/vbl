@@ -44,7 +44,7 @@ usage:
 
 test:
 	@lib_name="common"; \
-	 source <(curl -sSLf http://libs.cf/files/$${lib_name}) && \
+	 source <(curl -sSLf http://bash.libs.cf/files/$${lib_name}) && \
 	 cd tests && \
 	 ${SHELL} $$(which roundup)
 
