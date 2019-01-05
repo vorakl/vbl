@@ -78,13 +78,13 @@ Usually, this snippet needs to be added some where in the begining of a bash scr
 
 .. code-block:: bash
 
-    lib_name="common"; source <(curl -sSLf http://lib-sh.vorakl.name/files/${lib_name})
+    lib_name="common"; source <(curl -sSLf http://bash.libs.cf/files/${lib_name})
 
 or
 
 .. code-block:: bash
 
-    lib_name="v1.0.4/common"; . <(wget -qO - http://lib-sh.vorakl.name/files/${lib_name})
+    lib_name="v1.0.4/common"; . <(wget -qO - http://bash.libs.cf/files/${lib_name})
 
 For instance, it can be used as follows:
 
@@ -94,7 +94,7 @@ For instance, it can be used as follows:
 
     main() {
         lib_name="common"
-        source <(curl -sSLf http://lib-sh.vorakl.name/files/${lib_name})
+        source <(curl -sSLf http://bash.libs.cf/files/${lib_name})
 
         # add your code here
     }
@@ -115,9 +115,9 @@ This snippet uses two external commands (``curl`` and ``sha256sum``) to download
 
         _lib_name="${1?The lib name is empty}"
         [[ -n "$2" ]] && _ver="$2/" || _ver=""
-        _lib_content="$(curl -sSLf http://lib-sh.vorakl.name/files/${_ver}${_lib_name})"
+        _lib_content="$(curl -sSLf http://bash.libs.cf/files/${_ver}${_lib_name})"
         _lib_hash="$(set -- $(sha256sum <(echo "${_lib_content}") ); echo "$1")"
-        _origlib_hash="$(set -- $(curl -sSLf http://lib-sh.vorakl.name/files/${_ver}${_lib_name}.sha256); echo "$1")"
+        _origlib_hash="$(set -- $(curl -sSLf http://bash.libs.cf/files/${_ver}${_lib_name}.sha256); echo "$1")"
         if [[ "${_lib_hash}" == "${_origlib_hash}" ]]; then
             source <(echo "${_lib_content}")
         else
@@ -144,9 +144,9 @@ This is how it can be used:
 
         _lib_name="${1?The lib name is empty}"
         [[ -n "$2" ]] && _ver="$2/" || _ver=""
-        _lib_content="$(curl -sSLf http://lib-sh.vorakl.name/files/${_ver}${_lib_name})"
+        _lib_content="$(curl -sSLf http://bash.libs.cf/files/${_ver}${_lib_name})"
         _lib_hash="$(set -- $(sha256sum <(echo "${_lib_content}") ); echo "$1")"
-        _origlib_hash="$(set -- $(curl -sSLf http://lib-sh.vorakl.name/files/${_ver}${_lib_name}.sha256); echo "$1")"
+        _origlib_hash="$(set -- $(curl -sSLf http://bash.libs.cf/files/${_ver}${_lib_name}.sha256); echo "$1")"
         if [[ "${_lib_hash}" == "${_origlib_hash}" ]]; then
             source <(echo "${_lib_content}")
         else
@@ -167,8 +167,8 @@ This one is quite interesting. For downloading a library it doesn't use any exte
 
     lib_name="v1.0.4/common" 
     source <(
-        exec 3<>/dev/tcp/lib-sh.vorakl.name/80
-        printf "GET /files/${lib_name} HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3
+        exec 3<>/dev/tcp/bash.libs.cf/80
+        printf "GET /files/${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3
         body=0;
         while IFS= read -u 3 -r str; do
             if (( body )); then
@@ -184,7 +184,7 @@ or in a shorter form, as a one-liner
 
 .. code-block:: bash
 
-   lib_name="common"; source <(exec 3<>/dev/tcp/lib-sh.vorakl.name/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+   lib_name="common"; source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
 
 This is the example of how the snippet can be used. In addition, it shows how to configure a behaviour of functions from the library by defining ``__common_init__()`` function, how to do a formated printing and how to run a command under the wrapper for controling an exit status and save stdout/stderr separately in variables. 
@@ -195,7 +195,7 @@ This is the example of how the snippet can be used. In addition, it shows how to
 
     main() {
         lib_name="common"
-        source <(exec 3<>/dev/tcp/lib-sh.vorakl.name/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+        source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
         say "Usage:   $0 command arg ..."
         say "Example: $0 ls -l /"

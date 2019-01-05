@@ -42,7 +42,7 @@ In general, the installation process looks as follows:
 1. Download the latest version of a library from this collection.
     The URL to a library's file should be constructed from three parts by gluing them together: 
     
-    - **The base URL**. It is ``http://lib-sh.vorakl.name/files/``
+    - **The base URL**. It is ``http://bash.libs.cf/files/``
     - **The version**. The list of all available versions is `here`__. This is optional and if it's not specified, then the latest version will be requested. Basically, it follows the `Semantic Versioning`_, e.g. v1.2.3 
     - **The name of a library**. It's exactly the same name as in `The list of libraries`_
 
@@ -50,14 +50,14 @@ In general, the installation process looks as follows:
 
     For example:
 
-    - ``http://lib-sh.vorakl.name/files/common``, for the ``common`` library and the latest version.
-    - ``http://lib-sh.vorakl.name/files/v1.0.4/common``, for the ``common`` library and the v1.0.4 version.
+    - ``http://bash.libs.cf/files/common``, for the ``common`` library and the latest version.
+    - ``http://bash.libs.cf/files/v1.0.4/common``, for the ``common`` library and the v1.0.4 version.
    
     In addition, each library comes with a sha256 hash. A file name for it looks like ${LIBNAME}.sha256
     For example, these are URLs for a sha256 hashes of the ``common`` library: 
     
-    - ``http://lib-sh.vorakl.name/files/common.sha256``
-    - ``http://lib-sh.vorakl.name/files/v1.0.4/common.sha256``
+    - ``http://bash.libs.cf/files/common.sha256``
+    - ``http://bash.libs.cf/files/v1.0.4/common.sha256``
 
 2. Include it into your script.
     Usually, external files with Bash code are included by ``source /path/to/file`` or ``. /path/to/file`` instuctions.
@@ -75,13 +75,13 @@ Usually, this snippet needs to be added some where in the begining of a bash scr
 
 .. code-block:: bash
 
-    lib_name="common"; source <(curl -sSLf http://lib-sh.vorakl.name/files/${lib_name})
+    lib_name="common"; source <(curl -sSLf http://bash.libs.cf/files/${lib_name})
 
 or
 
 .. code-block:: bash
 
-    lib_name="v1.0.4/common"; . <(wget -qO - http://lib-sh.vorakl.name/files/${lib_name})
+    lib_name="v1.0.4/common"; . <(wget -qO - http://bash.libs.cf/files/${lib_name})
 
 For instance, it can be used as follows:
 
@@ -91,7 +91,7 @@ For instance, it can be used as follows:
 
     main() {
         lib_name="common"
-        source <(curl -sSLf http://lib-sh.vorakl.name/files/${lib_name})
+        source <(curl -sSLf http://bash.libs.cf/files/${lib_name})
 
         # add your code here
     }
@@ -112,9 +112,9 @@ This snippet uses two external commands (``curl`` and ``sha256sum``) to download
 
         _lib_name="${1?The lib name is empty}"
         [[ -n "$2" ]] && _ver="$2/" || _ver=""
-        _lib_content="$(curl -sSLf http://lib-sh.vorakl.name/files/${_ver}${_lib_name})"
+        _lib_content="$(curl -sSLf http://bash.libs.cf/files/${_ver}${_lib_name})"
         _lib_hash="$(set -- $(sha256sum <(echo "${_lib_content}") ); echo "$1")"
-        _origlib_hash="$(set -- $(curl -sSLf http://lib-sh.vorakl.name/files/${_ver}${_lib_name}.sha256); echo "$1")"
+        _origlib_hash="$(set -- $(curl -sSLf http://bash.libs.cf/files/${_ver}${_lib_name}.sha256); echo "$1")"
         if [[ "${_lib_hash}" == "${_origlib_hash}" ]]; then
             source <(echo "${_lib_content}")
         else
@@ -141,9 +141,9 @@ This is how it can be used:
 
         _lib_name="${1?The lib name is empty}"
         [[ -n "$2" ]] && _ver="$2/" || _ver=""
-        _lib_content="$(curl -sSLf http://lib-sh.vorakl.name/files/${_ver}${_lib_name})"
+        _lib_content="$(curl -sSLf http://bash.libs.cf/files/${_ver}${_lib_name})"
         _lib_hash="$(set -- $(sha256sum <(echo "${_lib_content}") ); echo "$1")"
-        _origlib_hash="$(set -- $(curl -sSLf http://lib-sh.vorakl.name/files/${_ver}${_lib_name}.sha256); echo "$1")"
+        _origlib_hash="$(set -- $(curl -sSLf http://bash.libs.cf/files/${_ver}${_lib_name}.sha256); echo "$1")"
         if [[ "${_lib_hash}" == "${_origlib_hash}" ]]; then
             source <(echo "${_lib_content}")
         else
@@ -164,8 +164,8 @@ This one is quite interesting. For downloading a library it doesn't use any exte
 
     lib_name="v1.0.4/common" 
     source <(
-        exec 3<>/dev/tcp/lib-sh.vorakl.name/80
-        printf "GET /files/${lib_name} HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3
+        exec 3<>/dev/tcp/bash.libs.cf/80
+        printf "GET /files/${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3
         body=0;
         while IFS= read -u 3 -r str; do
             if (( body )); then
@@ -181,7 +181,7 @@ or in a shorter form, as a one-liner
 
 .. code-block:: bash
 
-   lib_name="common"; source <(exec 3<>/dev/tcp/lib-sh.vorakl.name/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+   lib_name="common"; source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
 
 This is the example of how the snippet can be used. In addition, it shows how to configure a behaviour of functions from the library by defining ``__common_init__()`` function, how to do a formated printing and how to run a command under the wrapper for controling an exit status and save stdout/stderr separately in variables. 
@@ -192,7 +192,7 @@ This is the example of how the snippet can be used. In addition, it shows how to
 
     main() {
         lib_name="common"
-        source <(exec 3<>/dev/tcp/lib-sh.vorakl.name/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+        source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
         say "Usage:   $0 command arg ..."
         say "Example: $0 ls -l /"
@@ -228,7 +228,7 @@ It works as follows. Every library has an entrypoint, a function which is called
 
     main() {
         lib_name="common"
-        source <(exec 3<>/dev/tcp/lib-sh.vorakl.name/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: lib-sh.vorakl.name\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+        source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
         say "The 'say' function works in this script..."
         bash -c say "... and doesn't work in a sub-processes because it wasn't exported"
