@@ -1,9 +1,6 @@
 A collection of Bash libraries
 ##############################
 
-:slug: info
-:summary: A collection of Bash libraries
-
 |build-status|
 
 * Introduction_
@@ -45,22 +42,22 @@ In general, the installation process looks as follows:
 1. Download the latest version of a library from this collection.
     The URL to a library's file should be constructed from three parts by gluing them together: 
     
-    - **The base URL**. It is ``http://bash.libs.cf/files/``
-    - **The version**. The list of all available versions is `here`__. This is optional and if it's not specified, then the latest version will be requested. Basically, it follows the `Semantic Versioning`_, e.g. v1.2.3 
+    - **The base URL**. It is ``http://bash.libs.cf/``
+    - **The version**. A version can be ``latest/`` or one of published versions. The list of all available versions is `here`__. Basically, it follows the `Semantic Versioning`_, e.g. v1.2.3 
     - **The name of a library**. It's exactly the same name as in `The list of libraries`_
 
     __ https://github.com/vorakl/bash-libs/releases
 
     For example:
 
-    - ``http://bash.libs.cf/files/common``, for the ``common`` library and the latest version.
-    - ``http://bash.libs.cf/files/v1.0.4/common``, for the ``common`` library and the v1.0.4 version.
+    - ``http://bash.libs.cf/latest/common``, for the ``common`` library and the latest version.
+    - ``http://bash.libs.cf/v1.0.11/common``, for the ``common`` library and v1.0.11 version.
    
     In addition, each library comes with a sha256 hash. A file name for it looks like ${LIBNAME}.sha256
-    For example, these are URLs for a sha256 hashes of the ``common`` library: 
+    For example, these URLs are for sha256 hashes of the ``common`` library: 
     
-    - ``http://bash.libs.cf/files/common.sha256``
-    - ``http://bash.libs.cf/files/v1.0.4/common.sha256``
+    - ``http://bash.libs.cf/latest/common.sha256``
+    - ``http://bash.libs.cf/v1.0.11/common.sha256``
 
 2. Include it into your script.
     Usually, external files with Bash code are included by ``source /path/to/file`` or ``. /path/to/file`` instuctions.
@@ -78,13 +75,13 @@ Usually, this snippet needs to be added some where in the begining of a bash scr
 
 .. code-block:: bash
 
-    lib_name="common"; source <(curl -sSLf http://bash.libs.cf/files/${lib_name})
+    source <(curl -sSLf http://bash.libs.cf/latest/common)
 
 or
 
 .. code-block:: bash
 
-    lib_name="v1.0.4/common"; . <(wget -qO - http://bash.libs.cf/files/${lib_name})
+    . <(wget -qO - http://bash.libs.cf/v1.0.11/common)
 
 For instance, it can be used as follows:
 
@@ -93,8 +90,7 @@ For instance, it can be used as follows:
     #!/bin/bash
 
     main() {
-        lib_name="common"
-        source <(curl -sSLf http://bash.libs.cf/files/${lib_name})
+        source <(curl -sSLf http://bash.libs.cf/latest/common)
 
         # add your code here
     }
@@ -102,7 +98,7 @@ For instance, it can be used as follows:
     main "$@"
 
 
-Download a library by curl and check an integrity by sha256sum
+Download a library by curl and check an integrity by s ha256sum
 --------------------------------------------------------------
 
 This snippet uses two external commands (``curl`` and ``sha256sum``) to download a library (a version can be also specified), checks its sha256 hash and keeps everything in memory, without saving files on a disk. If everything is fine, then the library is included. Otherwise, the script exits with an error message. To simplify things, it's represented as a separate function ``import_lib``:
@@ -114,10 +110,10 @@ This snippet uses two external commands (``curl`` and ``sha256sum``) to download
         local _lib_name _ver _lib_content _lib_hash _origlib_hash
 
         _lib_name="${1?The lib name is empty}"
-        [[ -n "$2" ]] && _ver="$2/" || _ver=""
-        _lib_content="$(curl -sSLf http://bash.libs.cf/files/${_ver}${_lib_name})"
+        [[ -n "$2" ]] && _ver="$2/" || _ver="latest/"
+        _lib_content="$(curl -sSLf http://bash.libs.cf/${_ver}${_lib_name})"
         _lib_hash="$(set -- $(sha256sum <(echo "${_lib_content}") ); echo "$1")"
-        _origlib_hash="$(set -- $(curl -sSLf http://bash.libs.cf/files/${_ver}${_lib_name}.sha256); echo "$1")"
+        _origlib_hash="$(set -- $(curl -sSLf http://bash.libs.cf/${_ver}${_lib_name}.sha256); echo "$1")"
         if [[ "${_lib_hash}" == "${_origlib_hash}" ]]; then
             source <(echo "${_lib_content}")
         else
@@ -134,7 +130,7 @@ This is how it can be used:
 
     main() {
         import_lib common
-        # import_lib common v1.0.4
+        # import_lib common v1.0.11
 
         # add your code here
     }
@@ -143,10 +139,10 @@ This is how it can be used:
         local _lib_name _ver _lib_content _lib_hash _origlib_hash
 
         _lib_name="${1?The lib name is empty}"
-        [[ -n "$2" ]] && _ver="$2/" || _ver=""
-        _lib_content="$(curl -sSLf http://bash.libs.cf/files/${_ver}${_lib_name})"
+        [[ -n "$2" ]] && _ver="$2/" || _ver="latest/"
+        _lib_content="$(curl -sSLf http://bash.libs.cf/${_ver}${_lib_name})"
         _lib_hash="$(set -- $(sha256sum <(echo "${_lib_content}") ); echo "$1")"
-        _origlib_hash="$(set -- $(curl -sSLf http://bash.libs.cf/files/${_ver}${_lib_name}.sha256); echo "$1")"
+        _origlib_hash="$(set -- $(curl -sSLf http://bash.libs.cf/${_ver}${_lib_name}.sha256); echo "$1")"
         if [[ "${_lib_hash}" == "${_origlib_hash}" ]]; then
             source <(echo "${_lib_content}")
         else
@@ -158,17 +154,17 @@ This is how it can be used:
     main "$@"
 
 
-Download a library using a pure Bash without saving on a disk
+Download a library using a pure Bash without saving on a disk 
 -------------------------------------------------------------
 
 This one is quite interesting. For downloading a library it doesn't use any external commands like ``curl`` or ``wget``, just a pure Bash code. It also doesn't store a file on a disk.
 
 .. code-block:: bash
 
-    lib_name="v1.0.4/common" 
+    lib_name="latest/common" 
     source <(
         exec 3<>/dev/tcp/bash.libs.cf/80
-        printf "GET /files/${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3
+        printf "GET /${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3
         body=0;
         while IFS= read -u 3 -r str; do
             if (( body )); then
@@ -184,7 +180,7 @@ or in a shorter form, as a one-liner
 
 .. code-block:: bash
 
-   lib_name="common"; source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+   lib_name="latest/common"; source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
 
 This is the example of how the snippet can be used. In addition, it shows how to configure a behaviour of functions from the library by defining ``__common_init__()`` function, how to do a formated printing and how to run a command under the wrapper for controling an exit status and save stdout/stderr separately in variables. 
@@ -194,8 +190,8 @@ This is the example of how the snippet can be used. In addition, it shows how to
     #!/bin/bash
 
     main() {
-        lib_name="common"
-        source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+        lib_name="latest/common"
+        source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
         say "Usage:   $0 command arg ..."
         say "Example: $0 ls -l /"
@@ -230,8 +226,8 @@ It works as follows. Every library has an entrypoint, a function which is called
     #!/bin/bash
 
     main() {
-        lib_name="common"
-        source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /files/${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+        lib_name="latest/common"
+        source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
         say "The 'say' function works in this script..."
         bash -c say "... and doesn't work in a sub-processes because it wasn't exported"
@@ -246,10 +242,10 @@ It works as follows. Every library has an entrypoint, a function which is called
 
 .. Links
 
-.. _common: /pages/common/
+.. _common: common.rst
 .. _`Semantic Versioning`: http://semver.org/
-.. _example1: https://github.com/vorakl/bash-libs/blob/master/examples/common/say-err-debug.sh
-.. _example2: https://github.com/vorakl/bash-libs/blob/master/examples/common/run-output.sh
+.. _example1: https://github.com/vorakl/lib-sh/blob/master/examples/common/say-err-debug.sh
+.. _example2: https://github.com/vorakl/lib-sh/blob/master/examples/common/run-output.sh
 .. |build-status| image:: https://travis-ci.org/vorakl/bash-libs.svg?branch=master
    :target: https://travis-ci.org/vorakl/bash-libs
    :alt: Travis CI: continuous integration status
