@@ -10,6 +10,6 @@ import sys
 sys.path.append(os.curdir)
 
 # inherits pelicanconf configuration
-from pelicanconf import *
+from devconf import *
 
 RELATIVE_URLS = False

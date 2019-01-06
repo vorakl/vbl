@@ -1,5 +1,8 @@
-A collection of Bash libraries
-##############################
+Bash libraries
+##############
+
+:slug: info
+:summary: Collection of useful libraries to simplify every day programming
 
 |build-status|
 
@@ -98,7 +101,7 @@ For instance, it can be used as follows:
     main "$@"
 
 
-Download a library by curl and check an integrity by s ha256sum
+Download a library by curl and check an integrity by sha256sum
 --------------------------------------------------------------
 
 This snippet uses two external commands (``curl`` and ``sha256sum``) to download a library (a version can be also specified), checks its sha256 hash and keeps everything in memory, without saving files on a disk. If everything is fine, then the library is included. Otherwise, the script exits with an error message. To simplify things, it's represented as a separate function ``import_lib``:

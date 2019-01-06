@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
+from glob import glob
+from os.path import basename
 
 ### Basic configuration
 ########################
 
 AUTHOR = u'Oleksii Tsvietnov'
-SITENAME = u"Bash Libraries"
+SITENAME = u"Vorakl's Libs: Bash"
 SITEURL = 'https://bash.libs.cf'
 SITEDESC = u'A collection of Bash libraries'
-SITE_VERSION = '1497518371'
+SITE_VERSION = '1497518372'
 SITE_KEYWORDS = 'bash,shell,library,bash-library,shell-library'
 ARTICLE_PATHS = ['articles'] # a place for articles under the content location
 PAGE_PATHS = ['pages']
@@ -21,7 +23,7 @@ RELATIVE_URLS = True  # disable in public version
 DEFAULT_DATE = 'fs'
 DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 PLUGIN_PATHS = ['/plugins']
-PLUGINS = ['post_stats', 'pelican_youtube', 'minify'] # keep 'minify' plugin as the last element in the list to minify all output HTMLs
+PLUGINS = ['minify'] # keep 'minify' plugin as the last element in the list to minify all output HTMLs
 
 DEFAULT_PAGINATION = 10 # Turns on the pagination
 PAGINATION_PATTERNS = (
@@ -30,8 +32,9 @@ PAGINATION_PATTERNS = (
 )
 
 DELETE_OUTPUT_DIRECTORY = True  # build an output dir from scratch every time
-OUTPUT_RETENTION = ["CNAME", "files"] # but these dirs and files should be kept
-
+OUTPUT_RETENTION = ["CNAME", "latest"] # but these dirs and files should be kept
+OUTPUT_RETENTION.extend(map(basename, glob("/output/v*")))
+print(OUTPUT_RETENTION) 
 
 ### Interface configuration
 ############################
