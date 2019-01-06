@@ -15,7 +15,6 @@ FIND_BIN ?= find
 
 # -------------------------------------------------------------------------
 # Set a default target
-.PHONY: usage test test-dev test-latest test-ver push setver settag publish publish-latest publish-ver cirelease release
 .MAIN: usage
 
 DIR = $(shell ${PWD_BIN} -P)
@@ -72,9 +71,13 @@ settag:
 	  @${MKDIR_BIN} ${DIR}/docs/${VERSION} || true; \
 	 } || ${ECHO_BIN} "The tag ${VERSION} is set already"
 
-push:
+push-all: push-commits push-tags
+
+push-commits:
 	@${ECHO_BIN} "Pushing commits..."
 	@${GIT_BIN} push origin
+
+push-tags:
 	@${ECHO_BIN} "Pushing tags..."
 	@${GIT_BIN} push origin ${VERSION}
 
@@ -101,9 +104,9 @@ release: setver settag publish-all test-all
 	@${GIT_BIN} add .
 	@${GIT_BIN} ci -m "Release the latest and a new version ${VERSION}"
 
-deploy-latest: release-latest push
+deploy-latest: release-latest push-commits
 
-deploy-ver: release-ver push
+deploy-ver: release-ver push-all
 
-deploy: release-all push
+deploy: release-all push-all
 
