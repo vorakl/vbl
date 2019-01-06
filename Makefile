@@ -66,9 +66,9 @@ setver:
 
 settag:
 	@[[ ! -d ${DIR}/docs/${VERSION} ]] && { \
-	  @${ECHO_BIN} "Setting ${VERSION} as a tag to ${LAST_COMMIT}"; \
-	  @${GIT_BIN} tag ${VERSION} ${LAST_COMMIT} 2>/dev/null || true; \
-	  @${MKDIR_BIN} ${DIR}/docs/${VERSION} || true; \
+	  ${ECHO_BIN} "Setting ${VERSION} as a tag to ${LAST_COMMIT}"; \
+	  ${GIT_BIN} tag ${VERSION} ${LAST_COMMIT} 2>/dev/null || true; \
+	  ${MKDIR_BIN} ${DIR}/docs/${VERSION} || true; \
 	 } || ${ECHO_BIN} "The tag ${VERSION} is set already"
 
 push-all: push-commits push-tags
@@ -100,7 +100,7 @@ release-ver: setver settag publish-ver test-ver
 	@${GIT_BIN} add .
 	@${GIT_BIN} ci -m "Release a new version: ${VERSION}"
 
-release: setver settag publish-all test-all
+release-all: setver settag publish-all test-all
 	@${GIT_BIN} add .
 	@${GIT_BIN} ci -m "Release the latest and a new version ${VERSION}"
 
