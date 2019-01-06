@@ -41,8 +41,6 @@ test-dev:
 	 ${SHELL} $$(which roundup); \
 	)
 
-test-all: test-latest test-ver
-
 test-latest:
 	@${ECHO_BIN} "Testing latest version:"
 	@(lib_name="common"; \
@@ -100,7 +98,7 @@ release-ver: setver settag publish-ver test-ver
 	@${GIT_BIN} add .
 	@${GIT_BIN} ci -m "Release a new version: ${VERSION}"
 
-release-all: setver settag publish-all test-all
+release-all: setver settag publish-all test-ver
 	@${GIT_BIN} add .
 	@${GIT_BIN} ci -m "Release the latest and a new version ${VERSION}"
 
