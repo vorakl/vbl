@@ -17,11 +17,16 @@ FIND_BIN ?= find
 # Set a default target
 .MAIN: usage
 
+.PHONY: usage setver settag \
+    	test test-dev test-ver \
+        push-all push-commits push-tag \
+	publish-all publish-latest publish-ver \
+	release-all release-latest release-ver \
+	deploy deploy-latest deploy-ver
+
 DIR = $(shell ${PWD_BIN} -P)
-SELF = $(shell ${BASENAME_BIN} ${DIR})
 VER = $(shell ${SED_BIN} -n '1s/^[[:space:]]*//; 1s/[[:space:]]*$$//; 1p' ${DIR}/version)
 VERSION ?= ${VER}
-LAST_COMMIT = $(shell ${GIT_BIN} log -1 | sed -n '/^commit/s/^commit //p')
 
 usage:
 	@${ECHO_BIN} "Usage: make [target] ..."
@@ -67,13 +72,13 @@ settag:
 	 ${ECHO_BIN} "Setting ${VERSION} as a tag to $${LAST_COMMIT}"; \
 	 ${GIT_BIN} tag ${VERSION} ${LAST_COMMIT} 2>/dev/null
 
-push-all: push-commits push-tags
+push-all: push-commits push-tag
 
 push-commits:
 	@${ECHO_BIN} "Pushing commits..."
 	@${GIT_BIN} push origin
 
-push-tags:
+push-tag:
 	@${ECHO_BIN} "Pushing the tag..."
 	@${GIT_BIN} push origin ${VERSION}
 
