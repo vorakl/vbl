@@ -63,11 +63,9 @@ setver:
 	@${SED_BIN} -i "1s/.*/${VERSION}/" ${DIR}/version
 
 settag:
-	@[[ ! -d ${DIR}/docs/${VERSION} ]] && { \
-	  ${ECHO_BIN} "Setting ${VERSION} as a tag to ${LAST_COMMIT}"; \
-	  ${GIT_BIN} tag ${VERSION} ${LAST_COMMIT} 2>/dev/null || true; \
-	  ${MKDIR_BIN} ${DIR}/docs/${VERSION} || true; \
-	 } || ${ECHO_BIN} "The tag ${VERSION} is set already"
+	@LAST_COMMIT=$$(${GIT_BIN} log -1 | sed -n '/^commit/s/^commit //p'); \
+	 ${ECHO_BIN} "Setting ${VERSION} as a tag to $${LAST_COMMIT}"; \
+	 ${GIT_BIN} tag ${VERSION} ${LAST_COMMIT} 2>/dev/null
 
 push-all: push-commits push-tags
 
@@ -76,7 +74,7 @@ push-commits:
 	@${GIT_BIN} push origin
 
 push-tags:
-	@${ECHO_BIN} "Pushing tags..."
+	@${ECHO_BIN} "Pushing the tag..."
 	@${GIT_BIN} push origin ${VERSION}
 
 publish-all: publish-latest publish-ver
@@ -87,6 +85,7 @@ publish-latest:
 	@(cd ${DIR}/docs/latest/ && ${FIND_BIN} . -maxdepth 1 ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
 
 publish-ver:
+	@[[ -d ${DIR}/docs/${VERSION} ]] || ${MKDIR_BIN} ${DIR}/docs/${VERSION}
 	@${CP_BIN} -vf ${DIR}/src/* ${DIR}/docs/${VERSION}/
 	@(cd ${DIR}/docs/${VERSION}/ && ${FIND_BIN} . -maxdepth 1 ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
 
@@ -94,17 +93,17 @@ release-latest: setver publish-latest test-latest
 	@${GIT_BIN} add .
 	@${GIT_BIN} ci -m "Release ${VERSION} as the latest version"
 
-release-ver: setver settag publish-ver test-ver
+release-ver: setver publish-ver test-ver
 	@${GIT_BIN} add .
 	@${GIT_BIN} ci -m "Release a new version: ${VERSION}"
 
-release-all: setver settag publish-all test-ver
+release-all: setver publish-all test-ver
 	@${GIT_BIN} add .
 	@${GIT_BIN} ci -m "Release a new version ${VERSION} and the latest"
 
 deploy-latest: release-latest push-commits
 
-deploy-ver: release-ver push-all
+deploy-ver: release-ver settag push-all
 
-deploy: release-all push-all
+deploy: release-all settag push-all
 
