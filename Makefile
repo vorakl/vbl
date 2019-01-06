@@ -15,6 +15,7 @@ FIND_BIN ?= find
 
 # -------------------------------------------------------------------------
 # Set a default target
+.PHONY: usage test test-dev test-latest test-ver push setver settag publish publish-latest publish-ver cirelease release
 .MAIN: usage
 
 DIR = $(shell ${PWD_BIN} -P)
@@ -26,27 +27,38 @@ LAST_COMMIT = $(shell ${GIT_BIN} log -1 | sed -n '/^commit/s/^commit //p')
 usage:
 	@${ECHO_BIN} "Usage: make [target] ..."
 	@${ECHO_BIN} ""
-	@${ECHO_BIN} "Examples: make setver"
-	@${ECHO_BIN} "          make VERSION=v1.15.2 setver"
-	@${ECHO_BIN} "          make settag"
-	@${ECHO_BIN} "          make push"
-	@${ECHO_BIN} "          make release"
-	@${ECHO_BIN} "          make VERSION=v1.1.14 release"
-	@${ECHO_BIN} ""
-	@${ECHO_BIN} "Description:"
-	@${ECHO_BIN} "  setver         Set a new version (is taken from environment or file)."
-	@${ECHO_BIN} "  settag         Set a new version as a tag to the last commit."
-	@${ECHO_BIN} "  push           Push to the repo (with tags)."
-	@${ECHO_BIN} "  publish        Publish all libbraries to the static site with sha256 sums."
-	@${ECHO_BIN} "  release        Set a version, tag and push to the repo."
-	@${ECHO_BIN} "  test           Run all tests"
+	@${ECHO_BIN} "Examples: make test"
+	@${ECHO_BIN} "          make VERSION=v1.15.2 deploy-latest"
+	@${ECHO_BIN} "          make deploy"
 	@${ECHO_BIN} ""
 
-test:
-	@lib_name="common"; \
-	 source <(curl -sSLf http://bash.libs.cf/files/$${lib_name}) && \
+test: test-dev
+
+test-dev:
+	@${ECHO_BIN} "Testing development version:"
+	@(lib_name="common"; \
+	 source ${DIR}/src/$${lib_name} && \
 	 cd tests && \
-	 ${SHELL} $$(which roundup)
+	 ${SHELL} $$(which roundup); \
+	)
+
+test-all: test-latest test-ver
+
+test-latest:
+	@${ECHO_BIN} "Testing latest version:"
+	@(lib_name="common"; \
+	 source ${DIR}/docs/latest/$${lib_name} && \
+	 cd tests && \
+	 ${SHELL} $$(which roundup); \
+	)
+
+test-ver:
+	@${ECHO_BIN} "Testing ${VERSION} version:"
+	@(lib_name="common"; \
+	 source ${DIR}/docs/${VERSION}/$${lib_name} && \
+	 cd tests && \
+	 ${SHELL} $$(which roundup); \
+	)
 
 setver:
 	@${ECHO_BIN} "Setting version to ${VERSION}"
@@ -54,9 +66,11 @@ setver:
 	@${SED_BIN} -i "1s/.*/${VERSION}/" ${DIR}/version
 
 settag:
-	@${ECHO_BIN} "Setting ${VERSION} as a tag to ${LAST_COMMIT}"
-	@${GIT_BIN} tag ${VERSION} ${LAST_COMMIT} 2>/dev/null || true
-	@${MKDIR_BIN} docs/files/${VERSION}
+	@[[ ! -d ${DIR}/docs/${VERSION} ]] && { \
+	  @${ECHO_BIN} "Setting ${VERSION} as a tag to ${LAST_COMMIT}"; \
+	  @${GIT_BIN} tag ${VERSION} ${LAST_COMMIT} 2>/dev/null || true; \
+	  @${MKDIR_BIN} ${DIR}/docs/${VERSION} || true; \
+	 } || ${ECHO_BIN} "The tag ${VERSION} is set already"
 
 push:
 	@${ECHO_BIN} "Pushing commits..."
@@ -64,18 +78,32 @@ push:
 	@${ECHO_BIN} "Pushing tags..."
 	@${GIT_BIN} push origin ${VERSION}
 
-publish: publish-latest publish-tag
+publish-all: publish-latest publish-ver
 
 publish-latest:
-	@${LN_BIN} -vf src/* docs/files/
-	@(cd docs/files/ && ${FIND_BIN} . -maxdepth 1 ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
+	@[[ -d ${DIR}/docs/latest ]] || ${MKDIR_BIN} ${DIR}/docs/latest
+	@${CP_BIN} -vf ${DIR}/src/* ${DIR}/docs/latest/
+	@(cd ${DIR}/docs/latest/ && ${FIND_BIN} . -maxdepth 1 ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
 
-publish-tag:
-	@${CP_BIN} -vf src/* docs/files/${VERSION}/
-	@(cd docs/files/${VERSION}/ && ${FIND_BIN} . -maxdepth 1 ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
+publish-ver:
+	@${CP_BIN} -vf ${DIR}/src/* ${DIR}/docs/${VERSION}/
+	@(cd ${DIR}/docs/${VERSION}/ && ${FIND_BIN} . -maxdepth 1 ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
 
-cirelease: setver settag publish
+release-latest: setver publish-latest test-latest
 	@${GIT_BIN} add .
-	@${GIT_BIN} ci -m "Release new version: ${VERSION}"
+	@${GIT_BIN} ci -m "Release the latest version"
 
-release: cirelease push
+release-ver: setver settag publish-ver test-ver
+	@${GIT_BIN} add .
+	@${GIT_BIN} ci -m "Release a new version: ${VERSION}"
+
+release: setver settag publish-all test-all
+	@${GIT_BIN} add .
+	@${GIT_BIN} ci -m "Release the latest and a new version ${VERSION}"
+
+deploy-latest: release-latest push
+
+deploy-ver: release-ver push
+
+deploy: release-all push
+
