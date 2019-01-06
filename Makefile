@@ -92,7 +92,7 @@ publish-ver:
 
 release-latest: setver publish-latest test-latest
 	@${GIT_BIN} add .
-	@${GIT_BIN} ci -m "Release the latest version"
+	@${GIT_BIN} ci -m "Release ${VERSION} as the latest version"
 
 release-ver: setver settag publish-ver test-ver
 	@${GIT_BIN} add .
@@ -100,7 +100,7 @@ release-ver: setver settag publish-ver test-ver
 
 release-all: setver settag publish-all test-ver
 	@${GIT_BIN} add .
-	@${GIT_BIN} ci -m "Release the latest and a new version ${VERSION}"
+	@${GIT_BIN} ci -m "Release a new version ${VERSION} and the latest"
 
 deploy-latest: release-latest push-commits
 
