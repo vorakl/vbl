@@ -34,7 +34,6 @@ PAGINATION_PATTERNS = (
 DELETE_OUTPUT_DIRECTORY = True  # build an output dir from scratch every time
 OUTPUT_RETENTION = ["CNAME", "latest"] # but these dirs and files should be kept
 OUTPUT_RETENTION.extend(map(basename, glob("/output/v*")))
-print(OUTPUT_RETENTION) 
 
 ### Interface configuration
 ############################
