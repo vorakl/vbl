@@ -38,20 +38,40 @@ OUTPUT_RETENTION.extend(map(basename, glob("/output/v*")))
 ### Interface configuration
 ############################
 
-DISPLAY_MENU = True
-DISPLAY_PAGES_ON_MENU = False
-DISPLAY_CATEGORIES_ON_MENU = False
-DISPLAY_ITEMS_ON_MENU = True # Items are set in the MENUITEMS variable below
+DISPLAY_AUTHOR_IN_ARTICLE = False # Add an author in a article's metadata       
+                                                                                
+# MENU                                                                          
+DISPLAY_MENU = True                                                             
+DISPLAY_PAGES_IN_MENU = False                                                   
+DISPLAY_CATEGORIES_IN_MENU = False                                              
+DISPLAY_ITEMS_IN_MENU = True # Items are set in the MENUITEMS variable below    
+                                                                                
+# SIDEBAR                                                                       
+DISPLAY_SIDEBAR = True                                                          
+DISPLAY_MENUITEMS_ON_SIDEBAR = False # Items are set in the MENUITEMS variable below
+DISPLAY_SITE_ON_SIDEBAR = False                                                 
+DISPLAY_CATEGORIES_ON_SIDEBAR = False                                           
+DISPLAY_PAGES_ON_SIDEBAR = False                                                
+DISPLAY_TAGS_ON_SIDEBAR = False                                                 
+DISPLAY_LINKS_ON_SIDEBAR = True # Links are set in the LINKS variable below    
+                                                                                
+DISPLAY_SIDEBAR_SITE_NAME = "Site"                                              
+DISPLAY_SIDEBAR_ARCHIVES_NAME = "Archives"                                      
+DISPLAY_SIDEBAR_ALLARTICLES_NAME = "All articles"                               
+DISPLAY_SIDEBAR_CATEGORIES_NAME = "Playlists"                                   
+DISPLAY_SIDEBAR_TAGS_NAME = "Tags"                                              
+DISPLAY_SIDEBAR_PAGES_NAME = "Pages"                                            
+DISPLAY_SIDEBAR_LINKS_NAME = "Libraries"                                            
+DISPLAY_SIDEBAR_MENUITEMS_NAME = "Menu" 
 
-DISPLAY_SIDEBAR = True
-DISPLAY_ARCHIVES_ON_SIDEBAR = False # It also turns on/off an appropriate section in a sitemap.xml
-DISPLAY_CATEGORIES_ON_SIDEBAR = False # It also turns on/off an appropriate section in a sitemap.xml
-DISPLAY_TAGS_ON_SIDEBAR = False # It also turns on/off an appropriate section in a sitemap.xml
-DISPLAY_PAGES_ON_SIDEBAR = False # It also turns on/off an appropriate section in a sitemap.xml
-DISPLAY_AUTHORS_ON_SIDEBAR = False # It's turned off because I'm the only one author on this site
-DISPLAY_SUBSCRIBES_ON_SIDEBAR = False
-DISPLAY_SITE_ON_SIDEBAR = False
-DISPLAY_LINKS_ON_SIDEBAR = True # Links are set in the LINKS variable below
+# SIDEBAR.SITE                                                                  
+DISPLAY_ARCHIVES_IN_SITE = True # It also turns on/off an appropriate section in a sitemap.xml
+DISPLAY_ALLARTICLES_IN_SITE = True                                              
+DISPLAY_CATEGORIES_IN_SITE = True # It also turns on/off an appropriate section in a sitemap.xml
+DISPLAY_TAGS_IN_SITE = True # It also turns on/off an appropriate section in a sitemap.xml
+DISPLAY_PAGES_IN_SITE = False # It also turns on/off an appropriate section in a sitemap.xml
+DISPLAY_SUBSCRIBES_IN_SITE = False                                              
+DISPLAY_AUTHORS_IN_SITE = False
 
 MENUITEMS = [
     ("repo", "https://github.com/vorakl/bash-libs"),

@@ -6,6 +6,23 @@
     <changefreq>daily</changefreq>
 </url>
 <url>
+    <loc>https://bash.libs.cf/news/</loc>
+    <priority>1</priority>
+    <changefreq>daily</changefreq>
+</url>
+<url>
+    <loc>https://bash.libs.cf/articles/</loc>
+    <priority>1</priority>
+    <changefreq>daily</changefreq>
+</url><url>
+    <loc>https://bash.libs.cf/categories/</loc>
+    <priority>1</priority>
+    <changefreq>daily</changefreq>
+</url><url>
+    <loc>https://bash.libs.cf/tags/</loc>
+    <priority>1</priority>
+    <changefreq>daily</changefreq>
+</url><url>
     <loc>https://bash.libs.cf/pages/common/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
