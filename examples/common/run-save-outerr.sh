@@ -1,7 +1,7 @@
 #!/bin/bash
 
 main() {
-    source <(curl -sSLf http://lib-sh.vorakl.name/files/common)
+    source <(curl -sSLf http://bash.libs.cf/latest/common)
 
     run --save-out my_out --save-err my_err eval '{ say "$(top -bn1)"; err "$(ls -l /)"; }'
 

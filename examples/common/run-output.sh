@@ -1,7 +1,7 @@
 #!/bin/bash
 
 main() {
-    source <(curl -sSLf http://lib-sh.vorakl.name/files/common)
+    source <(curl -sSLf http://bash.libs.cf/latest/common)
 
     SAY_FORMAT="\n>>> %s\n" say "Stdout goes to the pipe, stderr goes to the terminal"
     run eval '{ say "hello"; err "world"; }' | { a=$(cat); echo "[$a]"; }

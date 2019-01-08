@@ -1,7 +1,7 @@
 #!/bin/bash
 
 main() {
-    source <(curl -sSLf http://lib-sh.vorakl.name/files/common)
+    source <(curl -sSLf http://bash.libs.cf/latest/common)
 
     say "Hello"
     debug "Saying Hello to the whole World"

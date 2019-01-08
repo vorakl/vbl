@@ -4,9 +4,9 @@ main() {
     # Download the common library in a current directory
     # Check sha256 hash
     # Remove the library on exit
-    curl -sSLfo common http://lib-sh.vorakl.name/files/common && \
+    curl -sSLfo common http://bash.libs.cf/latest/common && \
     trap 'rm -f common' EXIT TERM HUP INT && \
-    curl -sSLf http://lib-sh.vorakl.name/files/common.sha256 | sha256sum --quiet -c && \
+    curl -sSLf http://bash.libs.cf/latest/common.sha256 | sha256sum --quiet -c && \
     source common || \
     { echo "The library hasn't been loaded" >&2; exit 1; }
 
