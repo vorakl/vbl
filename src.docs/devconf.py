@@ -11,7 +11,7 @@ AUTHOR = u'Oleksii Tsvietnov'
 SITENAME = u"Vorakl's Libs: Bash"
 SITEURL = 'https://bash.libs.cf'
 SITEDESC = u'A collection of Bash libraries'
-SITE_VERSION = '1497518373'
+SITE_VERSION = '1497518374'
 SITE_KEYWORDS = 'bash,shell,library,bash-library,shell-library'
 ARTICLE_PATHS = ['articles'] # a place for articles under the content location
 PAGE_PATHS = ['pages']
@@ -75,6 +75,7 @@ DISPLAY_AUTHORS_IN_SITE = False
 
 MENUITEMS = [
     ("repo", "https://github.com/vorakl/bash-libs"),
+    ("libs", "https://libs.cf/"),
     ("blog", "https://vorakl.name/"),
     ("author", "https://vorakl.name/pages/about/"),
     ]
