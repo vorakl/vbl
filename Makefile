@@ -1,4 +1,4 @@
-# (c) Oleksii Tsvietnov, me@vorakl.name
+# (c) Oleksii Tsvietnov, vorakl@protonmail.com
 #
 # Variables:
 SHELL = bash
