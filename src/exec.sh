@@ -1,35 +1,28 @@
-#!/bin/echo This file has to be soursed. Run: source <path to a file>
-
-# exec - functions related to executing commands
+#!/bin/echo This file has to be soursed. Use: source
+# ---[exec]-----------------------------------------------------------(begin)---
+# Functions related to executing commands
+# https://bash.libs.cf/
 # Copyright (c) 2016,17,19 by Oleksii Tsvietnov, vorakl@protonmail.com
-# Version: v2.0.0
 
 # API:
-# <var>  __exec_export  a list of functions to be exported
-# <func> __exec_init__  an init functions, runs when a lib is imported
-# <func> cmd            a secure wrapper for running builtin commands
-# <func> run            a wrapper for running commands in a controlled way
-# <func> rerun_on_err   run a command N times with a pause if it fails
-# <func> assert_utils   check if utilities exist on a file system
+# <var>  __exec_version        a version of the module
+# <var>  __exec_exported       a list of functions to be exported
+# <var>  $*                    overrides __exec_exported if it's nonempty
+# <var> EXEC_RUN_WARN_FORMAT
+# <var> EXEC_RUN_ENSURE_FORMAT
+# <var> EXEC_DIE_EXITCODE
+# <func> __exec_init__         an init functions, runs when a lib is imported
+# <func> exec_run              a wrapper for running commands in a controlled way
+# <func> exec_die              prints an error and exists with a certain exitcode
+# <func> exec_rerun            run a command N times with a pause if it fails
+#
+# USE:
+# sourse module_name [list of functions to export]
 
-cmd() {
-    # A wrapper for the builtin 'command' to minimize a risk of reloading functions
-    # It works together with 'unset builtin' in the __exec_conf__ and 
-    # the whole idea will work only if Bash is run with the '--posix' option which
-    # doesn't allow to reload 'unset' builtin function. 
-    # Anyway, you decide how deep is your paranoia ;)
-    # It's intended to be used for running builtin commands or standard utilities.
-    # First, it checks in builtins. Then, it tries to find an external command.
-    #   -p  search in standard paths only
-    #   -v  check if a command exists
-
-    builtin command "$@"
-}
-
-run() {
+exec_run() {
     # A wrapper to run commands and control output, exit status, etc
     #
-    # usage: 
+    # usage:
     #   run [--silent|--no-out|--no-err] \
     #       [--save-out var|--save-err var] \
     #       [--join-outerr] \
@@ -49,15 +42,15 @@ run() {
     #   --ensure        exit on any non zero exit status
     #
     # options:
-    #   RUN_WARN_FORMAT
-    #   RUN_ENSURE_FORMAT
+    #   EXEC_RUN_WARN_FORMAT
+    #   EXEC_RUN_ENSURE_FORMAT
 
-    local _arg="" _line="" _channels="" _status="" _save_vars="" _rc=""
-    local _silent="0" _no_out="0" _no_err="0" _join_outerr="0"
-    local _save_out="" _save_err=""
-    local _ignore="0" _warn="0" _ensure="0"
-    local _pipe_out="/tmp/lib-sh-exec-$$-$RANDOM-out.pipe"
-    local _pipe_err="/tmp/lib-sh-exec-$$-$RANDOM-err.pipe"
+    declare _arg="" _line="" _channels="" _status="" _save_vars="" _rc=""
+    declare -i _silent="0" _no_out="0" _no_err="0" _join_outerr="0"
+    declare _save_out="" _save_err=""
+    declare -i _ignore="0" _warn="0" _ensure="0"
+    declare _pipe_out="/tmp/lib-sh-exec-$$-$RANDOM-out.pipe"
+    declare _pipe_err="/tmp/lib-sh-exec-$$-$RANDOM-err.pipe"
 
     while [[ "$@" ]]; do
         case "$1" in
@@ -116,9 +109,9 @@ run() {
     if (( _ignore )); then
         _status="|| cmd true"
     elif (( _warn )); then
-        _status='|| ERR_FORMAT="${RUN_WARN_FORMAT}" err "$1" "$?"'
+        _status='|| STR_ERR_FORMAT="${EXEC_RUN_WARN_FORMAT}" err "$1" "$?"'
     elif (( _ensure )); then
-        _status='|| ERR_FORMAT="${RUN_ENSURE_FORMAT}" die "$1" "$?" "${DIE_EXITCODE}"'
+        _status='|| STR_ERR_FORMAT="${EXEC_RUN_ENSURE_FORMAT}" die "$1" "$?" "${EXEC_DIE_EXITCODE}"'
     fi
 
     [[ "$@" ]] || die "There is nothing to run!"
@@ -146,75 +139,80 @@ run() {
         exec 4>&-
     fi
 
-    cmd return ${_rc}
+    sys_cmd return ${_rc}
 }
 
-__run_conf__() {
-    export RUN_WARN_FORMAT="Command \'%s\' has failed with exit status %d. Ignoring..."
-    export RUN_ENSURE_FORMAT="Command \'%s\' has failed with exit status %d. Exiting (exitcode=%d)..."
+__exec_run_conf__() {
+    export EXEC_RUN_WARN_FORMAT="Command \'%s\' has failed with exit status %d. Ignoring..."
+    export EXEC_RUN_ENSURE_FORMAT="Command \'%s\' has failed with exit status %d. Exiting (exitcode=%d)..."
 }
 
-rerun_on_err() {
-    :
+exec_die() {
+    # Print an error message using 'err' command to the stderr and
+    # exit with an appropriate exit code.
+    #
+    # options:
+    #   EXEC_DIE_EXITCODE
+
+    str_err "$@"
+    sys_cmd exit ${EXEC_DIE_EXITCODE}
 }
 
-assert_utils() {
+__exec_die_conf__() {
+    export EXEC_DIE_EXITCODE="1"
+}
+
+exec_rerun() {
     :
 }
 
 __exec_conf__() {
-    __run_conf__
-}
+    declare -grx __exec_version="v2.0.0"
+    declare -gx __exec_exported="exec_run exec_die exec_rerun"
 
-__exec_export__() {
-    local _func
-    
-    for _func in ${__exec_export}; do
-        cmd declare -fx ${_func}
-    done
+    __exec_run_conf__
+    __exec_die_conf__
 }
 
 __exec_require__() {
-    local _module
+    declare _module
 
-    for _module in ${__exec_require}; do
-        if ! cmd declare -p __${_module}_imported &> /dev/null; then
-            echo "FATAL: the module '${_module}' is required. Import it first!" >&2
-            exit 1
+    for _module in $*; do
+        if ! declare -p __${_module}_imported &> /dev/null; then
+            builtin command echo "FATAL: the module '${_module}' is required." >&2
+            builtin command exit 1
         fi
     done
 }
 
 __exec_main__() {
-    if cmd declare -p __exec_imported &> /dev/null; then
+    # gets back the original meaning if it was reloaded
+    unset -f builtin command return declare eval
+
+    if declare -p __exec_imported &> /dev/null; then
         return
-    else
-        export __exec_imported="true"
     fi
 
-    __exec_require="str"
-    __exec_require__ # Check if all required modules have been imported
+    # Check if the required modules were imported
+    __exec_require__ sys str
+    # Set default values and behaior for functions.
+    __exec_conf__
 
-    __exec_conf__  # Set default values and behaior for functions.
-
-    if cmd declare -F __exec_init__ &> /dev/null; then
-        # If the function is defined in the code, then execute it.
-        # This is the way to configure functions for your needs in particular
-        # code.
-        __exec_init__ 
+    if declare -F __exec_init__ &> /dev/null; then
+        # If a function is defined in code, then execute it.
+        # This is the way to configure functions for your needs.
+        __exec_init__
     fi
 
-    if ! cmd declare -p __exec_export &> /dev/null; then
-        # a list of functions to be exported
-
-        # All these functions are going to be exported if the variable 
-        # hasn't been set yet. It can be set in the __exec_init__ function 
-        # in an application code
-        __exec_export="cmd run rerun_on_err assert_utils"
+    if [[ -n "$*" ]]; then
+        __exec_exported=$*
     fi
 
-    __exec_export__
+    __sys_export_func__ ${__exec_exported}
+
+    declare -grx __exec_imported="true"
 }
 
 # The entrypoint
-__exec_main__
+__exec_main__ $*
+# ---[exec]-------------------------------------------------------------(end)---
