@@ -5,20 +5,26 @@
 # Copyright (c) 2016,17,19 by Oleksii Tsvietnov, vorakl@protonmail.com
 
 # API:
-# <var>  __str_version   a version of the module
-# <var>  __str_exported  a list of functions to be exported
-# <var>  $*              overrides __str_exported if it's nonempty
+# <var>  __str_version
+# <var>  __str_exported
 # <var> STR_SAY_SUPPRESS
 # <var> STR_SAY_FORMAT
-# <func> __str_init__    an init functions, runs when a lib is imported
-# <func> str_say         a formated printing to stdout
-# <func> str_debug       a similar to say but is useful for debugging
-# <func> str_err         a formated printing to stderr
-# <func> str_readline    reads one string from stdin
-# <func> str_readlines   reads a stream from stdin as a sequence of strings
-# <func> str_format      takes stdin, format it and print to stdout
-# <func> str_lstrip      removes a pattern from the left
-# <func> str_rstrip      removes a pattern from the right
+# <var> STR_DEBUG_SUPPRESS
+# <var> STR_DEBUG_FORMAT
+# <var> STR_ERR_SUPPRESS
+# <var> STR_ERR_FORMAT
+# <func> __str_init__
+# <func> str_say
+# <func> str_debug
+# <func> str_err
+# <func> str_readline
+# <func> str_readlines
+# <func> str_format
+# <func> str_lstrip
+# <func> str_rstrip
+#
+# REQIRES:
+# sys
 #
 # USE:
 # sourse module_name [list of functions to export]

@@ -5,11 +5,10 @@
 # Copyright (c) 2016,17,19 by Oleksii Tsvietnov, vorakl@protonmail.com
 
 # API:
-# <var>  __sys_version   a version of the module
-# <var>  __sys_exported  a list of functions to be exported
-# <var>  $*              overrides __sys_exported if it's nonempty
-# <func> __sys_init__    an init functions, runs when a lib is imported
-# <func> sys_cmd         a secure wrapper for running builtin commands
+# <var>  __sys_version
+# <var>  __sys_exported
+# <func> __sys_init__
+# <func> sys_cmd
 # <func> sys_timeit
 #
 # USE:
@@ -30,14 +29,6 @@ sys_cmd() {
     builtin command "$@"
 }
 
-sys_timeit() {
-    :
-}
-
-__sys_timeit_conf__() {
-    :
-}
-
 __sys_export_func__() {
     declare _func=""
 
@@ -48,9 +39,7 @@ __sys_export_func__() {
 
 __sys_conf__() {
     declare -grx __sys_version="v2.0.0"
-    declare -gx __sys_exported="sys_cmd sys_timeit"
-
-    __sys_timeit_conf__
+    declare -gx __sys_exported="sys_cmd"
 }
 
 __sys_main__() {

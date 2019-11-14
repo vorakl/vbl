@@ -5,15 +5,17 @@
 # Copyright (c) 2019 by Oleksii Tsvietnov, vorakl@protonmail.com
 
 # API:
-# <var>  __matrix_version   a version of the module
-# <var>  __matrix_exported  a list of functions to be exported
-# <var>  MATRIX_GET_FORMAT  an output format for the matrix_get function
-# <var>  $*                 overrides __matrix_exported if it's nonempty
-# <func> __matrix_init__    an init functions, runs when a lib is imported
+# <var>  __matrix_version
+# <var>  __matrix_exported
+# <var>  MATRIX_GET_FORMAT
+# <func> __matrix_init__
 # <func> matrix_init
 # <func> matrix_get
 # <func> matrix_set
 # <func> matrix_destroy
+#
+# REQIRES:
+# sys, str
 #
 # USE:
 # sourse module_name [list of functions to export]
