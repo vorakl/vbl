@@ -25,6 +25,11 @@ sys_cmd() {
     # Possible options are
     #   -p  search in standard paths only
     #   -v  check if a command exists
+    #
+    # examples:
+    #   sys_cmd echo "Hello World"
+    #   sys_cmd -v cp 
+    #   sys_cmd -p cp /from /to
 
     builtin command "$@"
 }

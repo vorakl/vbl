@@ -13,6 +13,8 @@
 # <var> EXEC_DIE_FORMAT
 # <var> EXEC_CHECK_CMD_WARN_FORMAT
 # <var> EXEC_CHECK_CMD_ENSURE_FORMAT
+# <var> EXEC_RERUN_TRIES
+# <var> EXEC_RERUN_SLEEP
 # <func> __exec_init__
 # <func> exec_run
 # <func> exec_check_cmd
@@ -51,6 +53,12 @@ exec_run() {
     # options:
     #   EXEC_RUN_WARN_FORMAT
     #   EXEC_RUN_ENSURE_FORMAT
+    #
+    # examples:
+    #   exec_run --silent --ignore cat /nonexistent
+    #   exec_run --err-to-out find / -name "void" | tee -a search.log
+    #   exec_run --no-out --save-err myerr --warn sync_dirs /home
+    #   exec_run --no-out --ensure do_backup_daily
 
     declare -i _silent="0" _no_out="0" _no_err="0" _err_to_out="0"
     declare -i _ignore="0" _warn="0" _ensure="0"
@@ -178,18 +186,53 @@ exec_die() {
     # exits with an appropriate exit code.
     #
     # usage:
-    #   exec_die arg [...]
+    #   exec_die [--exitcode 0..255] [--] arg [...]
+    #
+    # parameters:
+    #   --exitcode      set an exit code, has precedence on EXEC_DIE_EXITCODE
     #
     # options:
     #   EXEC_DIE_EXITCODE
     #   EXEC_DIE_FORMAT
+    #
+    # examples:
+    #   exec_die "A file does not exist"
+    #   exec_die --exitscode 15 "A host is not reachable"
+    #   EXEC_DIE_FORMAT="FATAL: '%s' has failed with '%d' exitcode\n" \
+    #       exec_die --exitcode 34 "cp" "${$_rc}"
+
+    declare _arg
+    declare -i _exitcode="${EXEC_DIE_EXITCODE}"
+
+    # parse param string
+    while [[ "$@" ]]; do
+        case "$1" in
+            --) 
+                shift
+                break
+                ;;
+            --*) 
+                _arg="${1#--}"
+                case "${_arg}" in
+                    exitcode)
+                        shift
+                        _exitcode="$1"
+                        ;;
+                esac
+                shift
+                ;;
+            *)  
+                break
+                ;;
+        esac
+    done
 
     STR_ERR_FORMAT="${EXEC_DIE_FORMAT}" str_err "$@"
-    exit ${EXEC_DIE_EXITCODE}
+    exit ${_exitcode}
 }
 
 __exec_die_conf__() {
-    declare -gx EXEC_DIE_EXITCODE="1"
+    declare -gix EXEC_DIE_EXITCODE="1"
     declare -gx EXEC_DIE_FORMAT="%s\n"
 }
 
@@ -206,6 +249,13 @@ exec_check_cmd() {
     # options:
     #   EXEC_CHECK_CMD_WARN_FORMAT
     #   EXEC_CHECK_CMD_ENSURE_FORMAT
+    #
+    # examples:
+    #   exec_check_cmd rm
+    #   exec_check_cmd --warn touch cp od
+    #   EXEC_CHECK_CMD_ENSURE_FORMAT="FATAL: there is no '%s' command\n" \
+    #       EXEC_DIE_EXITCODE=28 \
+    #       exec_check_cmd --ensure head tail mv
 
     declare _cmd _arg
     declare -i _warn="0" _ensure="0"
@@ -250,7 +300,64 @@ __exec_check_cmd_conf__() {
 }
 
 exec_rerun() {
-    :
+    # Rerun a command if it fails
+    #
+    # usage:
+    #   exec_rerun [--tries num] [--sleep sec] [--] cmd [args]
+    #
+    # parameters:
+    #   --tries     a number of tries to run a command
+    #   --sleep     a pause in seconds between tries 
+    #
+    # options:
+    #   EXEC_RERUN_TRIES
+    #   EXEC_RERUN_SLEEP
+    #
+    # examples:
+    #   exec_rerun bash -c 'echo fail; exit 1'
+    #   exec_rerun --tries 3 ping -qc1 hostname
+    #   exec_rerun --tries 6 --sleep 1 exec_run --silent ping hostname
+
+    declare _arg
+    declare -i _tries="${EXEC_RERUN_TRIES}" _sleep="${EXEC_RERUN_SLEEP}"
+    declare -i _i="0" _rc="0"                                                      
+
+    # parse param string
+    while [[ "$@" ]]; do
+        case "$1" in
+            --) 
+                shift
+                break
+                ;;
+            --*) 
+                _arg="${1#--}"
+                case "${_arg}" in
+                    tries|sleep)
+                        shift
+                        eval _${_arg}="$1"
+                        ;;
+                esac
+                shift
+                ;;
+            *)  
+                break
+                ;;
+        esac
+    done
+                                                                                
+    while (( _i++ < ${_tries} )); do                                  
+        sleep ${_sleep}                                               
+        if { ("$@"); _rc=$?; ! (( _rc )); } then                                
+            break                                                               
+        fi                                                                      
+    done                                                                        
+                                                                                
+    return ${_rc}                                                               
+}
+
+__exec_rerun_conf__() {
+    declare -gix EXEC_RERUN_TRIES="5"
+    declare -gix EXEC_RERUN_SLEEP="0"
 }
 
 __exec_conf__() {
@@ -260,6 +367,7 @@ __exec_conf__() {
     __exec_run_conf__
     __exec_die_conf__
     __exec_check_cmd_conf__
+    __exec_rerun_conf__
 }
 
 __exec_require__() {
