@@ -30,12 +30,18 @@
 # sourse module_name [list of functions to export]
 
 str_say() {
-    # Print to stdout with an ability to set a format and turn off an output
-    # by setting appropriate variables.
+    # Prints to stdout with an ability to set a format
+    #
+    # usage:
+    #   str_say arg [...]
     #
     # options:
     #   STR_SAY_SUPPRESS
     #   STR_SAY_FORMAT
+    #
+    # examples:
+    #   str_say "Hello World"
+    #   STR_SAY_FORMAT="INFO [%s]: %s\n" str_say "main" "Loading to memory..."
 
     (( STR_SAY_SUPPRESS )) || sys_cmd printf "${STR_SAY_FORMAT}" "$@"
 }
@@ -46,12 +52,20 @@ __str_say_conf__() {
 }
 
 str_debug() {
-    # Print to stdout as 'say' does but only if debug_suppress is turned off.
+    # Prints to stdout as 'say' does but only if debug_suppress is turned off.
     # It's useful for having a controlled higher level of verbosity.
+    #
+    # usage:
+    #   str_debug arg [...]
     #
     # options:
     #   STR_DEBUG_SUPPRESS
     #   STR_DEBUG_FORMAT
+    #
+    # examples:
+    #   STR_DEBUG_SUPPRESS=0 \
+    #       STR_DEBUG_FORMAT="DEBUG: %s\n" \
+    #       str_debug "The queue is empty"
 
     (( STR_DEBUG_SUPPRESS )) || sys_cmd printf "${STR_DEBUG_FORMAT}" "$@"
 }
@@ -62,12 +76,18 @@ __str_debug_conf__() {
 }
 
 str_err() {
-    # Print to stderr with an ability to set a format and turn off an output
-    # by setting appropriate variables.
+    # Prints to stderr with an ability to set a format
+    #
+    # usage:
+    #   str_err arg [...]
     #
     # options:
     #   STR_ERR_SUPPRESS
     #   STR_ERR_FORMAT
+    #
+    # examples:
+    #   str_err "The connection has been closed"
+    #   STR_ERR_FORMAT="WARN: %s\n" str_err "too much arguments"
 
     (( STR_ERR_SUPPRESS )) || sys_cmd printf "${STR_ERR_FORMAT}" "$@" >&2
 }
@@ -231,14 +251,14 @@ __str_require__() {
     for _module in $*; do
         if ! declare -p __${_module}_imported &> /dev/null; then
             builtin command echo "FATAL: the module '${_module}' is required. " >&2
-            builtin command exit 1
+            exit 1
         fi
     done
 }
 
 __str_main__() {
     # gets back the original meaning if it was reloaded
-    unset -f builtin command return declare local export eval
+    unset -f builtin command return declare local export eval exit read
 
     if declare -p __str_imported &> /dev/null; then
         return
