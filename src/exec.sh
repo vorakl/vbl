@@ -84,8 +84,8 @@ exec_run() {
                         ;;
                     save-out|save-err)
                         shift
-                        eval _${_arg/-/_}=$1
-                        eval _${_arg/-/_}_set=1
+                        eval _${_arg/-/_}='"$1"'
+                        eval _${_arg/-/_}_set="1"
                         ;;
                 esac
                 shift
@@ -201,7 +201,7 @@ exec_die() {
     #   EXEC_DIE_FORMAT="FATAL: '%s' has failed with '%d' exitcode\n" \
     #       exec_die --exitcode 34 "cp" "${$_rc}"
 
-    declare _arg
+    declare _arg=""
     declare -i _exitcode="${EXEC_DIE_EXITCODE}"
 
     # parse param string
@@ -257,7 +257,7 @@ exec_check_cmd() {
     #       EXEC_DIE_EXITCODE=28 \
     #       exec_check_cmd --ensure head tail mv
 
-    declare _cmd _arg
+    declare _cmd="" _arg=""
     declare -i _warn="0" _ensure="0"
 
     # parse param string
@@ -318,7 +318,7 @@ exec_rerun() {
     #   exec_rerun --tries 3 ping -qc1 hostname
     #   exec_rerun --tries 6 --sleep 1 exec_run --silent ping hostname
 
-    declare _arg
+    declare _arg=""
     declare -i _tries="${EXEC_RERUN_TRIES}" _sleep="${EXEC_RERUN_SLEEP}"
     declare -i _i="0" _rc="0"                                                      
 
@@ -334,7 +334,7 @@ exec_rerun() {
                 case "${_arg}" in
                     tries|sleep)
                         shift
-                        eval _${_arg}="$1"
+                        eval _${_arg}='"$1"'
                         ;;
                 esac
                 shift

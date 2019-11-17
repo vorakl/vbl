@@ -42,9 +42,9 @@ matrix_get() {
     # options:
     #   MATRIX_GET_FORMAT
 
-    declare -n self=$1
-    declare -i x=$2 y=$3
-    declare -i width=${self[0]} height=${self[1]}
+    declare -n self="$1"
+    declare -i x="$2" y="$3"
+    declare -i width="${self[0]}" height="${self[1]}"
 
     STR_SAY_FORMAT="${MATRIX_GET_FORMAT}" str_say "${self[2+y*width+x]}"
 }
@@ -54,16 +54,16 @@ __matrix_get_conf__() {
 }
 
 matrix_set() {
-    declare -n self=$1
-    declare -i x=$2 y=$3
+    declare -n self="$1"
+    declare -i x="$2" y="$3"
     declare data="$4"
-    declare -i width=${self[0]} height=${self[1]}
+    declare -i width="${self[0]}" height="${self[1]}"
 
     self[2+y*width+x]="${data}"
 }
 
 matrix_destroy() {
-    declare -n self=$1
+    declare -n self="$1"
     unset self
 }
 
@@ -80,14 +80,14 @@ __matrix_require__() {
     for _module in $*; do
         if ! declare -p __${_module}_imported &> /dev/null; then
             builtin command echo "FATAL: the module '${_module}' is required. " >&2
-            builtin command exit 1
+            exit 1
         fi
     done
 }
 
 __matrix_main__() {
     # gets back the original meaning if it was reloaded
-    unset -f builtin command return declare eval
+    unset -f builtin command return declare eval exit
 
     if declare -p __matrix_imported &> /dev/null; then
         return

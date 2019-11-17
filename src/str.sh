@@ -22,6 +22,7 @@
 # <func> str_format
 # <func> str_lstrip
 # <func> str_rstrip
+# <func> str_strip
 #
 # REQIRES:
 # sys
@@ -98,74 +99,161 @@ __str_err_conf__() {
 }
 
 str_readline() {
-    # A wrapper around the 'read' command. It reads from STDIN only one string.
-    # It doesn't matter if it ends with a specified delimiter (like '\n') or not.
-    # That's why it's safer to be used in a while loop to read a stream
-    # which may not have a delimiter at the end of a last string.
+    # Reads one line from stdin or a file descriptor. The ending symbol can
+    # be defined. It also doesn't matter if a string ends with a specified
+    # delimiter (like '\n') or not. That's why it's much safer to be used 
+    # in a while loop to read a stream which may not have a defined delimiter
+    # at the end of the last string.
     #
     # usage:
-    #    readline [arg [...]] var [var [...]]
+    #    str_readline [--delim char] [--fd num] [--] var
     #
     # parameters:
-    #    arg - an argument for the 'read' command
-    #    var - one or more variables. At least one has to be defined!
+    #    --delim    a delimiter of a string (default is $'\n')
+    #    --fd       a file descriptor to read from (default is 0)
+    #   var         a variable for storing a result
+    #
+    # examples:
+    #   # the result should contain all 3 strings and first 2 start with spaces
+    #   printf '  Hi!\n    How are you?\nBye' | \
+    #       while str_readline str; do echo "${str}"; done
+    #
+    #   # reads strings which end with \0 symbol instead of \n
+    #   cat /proc/self/environ | \
+    #       while str_readline --delim '' str; do echo "[${str}]"; done
+    #
+    #   # reads from a file descriptor
+    #   { mkfifo /tmp/my.pipe;
+    #     exec {mypipe}<>/tmp/my.pipe;
+    #     cat /etc/passwd > /tmp/my.pipe;
+    #     while str_readline --fd ${mypipe} str; do echo "${str}"; done;
+    #     exec {mypipe}<&-;
+    #     rm -f /tmp/my.pipe; }
 
-    eval local _var="\${$#}" # set to a variable name (the last parameter).
+    declare -n _var
+    declare _arg=""
+    declare -i _fd="0"
+    declare _delim=$'\n'
 
-    if ! IFS= read "$@"; then # the 'read' command has faced to the EOF
-        eval '[[ "${'${_var}'}" ]]' # check if there is a string without '\n' at the end
+    # parse param string
+    while [[ "$@" ]]; do
+        case "$1" in
+            --) 
+                shift
+                break
+                ;;
+            --*) 
+                _arg="${1#--}"
+                case "${_arg}" in
+                    delim)
+                        shift
+                        _delim="$1"
+                        ;;
+                    fd)
+                        shift
+                        _fd="$1"
+                        ;;
+                    *)  ;;
+                esac
+                shift
+                ;;
+            *)  
+                _var="$1"
+                break
+                ;;
+        esac
+    done
+
+    if ! IFS= sys_cmd read -d "${_delim}" -u ${_fd} -r _var; then
+        [[ "${_var}" ]]
     fi
 }
 
 str_readlines() {
     # A wrapper around 'read' command.
-    # Instead of the 'readline' it reads from STDIN the whole stream
-    # which consists of one or more strings (a string's delimiter can be set as usually for 'read'
-    # command, using -d option) and saves it in a specified variable 'var'.
-    # It also behaves correctly if there is no a delimiter at the end of a last string.
-    # IMPORTANT: each string on the output is always extended by '\n' before saving it to
-    # the 'var' variable. That means, a specified variable will have all common strings ending
-    # with '\n' (and the last string also!) and no matter how these strings were separated on the input.
+    # Instead of what str_readline function does, it reads from STDIN
+    # the whole stream and saves it as an array.
+    # It also behaves correctly if there is no a delimiter at the end
+    # of the last string.
     #
     # usage:
-    #    readlines [arg [...]] var
+    #    str_readlines [--delim char] [--fd num] [--] arr
     #
     # parameters:
-    #    arg - arguments for the 'read' command
-    #    var - the only one variable name. It has to be defined!
+    #    --delim    a delimiter of a string (default is $'\n')
+    #    --fd       a file descriptor to read from (default is 0)
+    #   arr         an array variable for storing the result
+    #
+    # examples:
+    #   # reads strings which end with \0 symbol instead of \n
+    #   str_readlines --delim $'\0' myenv < /proc/self/environ && \
+    #       echo "${myenv[0]}"
 
-    declare _var_all=""
-    eval local _var="\${$#}" # set to a variable name (the last parameter).
+    declare -n _arr
+    declare _str="" _arg=""
+    declare -i _fd="0"
+    declare _delim=$'\n'
 
-    while str_readline "$@"; do
-        eval printf -v _var_all '"%s\n"' '"${_var_all}${'${_var}'}"'
+    # parse param string
+    while [[ "$@" ]]; do
+        case "$1" in
+            --) 
+                shift
+                break
+                ;;
+            --*) 
+                _arg="${1#--}"
+                case "${_arg}" in
+                    delim)
+                        shift
+                        _delim="$1"
+                        ;;
+                    fd)
+                        shift
+                        _fd="$1"
+                        ;;
+                    *)  ;;
+                esac
+                shift
+                ;;
+            *)  
+                _arr="$1"
+                break
+                ;;
+        esac
     done
 
-    eval ${_var}='"${_var_all}"'
+    while str_readline --delim "${_delim}" --fd ${_fd} _str; do
+        _arr+=("${_str}")
+    done
 }
 
 str_format() {
     # This is a wrapper around printf which allows you to have a formated output
-    # for data taken from stdin. In this case the whole stream is considered
-    # as one blob until it faces '\0' or EOF. Although, it's possible to use
-    # the last parameter (input) as a source of data.
-    # An output can be sent to another variable or to the stdout if '-' was used
-    # as a variable's name.
+    # for data taken from the stdin. In this case the whole stream is considered
+    # as one blob until it faces '\0' or EOF. It is also possible to define
+    # as an input the last parameter (input) as a source of data instead
+    # of using the stdin. An output can be sent to another variable or
+    # to the stdout if '-' was used instean of variable's name.
     #
     # usage:
-    #   format format_string [output_var|-] [input]
+    #   str_format format_string [output_var|-] [input]
     #
     # parameters:
     #   format_string       a common printf's format string
-    #   output_var or -     a variable where to save output.
+    #   output_var or -     a variablei for saving the output.
     #                       If it's empty or '-', then prints to the stdout
-    #   input               if set, then it's used as a source of data.
+    #   input               if it's set, then it's used as a source of data.
     #                       In this case, the second parameter cannot be empty!
+    # examples:
+    #   str_format "%014.2f" my_float "1.48732599" && echo ${my_float}
+    #   str_format "The current time: %(%H:%M:%S)T\n" - "$(date '+%s')"
+    #   echo -ne 'Hello\nWorld' | str_format "[%s]\n"
 
     declare _format="$1" _return="$2" _input="$3"
 
     if [[ -z "${_input}" ]]; then
-        str_readline -r -d '' _input
+        str_readline --delim '' _input
     fi
 
     if [[ -n "${_return}" && "${_return}" != "-" ]]; then
@@ -176,23 +264,26 @@ str_format() {
 }
 
 str_rstrip() {
-    # It removes from the right all occurrences of a specified pattern
+    # Removes all occurrences of a specified pattern from the right side.
     # It's important to notice that the function reads the whole stream
     # as one blob until it faces '\0' or the end of data.
     # All other special symbols are treated as normal, including '\n'.
-    # The result can be saved to a variable or sent to stdout without adding
+    # The result can be saved to a variable or sent to the stdout without adding
     # '\n' to the end, as is.
     #
     # usage:
-    #   rstrip pattern [var]
+    #   str_rstrip pattern [var]
     #
     # parameters:
     #   pattern     a pattern to be removed
     #   var         a variable where the result will be saved, optional
+    #
+    # examples:
+    #   str_rstrip $'\n' < <(printf "Hello\n\n\n\n")
 
     declare _out="" _tmp="" _pattern="$1" _return="$2"
 
-    str_readline -r -d '' _out
+    str_readline --delim '' _out
 
     until { _tmp="${_out%$_pattern}"; [[ "${_out}" == "${_tmp}" ]]; } do
         _out="${_tmp}"
@@ -206,7 +297,7 @@ str_rstrip() {
 }
 
 str_lstrip() {
-    # It removes from the left all occurrences of a specified pattern
+    # Removes all occurrences of a specified pattern from the left side.
     # It's important to notice that the function reads the whole stream
     # as one blob until it faces '\0' or the end of data.
     # All other special symbols are treated as normal, including '\n'.
@@ -214,15 +305,18 @@ str_lstrip() {
     # '\n' to the end, as is.
     #
     # usage:
-    #   lstrip pattern [var]
+    #   str_lstrip pattern [var]
     #
     # parameters:
     #   pattern     a pattern to be removed
     #   var         a variable where the result will be saved, optional
+    #
+    # examples:
+    #   str_lstrip " " <<< "     Hello"
 
     declare _out="" _tmp="" _pattern="$1" _return="$2"
 
-    str_readline -r -d '' _out
+    str_readline --delim '' _out
 
     until { _tmp="${_out#$_pattern}"; [[ "${_out}" == "${_tmp}" ]]; } do
         _out="${_tmp}"
@@ -235,10 +329,17 @@ str_lstrip() {
     fi
 }
 
+str_strip() {
+    declare _pattern="$1" _return="$2"
+
+    str_lstrip "${_pattern}" "${_return}" | \
+        str_rstrip "${_pattern}" "${_return}" 
+}
+
 __str_conf__() {
     declare -grx __str_version="v2.0.0"
     declare -gx __str_exported="str_say str_debug str_err str_readline
-                           str_readlines str_format str_lstrip str_rstrip"
+                      str_readlines str_format str_lstrip str_rstrip str_strip"
 
     __str_say_conf__
     __str_debug_conf__
