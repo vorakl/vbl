@@ -109,9 +109,9 @@ str_readline() {
     #    str_readline [--delim char] [--fd num] [--] var
     #
     # parameters:
-    #    --delim    a delimiter of a string (default is $'\n')
-    #    --fd       a file descriptor to read from (default is 0)
-    #   var         a variable for storing a result
+    #    --delim    A delimiter of a string (default is $'\n')
+    #    --fd       A file descriptor to read from (default is 0)
+    #    var        A variable for storing a result
     #
     # examples:
     #   # the result should contain all 3 strings and first 2 start with spaces
@@ -180,9 +180,9 @@ str_readlines() {
     #    str_readlines [--delim char] [--fd num] [--] arr
     #
     # parameters:
-    #    --delim    a delimiter of a string (default is $'\n')
-    #    --fd       a file descriptor to read from (default is 0)
-    #   arr         an array variable for storing the result
+    #    --delim    A delimiter of a string (default is $'\n')
+    #    --fd       A file descriptor to read from (default is 0)
+    #    arr        An array variable for storing the result
     #
     # examples:
     #   # reads strings which end with \0 symbol instead of \n
@@ -234,16 +234,16 @@ str_format() {
     # as one blob until it faces '\0' or EOF. It is also possible to define
     # as an input the last parameter (input) as a source of data instead
     # of using the stdin. An output can be sent to another variable or
-    # to the stdout if '-' was used instean of variable's name.
+    # to the stdout if '-' was used instead of a variable's name.
     #
     # usage:
     #   str_format format_string [output_var|-] [input]
     #
     # parameters:
-    #   format_string       a common printf's format string
-    #   output_var or -     a variablei for saving the output.
+    #   format_string       A common printf's format string
+    #   output_var or -     A variablei for saving the output.
     #                       If it's empty or '-', then prints to the stdout
-    #   input               if it's set, then it's used as a source of data.
+    #   input               If it's set, then it's used as a source of data.
     #                       In this case, the second parameter cannot be empty!
     # examples:
     #   str_format "%014.2f" my_float "1.48732599" && echo ${my_float}
@@ -272,16 +272,21 @@ str_rstrip() {
     # '\n' to the end, as is.
     #
     # usage:
-    #   str_rstrip pattern [var]
+    #   str_rstrip [pattern] [var]
     #
     # parameters:
-    #   pattern     a pattern to be removed
-    #   var         a variable where the result will be saved, optional
+    #   pattern     A pattern is the same as in pathname expansion
+    #               Default is a new line (\n)
+    #   var         A variable where the result will be saved, optional
     #
     # examples:
-    #   str_rstrip $'\n' < <(printf "Hello\n\n\n\n")
+    #   str_rstrip < <(printf "Hello\n\n\n\n")
 
     declare _out="" _tmp="" _pattern="$1" _return="$2"
+
+    if [[ -z "${_pattern}" ]]; then
+        _pattern=$'\n'
+    fi
 
     str_readline --delim '' _out
 
@@ -305,16 +310,21 @@ str_lstrip() {
     # '\n' to the end, as is.
     #
     # usage:
-    #   str_lstrip pattern [var]
+    #   str_lstrip [pattern] [var]
     #
     # parameters:
-    #   pattern     a pattern to be removed
-    #   var         a variable where the result will be saved, optional
+    #   pattern     A pattern is the same as in pathname expansion
+    #               Default is a space (" ")
+    #   var         A variable where the result will be saved, optional
     #
     # examples:
-    #   str_lstrip " " <<< "     Hello"
+    #   str_lstrip <<< "     Hello"
 
     declare _out="" _tmp="" _pattern="$1" _return="$2"
+
+    if [[ -z "${_pattern}" ]]; then
+        _pattern=" "
+    fi
 
     str_readline --delim '' _out
 
@@ -330,7 +340,26 @@ str_lstrip() {
 }
 
 str_strip() {
+    # Removes all occurrences of a specified pattern from both sides.
+    # Keep in mind that usualy strings end with a new line symbol '\n' and
+    # to use this function, first you need to remove it from the right.
+    #
+    # usage:
+    #   str_strip [pattern] [var]
+    #
+    # parameters:
+    #   pattern     A pattern is the same as in pathname expansion
+    #               Default is a space (" ")
+    #   var         A variable where the result will be saved, optional
+    #
+    # examples:
+    #   { str_rstrip | str_strip | str_format "[%s]\n"; } <<< "   Hello     "
+
     declare _pattern="$1" _return="$2"
+
+    if [[ -z "${_pattern}" ]]; then
+        _pattern=" "
+    fi
 
     str_lstrip "${_pattern}" "${_return}" | \
         str_rstrip "${_pattern}" "${_return}" 
