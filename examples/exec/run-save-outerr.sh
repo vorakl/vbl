@@ -1,21 +1,18 @@
 #!/bin/bash
 
-main() {
-    source <(curl -sSLf http://bash.libs.cf/latest/common)
+start() {
+    source <(curl -sSLf http://bash.libs.cf/latest/sys)
+    source <(curl -sSLf http://bash.libs.cf/latest/str)
+    source <(curl -sSLf http://bash.libs.cf/latest/exec)
 
-    run --save-out my_out --save-err my_err eval '{ say "$(top -bn1)"; err "$(ls -l /)"; }'
+    exec_run --save-out my_out --save-err my_err \
+        eval '{ str_say "$(top -bn1)"; str_err "$(ls -l /)"; }'
 
-    say "StdOut:"
-    say "${my_out}"
-
-    say "StdErr:"
-    say "${my_err}"
+    str_say "StdOut:"
+    (IFS=$'\n'; str_say "${my_out[*]}")
+    echo
+    str_say "StdErr:"
+    (IFS=$'\n'; str_say "${my_err[*]}")
 }
 
-__common_init__() {
-    # Set default vaules. They can be redefined in-line for a particular command
-    SAY_FORMAT="%s\n"
-    ERR_FORMAT="%s\n"
-}
-
-main
+start
