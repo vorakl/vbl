@@ -99,17 +99,17 @@ __str_err_conf__() {
 }
 
 str_readline() {
-    # Reads one line from stdin or a file descriptor. The ending symbol can
-    # be defined. It also doesn't matter if a string ends with a specified
-    # delimiter (like '\n') or not. That's why it's much safer to be used 
-    # in a while loop to read a stream which may not have a defined delimiter
-    # at the end of the last string.
+    # Reads symbols from stdin or a file descriptor, until it faced a delimiter
+    # or the EOF. The delimiter can be defined. It also doesn't matter if
+    # a string ends with a specified  delimiter (by default it's '\n') or not.
+    # That's why it's much safer to be used in a while loop to read a stream
+    # which may not have a defined delimiter at the end of the last string.
     #
     # usage:
     #    str_readline [--delim char] [--fd num] [--] var
     #
     # parameters:
-    #    --delim    A delimiter of a string (default is $'\n')
+    #    --delim    A delimiter of a string (default is '\n')
     #    --fd       A file descriptor to read from (default is 0)
     #    var        A variable for storing a result
     #
@@ -170,11 +170,9 @@ str_readline() {
 }
 
 str_readlines() {
-    # A wrapper around 'read' command.
-    # Instead of what str_readline function does, it reads from STDIN
-    # the whole stream and saves it as an array.
-    # It also behaves correctly if there is no a delimiter at the end
-    # of the last string.
+    # Reads strings from the stdin until it faced the EOF and save
+    # them in an array. It also behaves correctly if there is no a delimiter
+    # at the end of the last string.
     #
     # usage:
     #    str_readlines [--delim char] [--fd num] [--] arr
@@ -185,7 +183,7 @@ str_readlines() {
     #    arr        An array variable for storing the result
     #
     # examples:
-    #   # reads strings which end with \0 symbol instead of \n
+    #   # reads strings which end with '\0' symbol instead of '\n'
     #   str_readlines --delim $'\0' myenv < /proc/self/environ && \
     #       echo "${myenv[0]}"
 
@@ -361,8 +359,12 @@ str_strip() {
         _pattern=" "
     fi
 
-    str_lstrip "${_pattern}" "${_return}" | \
-        str_rstrip "${_pattern}" "${_return}" 
+    if [[ -z "${_return}" ]]; then
+        str_lstrip "${_pattern}" | str_rstrip "${_pattern}"
+    else
+        str_lstrip "${_pattern}" "${_return}"
+        str_rstrip "${_pattern}" "${_return}" < <(eval printf "\$${_return}")
+    fi
 }
 
 __str_conf__() {
