@@ -47,8 +47,12 @@ exec_run() {
     #   --save-err var  save stderr into array variable 'var' (up to 64 KB)
     #   --err-to-out    join stderr and stdout in one stream of stdout 
     #   --ignore        ignore non zero exit status
-    #   --warn          ignore non zero exit status and write an error message
-    #   --ensure        exit on any non zero exit status
+    #   --warn          ignore non zero exit status and print an error which
+    #                   is built of the ordered FORMAT's elements:
+    #                   %s - errmsg, %d - exitcode
+    #   --ensure        exit on any non-zero exitstatus and print an error
+    #                   which is built of the ordered FORMAT's elements:
+    #                   %s - errmsg, %d - exitcode, %d - die exitcode
     #
     # options:
     #   EXEC_RUN_WARN_FORMAT
@@ -237,24 +241,30 @@ __exec_die_conf__() {
 }
 
 exec_check_cmd() {
-    # Checks if commands exist
+    # Checks if commands exist. Return an error on the first absent command
     #
     # usage:
     #   exec_check_cmd [--warn|--ensure] [--] cmd [...]
     #
     # parameters:
-    #   --warn      prints a warn message about the first missing command
+    #   --warn      prints a error message about the first missing command, but
+    #               doesn't return any errors, keeps checking
+    #               The message's FORMAT is made of the followinf elements:
+    #               %s - command
     #   --ensure    exits with an error message on the first missing command
+    #               The message's FORMAT is made of the followinf elements:
+    #               %s - command
     #
     # options:
     #   EXEC_CHECK_CMD_WARN_FORMAT
     #   EXEC_CHECK_CMD_ENSURE_FORMAT
+    #   EXEC_CHECK_CMD_ENSURE_EXITCODE
     #
     # examples:
     #   exec_check_cmd rm
     #   exec_check_cmd --warn touch cp od
     #   EXEC_CHECK_CMD_ENSURE_FORMAT="FATAL: there is no '%s' command\n" \
-    #       EXEC_DIE_EXITCODE=28 \
+    #       EXEC_CHECK_CMD_ENSURE_EXITCODE=28 \
     #       exec_check_cmd --ensure head tail mv
 
     declare _cmd="" _arg=""
@@ -286,8 +296,11 @@ exec_check_cmd() {
         if ! sys_cmd -v ${_cmd} &>/dev/null; then
             if (( _warn )); then
                 STR_ERR_FORMAT="${EXEC_CHECK_CMD_WARN_FORMAT}" str_err "${_cmd}"
+                continue 
             elif (( _ensure )); then
-                EXEC_DIE_FORMAT="${EXEC_CHECK_CMD_ENSURE_FORMAT}" exec_die "${_cmd}"
+                EXEC_DIE_FORMAT="${EXEC_CHECK_CMD_ENSURE_FORMAT}" \
+                    EXEC_DIE_EXITCODE="${EXEC_CHECK_CMD_ENSURE_EXITCODE}" \
+                    exec_die "${_cmd}"
             fi
             return 1
         fi
@@ -297,6 +310,7 @@ exec_check_cmd() {
 __exec_check_cmd_conf__() {
     declare -gx EXEC_CHECK_CMD_WARN_FORMAT="Command '%s' does not exist.\n"
     declare -gx EXEC_CHECK_CMD_ENSURE_FORMAT="Command '%s' does not exist. Exiting...\n"
+    declare -gx EXEC_CHECK_CMD_ENSURE_EXITCODE="1"
 }
 
 exec_rerun() {
