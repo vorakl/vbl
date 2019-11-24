@@ -21,7 +21,7 @@
 # sourse module_name [list of functions to export]
 #
 # EXAMPLE:
-# matrix_init my_matrix \
+# matrix_ init my_matrix \
 #            3 2 \
 #            one two three \
 #            "1 1" "2 2" "3 3"

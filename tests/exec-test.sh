@@ -110,4 +110,27 @@ it_checks_check_cmd_status_insure() {
     fi
 }
 
+it_checks_rerun() {
+    r1=$(exec_rerun bash -c 'echo 1; false' | wc -l)
+    (( r1 == 5 ))
+}
 
+it_checks_rerun_tries() {
+    r1=$(EXEC_RERUN_TRIES=3 exec_rerun bash -c 'echo 1; false' | wc -l)
+    (( r1 == 3 ))
+
+    r1=$(exec_rerun --tries 2 bash -c 'echo 1; false' | wc -l)
+    (( r1 == 2 ))
+}
+
+it_checks_rerun_sleep() {
+    s=$SECONDS
+    exec_run --ignore exec_rerun --tries 2 --sleep 1 false
+    f=$SECONDS
+    (( (f - s) == 2 ))
+
+    s=$SECONDS
+    EXEC_RERUN_SLEEP=1 exec_run --ignore exec_rerun --tries 3 false
+    f=$SECONDS
+    (( (f - s) == 3 ))
+}
