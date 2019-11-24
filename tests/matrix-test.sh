@@ -20,7 +20,7 @@ it_checks_init_destroy() {
 it_checks_get_set() {
     matrix_init my_matrix 1 1 "a"
     [[ "$(matrix_get my_matrix 0 0)" == "a" ]]
-
     matrix_set my_matrix 0 0 "z"
     [[ "$(matrix_get my_matrix 0 0)" == "z" ]]
+    matrix_destroy my_matrix
 }
