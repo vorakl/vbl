@@ -1,4 +1,4 @@
-# [Bash library](https://bash.libs.cf/)
+# [Vorakl's Bash library](https://bash.libs.cf/)
 
 ## Introduction
 
