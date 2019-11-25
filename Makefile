@@ -1,6 +1,10 @@
 # (c) Oleksii Tsvietnov, vorakl@protonmail.com
 #
 # Variables:
+
+LIBS_BASE := sys.sh str.sh exec.sh
+LIBS_MISC := matrix.sh 
+
 SHELL = bash
 ECHO_BIN ?= echo
 CP_BIN ?= cp
@@ -39,11 +43,11 @@ usage:
 test: test-dev
 
 test-dev:
-	@${ECHO_BIN} "Testing development version:"
-	@(lib_name="common"; \
-	 source ${DIR}/src/$${lib_name} && \
-	 cd tests && \
-	 ${SHELL} $$(which roundup); \
+	@${ECHO_BIN} "Run all tests for a development version:"
+	@($(foreach lib, $(LIBS_BASE), source $(DIR)/src/$(lib);) \
+	  $(foreach lib, $(LIBS_MISC), source $(DIR)/src/$(lib);) \
+  	  cd tests && \
+	  ${SHELL} $$(which roundup); \
 	)
 
 test-latest:

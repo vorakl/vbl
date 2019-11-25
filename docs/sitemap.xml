@@ -2,34 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
     <loc>https://bash.libs.cf/</loc>
-    <priority>0.8</priority>
     <changefreq>daily</changefreq>
 </url>
 <url>
-    <loc>https://bash.libs.cf/news/</loc>
-    <priority>1</priority>
-    <changefreq>daily</changefreq>
-</url>
-<url>
-    <loc>https://bash.libs.cf/articles/</loc>
-    <priority>1</priority>
-    <changefreq>daily</changefreq>
-</url><url>
-    <loc>https://bash.libs.cf/categories/</loc>
-    <priority>1</priority>
-    <changefreq>daily</changefreq>
-</url><url>
-    <loc>https://bash.libs.cf/tags/</loc>
-    <priority>1</priority>
-    <changefreq>daily</changefreq>
-</url><url>
     <loc>https://bash.libs.cf/pages/common/</loc>
-    <priority>1.0</priority>
     <changefreq>weekly</changefreq>
+    <lastmod>2018-02-01</lastmod>
 </url>
 <url>
     <loc>https://bash.libs.cf/pages/info/</loc>
-    <priority>1.0</priority>
     <changefreq>weekly</changefreq>
+    <lastmod>2019-11-25</lastmod>
 </url>
 </urlset>

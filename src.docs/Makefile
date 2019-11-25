@@ -1,18 +1,19 @@
-PY?=python
-PELICAN?=pelican
-PELICANOPTS=
+OUTPUTDIR ?= /home/vorakl/repos/my/github/bash-libs/docs
+THEMEDIR ?= /home/vorakl/repos/my/github/aves/theme
+PLUGINSDIR ?= /home/vorakl/repos/others/pelican-plugins
+SITEMAP ?= https%3A%2F%2Fbash.libs.cf%2Fsitemap.xml
 
-BASEDIR=$(CURDIR)
-INPUTDIR=$(BASEDIR)/content
-OUTPUTDIR=$(shell readlink -f ../docs)
-STATICDIR=$(BASEDIR)/theme/static
-THEMEDIR=/home/vorakl/repos/my/github/aves/theme
-PLUGINSDIR=/home/vorakl/repos/others/pelican-plugins
-CONFFILE=pelicanconf.py
-PUBLISHCONF=publishconf.py
+PY ?= python
+PELICAN ?= pelican
+PELICANOPTS =
 
-UID=$(shell id -u)
-GID=$(shell id -g)
+BASEDIR = $(CURDIR)
+INPUTDIR = $(BASEDIR)/content
+DEVCONF = sitedev.py
+PRODCONF = siteprod.py
+STATICDIR = $(BASEDIR)/theme/static
+UID = $(shell id -u)
+GID = $(shell id -g)
 
 GITHUB_PAGES_BRANCH=master
 
@@ -27,23 +28,22 @@ ifeq ($(RELATIVE), 1)
 	PELICANOPTS += --relative-urls
 endif
 
-.PHONY: html help serve publish github
+.PHONY: help dev prod run deploy
 
 help:
-	@echo 'Makefile for a pelican Web site                                           '
+	@echo 'Makefile for building a static web site                                           '
 	@echo '                                                                          '
 	@echo 'Usage:                                                                    '
-	@echo '   make html                       (re)generate the web site              '
-	@echo '   make publish                    generate using production settings     '
-	@echo '   make bundle                     generate bundled version of CSS and JS '
-	@echo '   make serve [PORT=8000]          serve site at http://localhost:8000/   '
-	@echo '   make github                     push the web site to GitHub            '
+	@echo '   make dev                        (re)generate the web site              '
+	@echo '   make prod                       generate using production settings     '
+	@echo '   make run [PORT=8000]            serve site at http://localhost:8000/   '
+	@echo '   make deploy                     push the web site to GitHub            '
 	@echo '                                                                          '
 	@echo 'Set the DEBUG variable to 1 to enable debugging, e.g. make DEBUG=1 html   '
 	@echo 'Set the RELATIVE variable to 1 to enable relative urls                    '
 	@echo '                                                                          '
 
-html:   
+dev:   
 	@if docker version &>/dev/null; then \
 		echo 'Building a local web-site using docker image'; \
 		docker run \
@@ -55,32 +55,13 @@ html:
 		    -v $(THEMEDIR):/theme \
 		    -v $(PLUGINSDIR):/plugins \
 		    vorakl/alpine-pelican \
-	                -F 'cd /site && pelican /input -o /output -t /theme -s $(CONFFILE) $(PELICANOPTS)'; \
+	                -F 'cd /site && pelican /input -o /output -t /theme -s $(DEVCONF) $(PELICANOPTS)'; \
 	else \
-		echo 'Building a local web-site using a local Pelican'; \
-		@$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(BASEDIR)/$(CONFFILE) $(PELICANOPTS); \
+		echo 'ERROR: there is no a running Docker daemon' >&2; \
+		exit 1; \
 	fi
 
-bundle:
-	@cd $(STATICDIR) && \
-	cat bootstrap.min.css bootstrap.min.responsive.css local.min.css pygments.min.css > bootstrap-pygments.bundle.min.css && \
-	cat jquery.min.js bootstrap-collapse.min.js > jquery-bootstrap-collapse.bundle.min.js
-
-serve:
-	@if docker version &>/dev/null; then \
-		echo 'Launching a docker container with Nginx on the port $(PORT)'; \
-		docker run \
-		    --rm \
-		    -it \
-		    -p $(PORT):80 \
-		    -v $(OUTPUTDIR):/usr/share/nginx/html \
-		    nginx:mainline-alpine; \
-	else \
-		echo 'Launching Pelican Server on port $(PORT)'; \
-		cd $(OUTPUTDIR) && $(PY) -m pelican.server $(PORT); \
-	fi
-
-publish: 
+prod: 
 	@if docker version &>/dev/null; then \
 		echo 'Building a public web-site using docker image'; \
 		docker run \
@@ -92,15 +73,31 @@ publish:
 		    -v $(THEMEDIR):/theme \
 		    -v $(PLUGINSDIR):/plugins \
 		    vorakl/alpine-pelican \
-	                -F 'cd /site && pelican /input -o /output -t /theme -s $(PUBLISHCONF) $(PELICANOPTS)'; \
+	                -F 'cd /site && pelican /input -o /output -t /theme -s $(PRODCONF) $(PELICANOPTS)'; \
 	else \
-		echo 'Building a public web-site using a local Pelican'; \
-		@$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(BASEDIR)/$(PUBLISHCONF) $(PELICANOPTS); \
+		echo 'ERROR: there is no a running Docker daemon' >&2; \
+		exit 1; \
 	fi
 
-github: publish
+run:
+	@if docker version &>/dev/null; then \
+		echo 'Launching a docker container with Nginx on the port $(PORT)'; \
+		docker run \
+		    --rm \
+		    -it \
+		    -p $(PORT):80 \
+		    -v $(OUTPUTDIR):/usr/share/nginx/html \
+		    nginx:mainline-alpine; \
+	else \
+		echo 'Launching Python built-in web server on port $(PORT)'; \
+		cd $(OUTPUTDIR) && $(PY) -m pelican.server $(PORT); \
+	fi
+
+deploy:	
+	@echo 'Deploying site to Production environament'
 	@cd $(OUTPUTDIR) && \
 	  git add . && \
-	  git commit -m "New content" && \
+	  git commit -m "New web-site content" && \
 	  git push origin $(GITHUB_PAGES_BRANCH)
-
+	@echo 'Pinging Google about sitemap update'
+	@curl -sSLfq https://google.com/ping?sitemap=$(SITEMAP) > /dev/null
