@@ -33,16 +33,15 @@ Basically, for me using these modules help to
 
 ## Modules
 
-* sys
-* str
-* exec
-* matrix
+* [sys](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/sys.rst)
+* [str](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/str.rst)
+* [exec](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/exec.rst)
+* [matrix](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/matrix.rst)
 
 
 ## Other documentation
 
 * Get started
-* Technical details
 * Installation
 * Modifiation of a default configuration
 * [Examples](https://github.com/vorakl/bash-libs/tree/master/examples)

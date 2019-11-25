@@ -1,41 +1,22 @@
-Bash libraries
-##############
+Vorakl's Bash library
+#####################
 
 :slug: info
-:summary: Collection of useful libraries to simplify every day programming
+:summary: Collection of useful modules to simplify everyday programming
 
 |build-status|
 
-* Introduction_
-* `The list of libraries`_
+* `Get started`_
 * Installation_
     * `The simplest one-liner which uses curl/wget to dowload a file without saving on a disk`_
     * `Download a library by curl and check an integrity by sha256sum`_
     * `Download a library using a pure Bash without saving on a disk`_
 * `How to reconfigure the functions`_
 
+Get started
+===========
 
-Introduction
-============
-
-Bash is a powerful programming language and very useful for operational tasks. Without any doubts, this is the first "tool" you use in system administering of Unix-like operating systems. Unfortunately, it doesn't have a "Standard library" with all that functions which make a development process easier, faster and more efficient in all senses.
-
-Suddenly, I realized that I use the same functions, same blocks of code everywhere. Apparently, copy-pasting them from one script to another is not a right approach. That's why I decided to organize the most used functions in a few libraries and place them on a publicly available resource over http. This makes possible to find all needed files in one place, download them using simple tools or even a pure Bash code, always download the latest version of each library or even get stuck to a specific version in terms of stability and reliability.
-
-Basically, for me use these functions helps to
-
-* reuse the same code everywhere which is checked and proved by the time
-* simplify and speed up a development
-* increase a readability of code
-
-Besides all mentioned benefits, I would recommend to spend a little time and dig into the code to get a full understanding of how it works. Actually, this is a good practice before using any kind of libraries or functions.
-
-
-The list of libraries
-=====================
-
-* common_, the library with often used functions
-
+ttt
 
 Installation
 ============
@@ -47,7 +28,7 @@ In general, the installation process looks as follows:
     
     - **The base URL**. It is ``http://bash.libs.cf/``
     - **The version**. A version can be ``latest/`` or one of published versions. The list of all available versions is `here`__. Basically, it follows the `Semantic Versioning`_, e.g. v1.2.3 
-    - **The name of a library**. It's exactly the same name as in `The list of libraries`_
+    - **The name of a library**. 
 
     __ https://github.com/vorakl/bash-libs/releases
 

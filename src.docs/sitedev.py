@@ -10,12 +10,12 @@ from os.path import basename
 AUTHOR = u'Oleksii Tsvietnov'
 SITENAME = u"Vorakl's Libs: Bash"
 SITEURL = 'https://bash.libs.cf'
-SITEDESC = u'A collection of Bash libraries'
-SITE_VERSION = '1497518374'
+SITEDESC = u'A collection of Bash modules'
+SITE_VERSION = '1497518375'
 SITE_KEYWORDS = 'bash,shell,library,bash-library,shell-library'
 ARTICLE_PATHS = ['articles'] # a place for articles under the content location
 PAGE_PATHS = ['pages']
-CONTACT_URL = 'https://vorakl.name/pages/about/'
+CONTACT_URL = 'https://vorakl.com/contacts/'
 START_URL = 'pages/info/' # What's a start point of a site (like 'news/' or 'pages/about/')?
 TIMEZONE = 'Europe/Berlin'
 DEFAULT_LANG = u'en'
@@ -32,7 +32,7 @@ PAGINATION_PATTERNS = (
 )
 
 DELETE_OUTPUT_DIRECTORY = True  # build an output dir from scratch every time
-OUTPUT_RETENTION = ["CNAME", "latest"] # but these dirs and files should be kept
+OUTPUT_RETENTION = ["CNAME", "README.md", "latest"] # these dirs and files should be kept
 OUTPUT_RETENTION.extend(map(basename, glob("/output/v*")))
 
 ### Interface configuration
@@ -61,12 +61,12 @@ DISPLAY_SIDEBAR_ALLARTICLES_NAME = "All articles"
 DISPLAY_SIDEBAR_CATEGORIES_NAME = "Playlists"                                   
 DISPLAY_SIDEBAR_TAGS_NAME = "Tags"                                              
 DISPLAY_SIDEBAR_PAGES_NAME = "Pages"                                            
-DISPLAY_SIDEBAR_LINKS_NAME = "Libraries"                                            
+DISPLAY_SIDEBAR_LINKS_NAME = "Modules"                                            
 DISPLAY_SIDEBAR_MENUITEMS_NAME = "Menu" 
 
 # SIDEBAR.SITE                                                                  
 DISPLAY_ARCHIVES_IN_SITE = True # It also turns on/off an appropriate section in a sitemap.xml
-DISPLAY_ALLARTICLES_IN_SITE = True                                              
+DISPLAY_ALLARTICLES_IN_SITE = False                                              
 DISPLAY_CATEGORIES_IN_SITE = True # It also turns on/off an appropriate section in a sitemap.xml
 DISPLAY_TAGS_IN_SITE = True # It also turns on/off an appropriate section in a sitemap.xml
 DISPLAY_PAGES_IN_SITE = False # It also turns on/off an appropriate section in a sitemap.xml
@@ -76,10 +76,15 @@ DISPLAY_AUTHORS_IN_SITE = False
 MENUITEMS = [
     ("repo", "https://github.com/vorakl/bash-libs"),
     ("libs", "https://libs.cf/"),
-    ("blog", "https://vorakl.name/"),
-    ("author", "https://vorakl.name/pages/about/"),
+    ("blog", "https://vorakl.com/"),
+    ("author", "https://vorakl.com/about/"),
     ]
-LINKS = [("common", "/pages/common/")]
+LINKS = [
+    ("sys", "/pages/sys/"),
+    ("str", "/pages/str/"),
+    ("exec", "/pages/exec/"),
+    ("matrix", "/pages/matrix/"),
+        ]
 DISPLAY_AUTHOR = False # Add an author in a article's metadata
 
 CATEGORIES_DESCRIPTION = {}
