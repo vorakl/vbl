@@ -1,4 +1,4 @@
-# Bash library
+# [Bash library](https://bash.libs.cf/)
 
 ## Introduction
 
@@ -45,4 +45,4 @@ Basically, for me using these modules help to
 * Technical details
 * Installation
 * Modifiation of a default configuration
-* Examples
+* [Examples](https://github.com/vorakl/bash-libs/tree/master/examples)
