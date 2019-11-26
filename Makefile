@@ -2,18 +2,18 @@
 #
 # Variables:
 
+# The order of modules in the list is important!
 LIBS_BASE := sys.sh str.sh exec.sh
 LIBS_MISC := matrix.sh 
 
 SHELL = bash
 ECHO_BIN ?= echo
-CP_BIN ?= cp
-MKDIR_BIN ?= mkdir
-LN_BIN ?= ln
-SED_BIN ?= sed
 PWD_BIN ?= pwd
+WHICH_BIN ?= which
+CP_BIN ?= cp
+RM_BIN ?= rm
+MKDIR_BIN ?= mkdir
 BASENAME_BIN ?= basename
-GIT_BIN ?= git
 SHA256SUM_BIN ?= sha256sum 
 FIND_BIN ?= find
 
@@ -21,98 +21,60 @@ FIND_BIN ?= find
 # Set a default target
 .MAIN: usage
 
-.PHONY: usage setver settag \
-    	test test-dev test-ver \
-        push-all push-commits push-tag \
-	publish-all publish-latest publish-ver \
-	release-all release-latest release-ver \
-	deploy deploy-latest deploy-ver
+.PHONY: usage test pub-latest
 
 DIR = $(shell ${PWD_BIN} -P)
-VER = $(shell ${SED_BIN} -n '1s/^[[:space:]]*//; 1s/[[:space:]]*$$//; 1p' ${DIR}/version)
-VERSION ?= ${VER}
 
 usage:
 	@${ECHO_BIN} "Usage: make [target] ..."
 	@${ECHO_BIN} ""
 	@${ECHO_BIN} "Examples: make test"
-	@${ECHO_BIN} "          make VERSION=v1.15.2 deploy-latest"
-	@${ECHO_BIN} "          make deploy"
+	@${ECHO_BIN} "          make pub"
+	@${ECHO_BIN} "          make pub-latest"
+	@${ECHO_BIN} "          make pub-version"
 	@${ECHO_BIN} ""
 
-test: test-dev
-
-test-dev:
-	@${ECHO_BIN} "Run all tests for a development version:"
-	@($(foreach lib, $(LIBS_BASE), source $(DIR)/src/$(lib);) \
-	  $(foreach lib, $(LIBS_MISC), source $(DIR)/src/$(lib);) \
-  	  cd tests && \
-	  ${SHELL} $$(which roundup); \
+test:
+	@${ECHO_BIN} "---> Run all tests for a development version:"
+	@(for lib in ${LIBS_BASE}; do source ${DIR}/src/$${lib}; done;\
+	  for lib in ${LIBS_MISC}; do source ${DIR}/src/$${lib}; done;\
+	  cd tests && \
+	  ${SHELL} $$(${WHICH_BIN} roundup); \
 	)
 
-test-latest:
-	@${ECHO_BIN} "Testing latest version:"
-	@(lib_name="common"; \
-	 source ${DIR}/docs/latest/$${lib_name} && \
-	 cd tests && \
-	 ${SHELL} $$(which roundup); \
+pub: pub-latest pub-version
+
+pub-latest:
+	@[[ -d ${DIR}/docs/latest ]] ||\
+	    ${MKDIR_BIN} ${DIR}/docs/latest
+	@${ECHO_BIN} "---> Publish modules to the latest dir..."
+	@(declare -A latest=(); \
+	  for lib in ${LIBS_BASE} ${LIBS_MISC}; do \
+	    source ${DIR}/src/$${lib}; \
+	    eval latest[$${lib%.sh}]="\$${__$${lib%.sh}_version}"; \
+	    ${CP_BIN} -vf ${DIR}/src/$${lib} ${DIR}/docs/latest/$${lib%.sh}; \
+	    (cd ${DIR}/docs/latest/; \
+	     ${SHA256SUM_BIN} $${lib%.sh} |\
+	     tee $${lib%.sh}.sha256); \
+	  done; \
+	  ${ECHO_BIN} "---> Create a latest.lst..."; \
+	  ${RM_BIN} -f ${DIR}/docs/latest.lst; \
+	  for lib in $${!latest[*]}; do \
+	    eval echo "$${lib}=\'\$${latest[$${lib}]}\'" | \
+	       tee -a ${DIR}/docs/latest.lst; \
+	  done ;\
 	)
 
-test-ver:
-	@${ECHO_BIN} "Testing ${VERSION} version:"
-	@(lib_name="common"; \
-	 source ${DIR}/docs/${VERSION}/$${lib_name} && \
-	 cd tests && \
-	 ${SHELL} $$(which roundup); \
+pub-version:
+	@${ECHO_BIN} "---> Publish modules to the version dirs..."
+	@(for lib in ${LIBS_BASE} ${LIBS_MISC}; do \
+	    source ${DIR}/src/$${lib}; \
+	    eval ver="\$${__$${lib%.sh}_version}"; \
+	    [[ -d ${DIR}/docs/$${ver} ]] || \
+	    	${MKDIR_BIN} ${DIR}/docs/$${ver}; \
+	    ${CP_BIN} -vf ${DIR}/src/$${lib} ${DIR}/docs/$${ver}/$${lib%.sh}; \
+	    (cd ${DIR}/docs/$${ver}/; \
+	     ${SHA256SUM_BIN} $${lib%.sh} |\
+	     tee $${lib%.sh}.sha256); \
+	  done; \
 	)
-
-setver:
-	@${ECHO_BIN} "Setting version to ${VERSION}"
-	@${SED_BIN} -i "s/# Version: .*$$/# Version: ${VERSION}/" ${DIR}/src/*
-	@${SED_BIN} -i "1s/.*/${VERSION}/" ${DIR}/version
-
-settag:
-	@LAST_COMMIT=$$(${GIT_BIN} log -1 | sed -n '/^commit/s/^commit //p'); \
-	 ${ECHO_BIN} "Setting ${VERSION} as a tag to $${LAST_COMMIT}"; \
-	 ${GIT_BIN} tag ${VERSION} ${LAST_COMMIT} 2>/dev/null
-
-push-all: push-commits push-tag
-
-push-commits:
-	@${ECHO_BIN} "Pushing commits..."
-	@${GIT_BIN} push origin
-
-push-tag:
-	@${ECHO_BIN} "Pushing the tag..."
-	@${GIT_BIN} push origin ${VERSION}
-
-publish-all: publish-latest publish-ver
-
-publish-latest:
-	@[[ -d ${DIR}/docs/latest ]] || ${MKDIR_BIN} ${DIR}/docs/latest
-	@${CP_BIN} -vf ${DIR}/src/* ${DIR}/docs/latest/
-	@(cd ${DIR}/docs/latest/ && ${FIND_BIN} . -maxdepth 1 ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
-
-publish-ver:
-	@[[ -d ${DIR}/docs/${VERSION} ]] || ${MKDIR_BIN} ${DIR}/docs/${VERSION}
-	@${CP_BIN} -vf ${DIR}/src/* ${DIR}/docs/${VERSION}/
-	@(cd ${DIR}/docs/${VERSION}/ && ${FIND_BIN} . -maxdepth 1 ! -name "*.sha256" -type f -exec bash -c '_file=$$(basename {}); ${SHA256SUM_BIN} $${_file} | tee $${_file}.sha256' \;)
-
-release-latest: setver publish-latest test-latest
-	@${GIT_BIN} add .
-	@${GIT_BIN} ci -m "Release ${VERSION} as the latest version"
-
-release-ver: setver publish-ver test-ver
-	@${GIT_BIN} add .
-	@${GIT_BIN} ci -m "Release a new version: ${VERSION}"
-
-release-all: setver publish-all test-ver
-	@${GIT_BIN} add .
-	@${GIT_BIN} ci -m "Release a new version ${VERSION} and the latest"
-
-deploy-latest: release-latest push-commits
-
-deploy-ver: release-ver settag push-all
-
-deploy: release-all settag push-all
-
