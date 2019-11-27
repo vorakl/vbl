@@ -2,7 +2,7 @@
 
 start() {
     source <(curl -sSLf http://bash.libs.cf/latest/sys)
-    source <(curl -sSLf http://bash.libs.cf/latest/sys)
+    source <(curl -sSLf http://bash.libs.cf/latest/str)
 
     local _myvar
 
