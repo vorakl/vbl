@@ -1,6 +1,6 @@
 #!/bin/echo This file has to be soursed. Run: source 
 
-# lib-sh/common - The most used common functions
+# bash-libs/common - The most used common functions
 # Copyright (c) 2016,17 by Oleksii Tsvietnov, vorakl@protonmail.com
 # Version: v1.0.11
 
