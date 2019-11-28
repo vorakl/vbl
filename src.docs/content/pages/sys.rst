@@ -13,23 +13,29 @@ API
 * `__sys_init__`_ <func>
 * `sys_cmd`_  <func>
 
+|
 
 USAGE
 =====
 
-source module_name [list of functions to export]
+    source module_name [list of functions to export]
 
+|
 
 __sys_version
 =============
 
 This readonly variable contains a current module's version.
 
+|
+
 __sys_exported
 ==============
 
 This variable contains a list (separated by a space symbol) of functions that
 will be exported. It can be altered in the `__sys_init__`_ function.
+
+|
 
 __sys_init__
 ============
@@ -40,20 +46,21 @@ It can be used for setting up default values for any function's variables.
 example:
 --------
 
-.. code-block:: bash                                                            
-                                                                                
-    #!/bin/bash
+    .. code-block:: bash                                                            
+                                                                                    
+        #!/bin/bash
 
-    __sys_init__() {
-        __sys_exported="sys_cmd"
-    }
+        __sys_init__() {
+            __sys_exported="sys_cmd"
+        }
 
-    start() {
-        source <(curl -sSLf http://bash.libs.cf/latest/sys)
-    }
+        start() {
+            source <(curl -sSLf http://bash.libs.cf/latest/sys)
+        }
 
-    start
+        start
 
+|
 
 sys_cmd
 =======
@@ -69,29 +76,29 @@ First, it checks in builtins. Then, it tries to find an external command.
 usage:
 ------
 
-sys_cmd arg [..]
+    **sys_cmd** arg [..]
 
 parameters:
 -----------
 
-All parameters of the 'cmd' command. For instance:
+    All parameters of the 'cmd' command. For instance:
 
-* -p  search in standard paths only
-* -v  check if a command exists
+    * **-p**,  search in standard paths only
+    * **-v**,  check if a command exists
 
 example:
 --------
 
-.. code-block:: bash                                                            
+    .. code-block:: bash                                                            
 
-    #!/bin/bash
+        #!/bin/bash
 
-    start() {
-        source <(curl -sSLf http://bash.libs.cf/latest/sys)
+        start() {
+            source <(curl -sSLf http://bash.libs.cf/latest/sys)
 
-        sys_cmd echo "Hello World"
-        sys_cmd -v cp
-        sys_cmd -p df -h
-    }
+            sys_cmd echo "Hello World"
+            sys_cmd -v cp
+            sys_cmd -p df -h
+        }
 
-    start
+        start
