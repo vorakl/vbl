@@ -29,7 +29,7 @@ __sys_exported
 ==============
 
 This variable contains a list (separated by a space symbol) of functions that
-will be exported. It can be altered in the `__sys_init__` function.
+will be exported. It can be altered in the `__sys_init__`_ function.
 
 __sys_init__
 ============
@@ -59,7 +59,7 @@ sys_cmd
 =======
 
 A wrapper for the builtin **'command'** for minimizing a risk of reloading
-It works together with **'unset builtin'** in the `__sys_conf__` and
+It works together with **'unset builtin'** in the *__sys_conf__* and
 the whole idea will work out only if Bash is run with the **'--posix'** option
 which doesn't allow to reload **'unset'** builtin function.
 Anyway, you decide how deep is your paranoia ;)
