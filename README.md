@@ -1,5 +1,7 @@
 # [Vorakl's Bash library](https://bash.libs.cf/)
 
+[![build-statu](https://travis-ci.org/vorakl/bash-libs.svg?branch=master)](https://travis-ci.org/vorakl/bash-libs)
+
 ## Introduction
 
 Bash is a powerful programming language and very useful for operational tasks.
@@ -42,6 +44,6 @@ Basically, for me using these modules help to
 ## Other documentation
 
 * Get started
+* [Examples](https://github.com/vorakl/bash-libs/tree/master/examples)
 * Installation
 * Modifiation of a default configuration
-* [Examples](https://github.com/vorakl/bash-libs/tree/master/examples)
