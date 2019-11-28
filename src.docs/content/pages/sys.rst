@@ -35,7 +35,7 @@ __sys_init__
 ============
 
 This function has to be defined before the module is imported.
-It can be used for setting up default values for any function's variables
+It can be used for setting up default values for any function's variables.
 
 Example:
 --------
@@ -57,13 +57,15 @@ Example:
 
 sys_cmd
 =======
-A wrapper for the builtin 'command' for minimizing a risk of reloading
-It works together with 'unset builtin' in the __sys_conf__ and
-the whole idea will work out only if Bash is run with the '--posix' option
-which doesn't allow to reload 'unset' builtin function.
+
+A wrapper for the builtin **'command'** for minimizing a risk of reloading
+It works together with **'unset builtin'** in the `__sys_conf__` and
+the whole idea will work out only if Bash is run with the **'--posix'** option
+which doesn't allow to reload **'unset'** builtin function.
 Anyway, you decide how deep is your paranoia ;)
 It's intended to be used for running builtin commands or standard tools.
 First, it checks in builtins. Then, it tries to find an external command.
+
 Possible options are:
 
 * -p  search in standard paths only
