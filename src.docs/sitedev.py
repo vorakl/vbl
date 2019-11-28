@@ -32,7 +32,8 @@ PAGINATION_PATTERNS = (
 )
 
 DELETE_OUTPUT_DIRECTORY = True  # build an output dir from scratch every time
-OUTPUT_RETENTION = ["CNAME", "README.md", "latest"] # these dirs and files should be kept
+# these dirs and files should be kept
+OUTPUT_RETENTION = ["CNAME", "README.md", "latest", "latest.lst"] 
 OUTPUT_RETENTION.extend(map(basename, glob("/output/v*")))
 
 ### Interface configuration

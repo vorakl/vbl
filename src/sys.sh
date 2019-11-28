@@ -21,7 +21,12 @@ sys_cmd() {
     # Anyway, you decide how deep is your paranoia ;)
     # It's intended to be used for running builtin commands or standard tools.
     # First, it checks in builtins. Then, it tries to find an external command.
-    # Possible options are
+    #
+    # usage:
+    #   sys_cmd arg [...]
+    #
+    # parameters:
+    #   All parameters of the 'cmd' command. For instance:
     #   -p  search in standard paths only
     #   -v  check if a command exists
     #
@@ -42,7 +47,7 @@ __sys_export_func__() {
 }
 
 __sys_conf__() {
-    declare -grx __sys_version="v2.0.1"
+    declare -grx __sys_version="v2.0.2"
     declare -gx __sys_exported="sys_cmd"
 }
 

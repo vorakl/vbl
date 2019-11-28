@@ -37,7 +37,7 @@ __sys_init__
 This function has to be defined before the module is imported.
 It can be used for setting up default values for any function's variables.
 
-Example:
+example:
 --------
 
 .. code-block:: bash                                                            
@@ -66,12 +66,20 @@ Anyway, you decide how deep is your paranoia ;)
 It's intended to be used for running builtin commands or standard tools.
 First, it checks in builtins. Then, it tries to find an external command.
 
-Possible options are:
+usage:
+------
+
+sys_cmd arg [..]
+
+parameters:
+-----------
+
+All parameters of the 'cmd' command. For instance:
 
 * -p  search in standard paths only
 * -v  check if a command exists
 
-Example:
+example:
 --------
 
 .. code-block:: bash                                                            
