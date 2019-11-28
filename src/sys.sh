@@ -10,8 +10,8 @@
 # <func> __sys_init__
 # <func> sys_cmd
 #
-# USE:
-# sourse module_name [list of functions to export]
+# USAGE:
+# source module_name [list of functions to export]
 
 sys_cmd() {
     # A wrapper for the builtin 'command' for minimizing a risk of reloading
@@ -42,7 +42,7 @@ __sys_export_func__() {
 }
 
 __sys_conf__() {
-    declare -grx __sys_version="v2.0.0"
+    declare -grx __sys_version="v2.0.1"
     declare -gx __sys_exported="sys_cmd"
 }
 

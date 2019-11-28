@@ -27,8 +27,8 @@
 # REQIRES:
 # sys
 #
-# USE:
-# sourse module_name [list of functions to export]
+# USAGE:
+# source module_name [list of functions to export]
 
 str_say() {
     # Prints to stdout with an ability to set a format
@@ -368,7 +368,7 @@ str_strip() {
 }
 
 __str_conf__() {
-    declare -grx __str_version="v2.0.1"
+    declare -grx __str_version="v2.0.2"
     declare -gx __str_exported="str_say str_debug str_err str_readline \
                       str_readlines str_format str_lstrip str_rstrip str_strip"
 

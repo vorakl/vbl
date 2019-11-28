@@ -17,8 +17,8 @@
 # REQIRES:
 # sys, str
 #
-# USE:
-# sourse module_name [list of functions to export]
+# USAGE:
+# source module_name [list of functions to export]
 #
 # EXAMPLE:
 # matrix_ init my_matrix \
@@ -68,7 +68,7 @@ matrix_destroy() {
 }
 
 __matrix_conf__() {
-    declare -rgx __matrix_version="v2.0.0"
+    declare -rgx __matrix_version="v2.0.1"
     declare -gx __matrix_exported="matrix_init matrix_get matrix_set matrix_destroy"
 
     __matrix_get_conf__

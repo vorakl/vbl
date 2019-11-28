@@ -24,8 +24,8 @@
 # REQIRES:
 # sys, str
 #
-# USE:
-# sourse module_name [list of functions to export]
+# USAGE:
+# source module_name [list of functions to export]
 
 exec_run() {
     # A wrapper to run commands and control output, exit status, etc
@@ -375,7 +375,7 @@ __exec_rerun_conf__() {
 }
 
 __exec_conf__() {
-    declare -grx __exec_version="v2.0.0"
+    declare -grx __exec_version="v2.0.1"
     declare -gx __exec_exported="exec_run exec_die exec_check_cmd exec_rerun"
 
     __exec_run_conf__
