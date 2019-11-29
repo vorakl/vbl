@@ -46,4 +46,4 @@ Basically, for me using these modules help to
 * Get started
 * [Examples](https://github.com/vorakl/bash-libs/tree/master/examples)
 * Installation
-* Modifiation of a default configuration
+* Modification of a default configuration

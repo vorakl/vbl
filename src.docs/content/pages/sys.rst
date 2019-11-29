@@ -20,6 +20,21 @@ USAGE
 
     source module_name [list of functions to export]
 
+By default, all functions are exported, so they can be used in sub-shells.
+It is also possible to specify which functions should be exported when a module
+is loaded by defining them as a list in the 'source' command or in the
+`__sys_exported`_ variable.
+
+    .. code-block:: bash
+
+        #!/bin/bash
+
+        start() {
+            source <(curl -sSLf http://bash.libs.cf/latest/sys) sys_cmd
+        }
+
+        start
+
 |
 
 __sys_version
@@ -102,3 +117,6 @@ example:
         }
 
         start
+
+|
+
