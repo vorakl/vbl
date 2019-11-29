@@ -333,14 +333,9 @@ usage:
 parameters:
 -----------
 
-    - *format_string*
-        a common printf's format string
-    - *output_var* or *-*
-        a variable for saving the output. If it's empty or '-', then prints
-        to the stdout
-    - *input*
-        if it's set, then it's used as a source of data. In this case, 
-        the second parameter cannot be empty!
+    - *format_string*, a common printf's format string
+    - *output_var* or *-*, a variable for saving the output. If it's empty or '-', then prints to the stdout
+    - *input*, if it's set, then it's used as a source of data. In this case, the second parameter cannot be empty!
 
 examples:
 ---------
@@ -379,10 +374,8 @@ usage:
 parameters:
 -----------
 
-    - *pattern*
-        a pattern is the same as in pathname expansion. Default is a new line '\n'
-    - *var*
-        a variable where the result will be saved, optional
+    - *pattern*, a pattern is the same as in pathname expansion. Default is a new line '\n'
+    - *var*, a variable where the result will be saved, optional
 
 example:
 --------
@@ -419,10 +412,8 @@ usage:
 parameters:
 -----------
 
-    - *pattern*
-        a pattern is the same as in pathname expansion. Default is a space ' '
-    - *var*
-        a variable where the result will be saved, optional
+    - *pattern*, a pattern is the same as in pathname expansion. Default is a space ' '
+    - *var*, a variable where the result will be saved, optional
 
 example:
 --------
@@ -457,10 +448,8 @@ usage:
 parameters:
 -----------
 
-- *pattern*
-    a pattern is the same as in pathname expansion. Default is a space ' '
-- *var*
-    a variable where the result will be saved, optional
+    - *pattern*, a pattern is the same as in pathname expansion. Default is a space ' '
+    - *var*, a variable where the result will be saved, optional
 
 example:
 --------
