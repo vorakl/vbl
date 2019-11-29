@@ -1,21 +1,145 @@
 <!DOCTYPE html><html lang=en> <head><meta charset=utf-8><title>str :: Vorakl's Libs: Bash</title><meta name=viewport content="width=device-width, initial-scale=1.0"><meta name=robots content=all><link href=https://bash.libs.cf/pages/str/ rel=canonical><meta name=description content="Functions for strings processing"><!--[if lt IE 9]>
     <script src="https://bash.libs.cf/theme/html5.js?v=1497518375"></script>
-    <![endif]--><link rel=stylesheet href="https://bash.libs.cf/theme/bootstrap-pygments.bundle.min.css?v=1497518375"><link rel="shortcut icon" href="/favicon.ico?v=1497518375"><meta name=apple-mobile-web-app-title content="Vorakl's Libs: Bash"><meta name=application-name content="Vorakl's Libs: Bash"></head> <body> <div class=navbar> <div class=navbar-inner> <div class=container> <a href=https://bash.libs.cf/ class=brand>Vorakl's Libs: Bash</a> <a class="btn btn-navbar" data-toggle=collapse data-target=.nav-collapse> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </a> <div class=nav-collapse> <ul class="nav pull-right"> <!-- <li class="divider-vertical"></li> --> <li><a href=https://github.com/vorakl/bash-libs>repo</a></li> <li><a href=https://libs.cf/ >libs</a></li> <li><a href=https://vorakl.com/ >blog</a></li> <li><a href=https://vorakl.com/about/ >author</a></li> <!-- <li class="divider-vertical"></li> --> </ul> </div> </div> </div> </div> <div class=container> <div class=content> <div class=row> <div class=span9> <div class=article> <div class=content-title> <h1>str</h1> <h3>Functions for strings processing</h3> </div> <div><div class=section id=api> <h2>API</h2> <ul class=simple> <li><a class="reference internal" href=#str-version>__str_version</a> &lt;var&gt;</li> <li><a class="reference internal" href=#str-exported>__str_exported</a> &lt;var&gt;</li> <li>STR_SAY_SUPPRESS &lt;var&gt;</li> <li>STR_SAY_FORMAT &lt;var&gt;</li> <li>STR_DEBUG_SUPPRESS &lt;var&gt;</li> <li>STR_DEBUG_FORMAT &lt;var&gt;</li> <li>STR_ERR_SUPPRESS &lt;var&gt;</li> <li>STR_ERR_FORMAT &lt;var&gt;</li> <li><a class="reference internal" href=#str-init>__str_init__</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-say>str_say</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-debug>str_debug</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-err>str_err</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-readline>str_readline</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-readlines>str_readlines</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-format>str_format</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-lstrip>str_lstrip</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-rstrip>str_rstrip</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-strip>str_strip</a> &lt;func&gt;</li> </ul> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=reqires> <h2>REQIRES</h2> <ul class=simple> <li>sys</li> </ul> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=usage> <h2>USAGE</h2> <blockquote> source module_name [list of functions to export]</blockquote> <p>By default, all functions are exported, so they can be used in sub-shells. It is also possible to specify which functions should be exported when a module is loaded by defining them as a list in the 'source' command or in the <a class="reference internal" href=#str-exported>__str_exported</a> variable.</p> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+    <![endif]--><link rel=stylesheet href="https://bash.libs.cf/theme/bootstrap-pygments.bundle.min.css?v=1497518375"><link rel="shortcut icon" href="/favicon.ico?v=1497518375"><meta name=apple-mobile-web-app-title content="Vorakl's Libs: Bash"><meta name=application-name content="Vorakl's Libs: Bash"></head> <body> <div class=navbar> <div class=navbar-inner> <div class=container> <a href=https://bash.libs.cf/ class=brand>Vorakl's Libs: Bash</a> <a class="btn btn-navbar" data-toggle=collapse data-target=.nav-collapse> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </a> <div class=nav-collapse> <ul class="nav pull-right"> <!-- <li class="divider-vertical"></li> --> <li><a href=https://github.com/vorakl/bash-libs>repo</a></li> <li><a href=https://libs.cf/ >libs</a></li> <li><a href=https://vorakl.com/ >blog</a></li> <li><a href=https://vorakl.com/about/ >author</a></li> <!-- <li class="divider-vertical"></li> --> </ul> </div> </div> </div> </div> <div class=container> <div class=content> <div class=row> <div class=span9> <div class=article> <div class=content-title> <h1>str</h1> <h3>Functions for strings processing</h3> </div> <div><div class=section id=api> <h2>API</h2> <ul class=simple> <li><a class="reference internal" href=#str-version>__str_version</a> &lt;var&gt;</li> <li><a class="reference internal" href=#str-exported>__str_exported</a> &lt;var&gt;</li> <li>STR_SAY_SUPPRESS &lt;var&gt;</li> <li>STR_SAY_FORMAT &lt;var&gt;</li> <li>STR_DEBUG_SUPPRESS &lt;var&gt;</li> <li>STR_DEBUG_FORMAT &lt;var&gt;</li> <li>STR_ERR_SUPPRESS &lt;var&gt;</li> <li>STR_ERR_FORMAT &lt;var&gt;</li> <li><a class="reference internal" href=#str-init>__str_init__</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-say>str_say</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-debug>str_debug</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-err>str_err</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-readline>str_readline</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-readlines>str_readlines</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-format>str_format</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-rstrip>str_rstrip</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-lstrip>str_lstrip</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-strip>str_strip</a> &lt;func&gt;</li> </ul> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=reqires> <h2>REQIRES</h2> <ul class=simple> <li>sys</li> </ul> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=usage> <h2>USAGE</h2> <blockquote> source module_name [list of functions to export]</blockquote> <p>By default, all functions are exported, so they can be used in sub-shells. It is also possible to specify which functions should be exported when a module is loaded by defining them as a list in the <strong>'source'</strong> command or in the <a class="reference internal" href=#str-exported>__str_exported</a> variable.</p> <div class=section id=example> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
 
 start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
     <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span> str_say str_err
 <span class=o>}</span>
 
 start
-</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=str-version> <h2>__str_version</h2> <p>This readonly variable contains a current module's version.</p> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=str-exported> <h2>__str_exported</h2> <p>This variable contains a list (separated by a space symbol) of functions that will be exported. It can be altered in the <a class="reference internal" href=#str-init>__str_init__</a> function.</p> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=str-init> <h2>__str_init__</h2> <p>This function has to be defined before the module is imported. It can be used for setting up default values for any function's variables.</p> <div class=section id=example> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=str-version> <h2>__str_version</h2> <p>This readonly variable contains a current module's version.</p> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=str-exported> <h2>__str_exported</h2> <p>This variable contains a list (separated by a space symbol) of functions that will be exported. It can be altered in the <a class="reference internal" href=#str-init>__str_init__</a> function.</p> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=str-init> <h2>__str_init__</h2> <p>This function has to be defined before the module is imported. It can be used for setting up default values for any function's variables.</p> <div class=section id=id1> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
 
 __str_init__<span class=o>()</span> <span class=o>{</span>
     <span class=nv>__str_exported</span><span class=o>=</span><span class=s2>&quot;str_say str_err str_debug&quot;</span>
 <span class=o>}</span>
 
 start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
     <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
 <span class=o>}</span>
 
 start
-</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=str-say> <h2>str_say</h2> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=str-debug> <h2>str_debug</h2> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=str-err> <h2>str_err</h2> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=str-readline> <h2>str_readline</h2> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=str-readlines> <h2>str_readlines</h2> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=str-format> <h2>str_format</h2> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=str-lstrip> <h2>str_lstrip</h2> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=str-rstrip> <h2>str_rstrip</h2> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=str-strip> <h2>str_strip</h2> <div class=line-block> <div class=line><br></div> </div> </div> </div> </div> <div class=article> <p>Share on <a href="https://twitter.com/intent/tweet?text=str:%20Functions%20for%20strings%20processing&url=https://bash.libs.cf/pages/str/">Twitter</a></p> </div> </div> <div class=span3> <div class=well style="padding: 8px 0; background-color: #FBFBFB;"> <ul class="nav nav-list"> <li class=nav-header> Modules </li> <li><a href=/pages/sys/ >sys</a></li> <li><a href=/pages/str/ >str</a></li> <li><a href=/pages/exec/ >exec</a></li> <li><a href=/pages/matrix/ >matrix</a></li> </ul> </div> </div> </div> </div> <footer> <div class=container> <div class=row> <div class=span5> <span class=pull-left> &copy; 2019 <a href=https://vorakl.com/contacts/ >Oleksii Tsvietnov</a> All Rights Reserved </span> </div> <div class=span7> <div class=pull-right> Powered by <a href=https://github.com/getpelican/pelican>Pelican</a> and <a href=https://aves.cf/ >Aves</a> theme </div> </div> </div> </div> </footer> </div> <script src="https://bash.libs.cf/theme/jquery-bootstrap-collapse.bundle.min.js?v=1497518375"></script> </body> </html>
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=str-say> <h2>str_say</h2> <p>Prints to the STDOUT with an ability to set a format.</p> <div class=section id=id2> <h3>usage:</h3> <blockquote> <strong>str_say</strong> arg [...]</blockquote> </div> <div class=section id=options> <h3>options:</h3> <blockquote> <ul class=simple> <li><em>STR_SAY_SUPPRESS</em>, default is &quot;0&quot;</li> <li><em>STR_SAY_FORMAT</em>, default is &quot;%sn&quot;</li> </ul> </blockquote> </div> <div class=section id=examples> <h3>examples:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+__str_init__<span class=o>()</span> <span class=o>{</span>
+    <span class=nv>STR_SAY_FORMAT</span><span class=o>=</span><span class=s2>&quot;[INFO]: %s\n&quot;</span>
+<span class=o>}</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+
+    str_say <span class=s2>&quot;Hello World&quot;</span>
+<span class=o>}</span>
+
+start
+</pre></div> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+
+    <span class=nv>STR_SAY_FORMAT</span><span class=o>=</span><span class=s2>&quot;INFO [%s]: %s\n&quot;</span> <span class=se>\</span>
+        str_say <span class=s2>&quot;main&quot;</span> <span class=s2>&quot;Loading to memory...&quot;</span>
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=str-debug> <h2>str_debug</h2> <p>Prints to the STDOUT as <strong>'say'</strong> does but only if STR_DEBUG_SUPPRESS is turned off. It's useful for having a controlled higher level of verbosity.</p> <div class=section id=id3> <h3>usage:</h3> <blockquote> <strong>str_debug</strong> arg [...]</blockquote> </div> <div class=section id=id4> <h3>options:</h3> <blockquote> <ul class=simple> <li><em>STR_DEBUG_SUPPRESS</em>, default is &quot;1&quot;</li> <li><em>STR_DEBUG_FORMAT</em>, defalt is &quot;%sn&quot;</li> </ul> </blockquote> </div> <div class=section id=id5> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+
+    <span class=nv>STR_DEBUG_SUPPRESS</span><span class=o>=</span><span class=s2>&quot;0&quot;</span> <span class=nv>STR_DEBUG_FORMAT</span><span class=o>=</span><span class=s2>&quot;DEBUG: %s\n&quot;</span> <span class=se>\</span>
+      str_debug <span class=s2>&quot;The queue is empty&quot;</span>
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=str-err> <h2>str_err</h2> <p>Prints to the STDERR with an ability to set a format.</p> <div class=section id=id6> <h3>usage:</h3> <blockquote> <strong>str_err</strong> arg [...]</blockquote> </div> <div class=section id=id7> <h3>options:</h3> <blockquote> <ul class=simple> <li><em>STR_ERR_SUPPRESS</em>, default is &quot;0&quot;</li> <li><em>STR_ERR_FORMAT</em>, default is &quot;%sn&quot;</li> </ul> </blockquote> </div> <div class=section id=id8> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+__str_init__<span class=o>()</span> <span class=o>{</span>
+    <span class=nv>STR_ERR_FORMAT</span><span class=o>=</span><span class=s2>&quot;[ERROR]: %s\n&quot;</span>
+<span class=o>}</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+
+    str_err <span class=s2>&quot;the connection has been closed!&quot;</span>
+    <span class=nv>STR_ERR_FORMAT</span><span class=o>=</span><span class=s2>&quot;WARN: %s\n&quot;</span> <span class=se>\</span>
+        str_err <span class=s2>&quot;too much arguments.&quot;</span>
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=str-readline> <h2>str_readline</h2> <p>Reads symbols from the STDIN or a file descriptor, until it faced a delimiter or the EOF. A delimiter can be defined. It also doesn't matter if a string ends with a specified delimiter (by default it's 'n') or not. That's why it's much safer to be used in a while loop to read a stream which may not have a defined delimiter at the end of the last string.</p> <div class=section id=id9> <h3>usage:</h3> <blockquote> <strong>str_readline</strong> [--delim char] [--fd num] [--] var</blockquote> </div> <div class=section id=parameters> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>--delim</em>, a delimiter of a string (default is 'n')</li> <li><em>--fd</em>, a file descriptor to read from (default is 0)</li> <li><em>var</em>, a variable for storing a result</li> </ul> </blockquote> </div> <div class=section id=id10> <h3>examples:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+
+    <span class=c1># the result should contain all 3 strings and first 2 start with spaces</span>
+    <span class=nb>printf</span> <span class=s1>&#39;  Hi!\n    How are you?\nBye&#39;</span> <span class=p>|</span> <span class=se>\</span>
+        <span class=k>while</span> str_readline str<span class=p>;</span> <span class=k>do</span> <span class=nb>echo</span> <span class=s2>&quot;</span><span class=si>${</span><span class=nv>str</span><span class=si>}</span><span class=s2>&quot;</span><span class=p>;</span> <span class=k>done</span>
+
+    <span class=c1># reads strings which end with &#39;\0&#39; symbol instead of &#39;\n&#39;</span>
+    cat /proc/self/environ <span class=p>|</span> <span class=se>\</span>
+        <span class=k>while</span> str_readline --delim <span class=s1>&#39;&#39;</span> str<span class=p>;</span> <span class=k>do</span> <span class=nb>echo</span> <span class=s2>&quot;[</span><span class=si>${</span><span class=nv>str</span><span class=si>}</span><span class=s2>]&quot;</span><span class=p>;</span> <span class=k>done</span>
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=str-readlines> <h2>str_readlines</h2> <p>Reads strings from the STDIN until it faced the EOF and save them in an array. It also behaves correctly if there is no a delimiter at the end of the last string.</p> <div class=section id=id11> <h3>usage:</h3> <blockquote> <strong>str_readlines</strong> [--delim char] [--fd num] [--] arr</blockquote> </div> <div class=section id=id12> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>--delim</em>, a delimiter of a string (default is $'n')</li> <li><em>--fd</em>, a file descriptor to read from (default is 0)</li> <li><em>arr</em>, an array variable for storing the result</li> </ul> </blockquote> </div> <div class=section id=id13> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+
+    <span class=c1># reads strings which end with &#39;\0&#39; symbol instead of &#39;\n&#39;</span>
+    str_readlines --delim <span class=s1>$&#39;\0&#39;</span> myenv &lt; /proc/self/environ <span class=o>&amp;&amp;</span> <span class=se>\</span>
+        <span class=nb>echo</span> <span class=s2>&quot;</span><span class=si>${</span><span class=nv>myenv</span><span class=p>[0]</span><span class=si>}</span><span class=s2>&quot;</span>
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=str-format> <h2>str_format</h2> <p>This is a wrapper around printf which allows you to have a formated output for data taken from the stdin. In this case the whole stream is considered as one blob until it faces '0' or the EOF. It is also possible to define as an input the last parameter (input) as a source of data instead of using the stdin. An output can be sent to another variable or to the stdout if '-' was used instead of a variable's name.</p> <div class=section id=id14> <h3>usage:</h3> <blockquote> <strong>str_format</strong> format_string [output_var|-] [input]</blockquote> </div> <div class=section id=id15> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><dl class="first docutils"> <dt><em>format_string</em></dt> <dd>a common printf's format string</dd> </dl> </li> <li><dl class="first docutils"> <dt><em>output_var</em> or <em>-</em></dt> <dd>a variable for saving the output. If it's empty or '-', then prints to the stdout</dd> </dl> </li> <li><dl class="first docutils"> <dt><em>input</em></dt> <dd>if it's set, then it's used as a source of data. In this case, the second parameter cannot be empty!</dd> </dl> </li> </ul> </blockquote> </div> <div class=section id=id16> <h3>examples:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+
+    str_format <span class=s2>&quot;%014.2f&quot;</span> my_float <span class=s2>&quot;1.48732599&quot;</span> <span class=o>&amp;&amp;</span> <span class=nb>echo</span> <span class=si>${</span><span class=nv>my_float</span><span class=si>}</span>
+    str_format <span class=s2>&quot;The current time: %(%H:%M:%S)T\n&quot;</span> - <span class=s2>&quot;</span><span class=k>$(</span>date <span class=s1>&#39;+%s&#39;</span><span class=k>)</span><span class=s2>&quot;</span>
+    <span class=nb>echo</span> -ne <span class=s1>&#39;Hello\nWorld&#39;</span> <span class=p>|</span> str_format <span class=s2>&quot;[%s]\n&quot;</span>
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=str-rstrip> <h2>str_rstrip</h2> <p>Removes all occurrences of a specified pattern from the right side. It's important to notice that the function reads the whole stream as one blob until it faces '0' or the end of data. All other special symbols are treated as normal, including 'n'. The result can be saved to a variable or sent to the stdout without adding 'n' to the end, as is.</p> <div class=section id=id17> <h3>usage:</h3> <blockquote> <strong>str_rstrip</strong> [pattern] [var]</blockquote> </div> <div class=section id=id18> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><dl class="first docutils"> <dt><em>pattern</em></dt> <dd>a pattern is the same as in pathname expansion. Default is a new line 'n'</dd> </dl> </li> <li><dl class="first docutils"> <dt><em>var</em></dt> <dd>a variable where the result will be saved, optional</dd> </dl> </li> </ul> </blockquote> </div> <div class=section id=id19> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+
+    str_rstrip &lt; &lt;<span class=o>(</span><span class=nb>printf</span> <span class=s2>&quot;Hello\n\n\n\n&quot;</span><span class=o>)</span>
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=str-lstrip> <h2>str_lstrip</h2> <p>Removes all occurrences of a specified pattern from the left side. It's important to notice that the function reads the whole stream as one blob until it faces '0' or the end of data. All other special symbols are treated as normal, including 'n'. The result can be saved to a variable or sent to stdout without adding 'n' to the end, as is.</p> <div class=section id=id20> <h3>usage:</h3> <blockquote> <strong>str_lstrip</strong> [pattern] [var]</blockquote> </div> <div class=section id=id21> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><dl class="first docutils"> <dt><em>pattern</em></dt> <dd>a pattern is the same as in pathname expansion. Default is a space ' '</dd> </dl> </li> <li><dl class="first docutils"> <dt><em>var</em></dt> <dd>a variable where the result will be saved, optional</dd> </dl> </li> </ul> </blockquote> </div> <div class=section id=id22> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+
+    str_lstrip <span class=o>&lt;&lt;&lt;</span> <span class=s2>&quot;     Hello&quot;</span>
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=str-strip> <h2>str_strip</h2> <p>Removes all occurrences of a specified pattern from both sides. Keep in mind that usualy strings end with a new line symbol 'n' and to use this function, first you need to remove it from the right.</p> <div class=section id=id23> <h3>usage:</h3> <blockquote> <strong>str_strip</strong> [pattern] [var]</blockquote> </div> <div class=section id=id24> <h3>parameters:</h3> <ul class=simple> <li><dl class="first docutils"> <dt><em>pattern</em></dt> <dd>a pattern is the same as in pathname expansion. Default is a space ' '</dd> </dl> </li> <li><dl class="first docutils"> <dt><em>var</em></dt> <dd>a variable where the result will be saved, optional</dd> </dl> </li> </ul> </div> <div class=section id=id25> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+
+    <span class=o>{</span> str_rstrip <span class=p>|</span> str_strip <span class=p>|</span> str_format <span class=s2>&quot;[%s]\n&quot;</span><span class=p>;</span> <span class=o>}</span> <span class=o>&lt;&lt;&lt;</span> <span class=s2>&quot;   Hello   &quot;</span>
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> </div> </div> <div class=article> <p>Share on <a href="https://twitter.com/intent/tweet?text=str:%20Functions%20for%20strings%20processing&url=https://bash.libs.cf/pages/str/">Twitter</a></p> </div> </div> <div class=span3> <div class=well style="padding: 8px 0; background-color: #FBFBFB;"> <ul class="nav nav-list"> <li class=nav-header> Modules </li> <li><a href=/pages/sys/ >sys</a></li> <li><a href=/pages/str/ >str</a></li> <li><a href=/pages/exec/ >exec</a></li> <li><a href=/pages/matrix/ >matrix</a></li> </ul> </div> </div> </div> </div> <footer> <div class=container> <div class=row> <div class=span5> <span class=pull-left> &copy; 2019 <a href=https://vorakl.com/contacts/ >Oleksii Tsvietnov</a> All Rights Reserved </span> </div> <div class=span7> <div class=pull-right> Powered by <a href=https://github.com/getpelican/pelican>Pelican</a> and <a href=https://aves.cf/ >Aves</a> theme </div> </div> </div> </div> </footer> </div> <script src="https://bash.libs.cf/theme/jquery-bootstrap-collapse.bundle.min.js?v=1497518375"></script> </body> </html>

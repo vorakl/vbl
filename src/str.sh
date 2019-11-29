@@ -53,7 +53,7 @@ __str_say_conf__() {
 }
 
 str_debug() {
-    # Prints to stdout as 'say' does but only if debug_suppress is turned off.
+    # Prints to stdout as 'say' does but only if STR_DEBUG_SUPPRESS is turned off.
     # It's useful for having a controlled higher level of verbosity.
     #
     # usage:
@@ -368,7 +368,7 @@ str_strip() {
 }
 
 __str_conf__() {
-    declare -grx __str_version="v2.0.2"
+    declare -grx __str_version="v2.0.3"
     declare -gx __str_exported="str_say str_debug str_err str_readline \
                       str_readlines str_format str_lstrip str_rstrip str_strip"
 

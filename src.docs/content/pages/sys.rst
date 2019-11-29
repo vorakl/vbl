@@ -25,6 +25,9 @@ It is also possible to specify which functions should be exported when a module
 is loaded by defining them as a list in the 'source' command or in the
 `__sys_exported`_ variable.
 
+example:
+--------
+
     .. code-block:: bash
 
         #!/bin/bash
@@ -98,8 +101,8 @@ parameters:
 
     All parameters of the 'cmd' command. For instance:
 
-    * **-p**,  search in standard paths only
-    * **-v**,  check if a command exists
+    - *-p*, search in standard paths only
+    - *-v*, check if a command exists
 
 example:
 --------
