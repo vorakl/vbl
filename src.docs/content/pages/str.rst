@@ -117,7 +117,7 @@ options:
 --------
 
     - *STR_SAY_SUPPRESS*, default is "0"
-    - *STR_SAY_FORMAT*, default is "%s\n" 
+    - *STR_SAY_FORMAT*, default is ``"%s\n"`` 
 
 examples:
 ---------
@@ -170,7 +170,7 @@ options:
 --------
 
     - *STR_DEBUG_SUPPRESS*, default is "1"
-    - *STR_DEBUG_FORMAT*, defalt is "%s\n"
+    - *STR_DEBUG_FORMAT*, defalt is ``"%s\n"``
 
 example:
 --------
@@ -205,7 +205,7 @@ options:
 --------
 
     - *STR_ERR_SUPPRESS*, default is "0"
-    - *STR_ERR_FORMAT*, default is "%s\n"
+    - *STR_ERR_FORMAT*, default is ``"%s\n"``
 
 example:
 --------
@@ -236,7 +236,7 @@ str_readline
 
 Reads symbols from the STDIN or a file descriptor, until it faced a delimiter
 or the EOF. A delimiter can be defined. It also doesn't matter if
-a string ends with a specified delimiter (by default it's '\n') or not.
+a string ends with a specified delimiter (by default it's ``"\n"``) or not.
 That's why it's much safer to be used in a while loop to read a stream
 which may not have a defined delimiter at the end of the last string.
 
@@ -248,7 +248,7 @@ usage:
 parameters:
 -----------
 
-    - *--delim*, a delimiter of a string (default is '\n')
+    - *--delim*, a delimiter of a string (default is ``"\n"``)
     - *--fd*, a file descriptor to read from (default is 0)
     - *var*, a variable for storing a result
 
@@ -291,7 +291,7 @@ usage:
 parameters:
 -----------
 
-    - *--delim*, a delimiter of a string (default is $'\n')
+    - *--delim*, a delimiter of a string (default is ``"\n"``)
     - *--fd*, a file descriptor to read from (default is 0)
     - *arr*, an array variable for storing the result
 
@@ -320,7 +320,7 @@ str_format
 
 This is a wrapper around printf which allows you to have a formated output
 for data taken from the stdin. In this case the whole stream is considered
-as one blob until it faces '\0' or the EOF. It is also possible to define
+as one blob until it faces ``"\0"`` or the EOF. It is also possible to define
 as an input the last parameter (input) as a source of data instead
 of using the stdin. An output can be sent to another variable or
 to the stdout if '-' was used instead of a variable's name.
@@ -362,9 +362,9 @@ str_rstrip
 
 Removes all occurrences of a specified pattern from the right side.
 It's important to notice that the function reads the whole stream
-as one blob until it faces '\0' or the end of data. All other special symbols
-are treated as normal, including '\n'. The result can be saved to a variable
-or sent to the stdout without adding '\n' to the end, as is.
+as one blob until it faces ``"\0"`` or the end of data. All other special symbols
+are treated as normal, including ``"\n"``. The result can be saved to a variable
+or sent to the stdout without adding ``"\n"`` to the end, as is.
 
 usage:
 ------
@@ -374,7 +374,7 @@ usage:
 parameters:
 -----------
 
-    - *pattern*, a pattern is the same as in pathname expansion. Default is a new line '\n'
+    - *pattern*, a pattern is the same as in pathname expansion. Default is a new line ``"\n"``
     - *var*, a variable where the result will be saved, optional
 
 example:
@@ -400,9 +400,9 @@ str_lstrip
 
 Removes all occurrences of a specified pattern from the left side.
 It's important to notice that the function reads the whole stream
-as one blob until it faces '\0' or the end of data. All other special symbols
-are treated as normal, including '\n'. The result can be saved to a variable
-or sent to stdout without adding '\n' to the end, as is.
+as one blob until it faces ``"\0"`` or the end of data. All other special symbols
+are treated as normal, including ``"\n"``. The result can be saved to a variable
+or sent to stdout without adding ``"\n"`` to the end, as is.
 
 usage:
 ------
@@ -437,7 +437,7 @@ str_strip
 =========
 
 Removes all occurrences of a specified pattern from both sides.
-Keep in mind that usualy strings end with a new line symbol '\n' and
+Keep in mind that usualy strings end with a new line symbol ``"\n"`` and
 to use this function, first you need to remove it from the right.
 
 usage:
