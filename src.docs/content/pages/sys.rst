@@ -17,8 +17,9 @@ API
 
 USAGE
 =====
+    ::
 
-    source module_name [list of functions to export]
+        source module_name [list of functions to export]
 
 By default, all functions are exported, so they can be used in sub-shells.
 It is also possible to specify which functions should be exported when a module
@@ -64,8 +65,8 @@ It can be used for setting up default values for any function's variables.
 example:
 --------
 
-    .. code-block:: bash                                                            
-                                                                                    
+    .. code-block:: bash
+
         #!/bin/bash
 
         __sys_init__() {
@@ -93,8 +94,9 @@ First, it checks in builtins. Then, it tries to find an external command.
 
 usage:
 ------
+    ::
 
-    **sys_cmd** arg [..]
+        sys_cmd arg [..]
 
 parameters:
 -----------
@@ -107,7 +109,7 @@ parameters:
 example:
 --------
 
-    .. code-block:: bash                                                            
+    .. code-block:: bash
 
         #!/bin/bash
 

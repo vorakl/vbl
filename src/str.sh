@@ -7,12 +7,12 @@
 # API:
 # <var>  __str_version
 # <var>  __str_exported
-# <var> STR_SAY_SUPPRESS
-# <var> STR_SAY_FORMAT
-# <var> STR_DEBUG_SUPPRESS
-# <var> STR_DEBUG_FORMAT
-# <var> STR_ERR_SUPPRESS
-# <var> STR_ERR_FORMAT
+# <var>  STR_SAY_SUPPRESS
+# <var>  STR_SAY_FORMAT
+# <var>  STR_DEBUG_SUPPRESS
+# <var>  STR_DEBUG_FORMAT
+# <var>  STR_ERR_SUPPRESS
+# <var>  STR_ERR_FORMAT
 # <func> __str_init__
 # <func> str_say
 # <func> str_debug

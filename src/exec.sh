@@ -7,14 +7,14 @@
 # API:
 # <var>  __exec_version
 # <var>  __exec_exported
-# <var> EXEC_RUN_WARN_FORMAT
-# <var> EXEC_RUN_ENSURE_FORMAT
-# <var> EXEC_DIE_EXITCODE
-# <var> EXEC_DIE_FORMAT
-# <var> EXEC_CHECK_CMD_WARN_FORMAT
-# <var> EXEC_CHECK_CMD_ENSURE_FORMAT
-# <var> EXEC_RERUN_TRIES
-# <var> EXEC_RERUN_SLEEP
+# <var>  EXEC_RUN_WARN_FORMAT
+# <var>  EXEC_RUN_ENSURE_FORMAT
+# <var>  EXEC_DIE_EXITCODE
+# <var>  EXEC_DIE_FORMAT
+# <var>  EXEC_CHECK_CMD_WARN_FORMAT
+# <var>  EXEC_CHECK_CMD_ENSURE_FORMAT
+# <var>  EXEC_RERUN_TRIES
+# <var>  EXEC_RERUN_SLEEP
 # <func> __exec_init__
 # <func> exec_run
 # <func> exec_check_cmd
@@ -31,9 +31,9 @@ exec_run() {
     # A wrapper to run commands and control output, exit status, etc
     #
     # usage:
-    #   exec_run [ --silent| 
-    #             (--no-out|--save-out var)|
-    #             (--no-err|--save-err var|--err-to-out)
+    #   exec_run [ --silent | \
+    #             (--no-out|--save-out var) | \
+    #             (--no-err|--save-err var|--err-to-out) \
     #            ] \
     #            [--ignore|--warn|--ensure] \
     #            [--] \

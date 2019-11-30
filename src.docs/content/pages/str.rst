@@ -38,8 +38,9 @@ REQIRES
 
 USAGE
 =====
+    ::
 
-    source module_name [list of functions to export]
+        source module_name [list of functions to export]
 
 By default, all functions are exported, so they can be used in sub-shells.
 It is also possible to specify which functions should be exported when a module
@@ -110,8 +111,9 @@ Prints to the STDOUT with an ability to set a format.
 
 usage:
 ------
+    ::
 
-    **str_say** arg [...]
+        str_say arg [...]
 
 options:
 --------
@@ -163,8 +165,9 @@ off. It's useful for having a controlled higher level of verbosity.
 
 usage:
 ------
+    ::
 
-    **str_debug** arg [...]
+        str_debug arg [...]
 
 options:
 --------
@@ -198,8 +201,9 @@ Prints to the STDERR with an ability to set a format.
 
 usage:
 ------
+    ::
 
-    **str_err** arg [...]
+        str_err arg [...]
 
 options:
 --------
@@ -242,8 +246,9 @@ which may not have a defined delimiter at the end of the last string.
 
 usage:
 ------
+    ::
 
-    **str_readline** [--delim char] [--fd num] [--] var
+        str_readline [--delim char] [--fd num] [--] var
 
 parameters:
 -----------
@@ -285,8 +290,9 @@ the last string.
 
 usage:
 ------
+    ::
 
-    **str_readlines** [--delim char] [--fd num] [--] arr
+        str_readlines [--delim char] [--fd num] [--] arr
 
 parameters:
 -----------
@@ -327,15 +333,18 @@ to the stdout if '-' was used instead of a variable's name.
 
 usage:
 ------
+    ::
 
-    **str_format** format_string [output_var|-] [input]
+        str_format format_string [output_var|-] [input]
 
 parameters:
 -----------
 
     - *format_string*, a common printf's format string
-    - *output_var* or *-*, a variable for saving the output. If it's empty or '-', then prints to the stdout
-    - *input*, if it's set, then it's used as a source of data. In this case, the second parameter cannot be empty!
+    - *output_var* or *-*, a variable for saving the output.
+      If it's empty or '-', then prints to the stdout
+    - *input*, if it's set, then it's used as a source of data.
+      In this case, the second parameter cannot be empty!
 
 examples:
 ---------
@@ -368,13 +377,15 @@ or sent to the stdout without adding ``"\n"`` to the end, as is.
 
 usage:
 ------
+    ::
 
-    **str_rstrip** [pattern] [var]
+        str_rstrip [pattern] [var]
 
 parameters:
 -----------
 
-    - *pattern*, a pattern is the same as in pathname expansion. Default is a new line ``"\n"``
+    - *pattern*, a pattern is the same as in pathname expansion.
+      Default is a new line ``"\n"``
     - *var*, a variable where the result will be saved, optional
 
 example:
@@ -406,13 +417,15 @@ or sent to stdout without adding ``"\n"`` to the end, as is.
 
 usage:
 ------
+    ::
 
-    **str_lstrip** [pattern] [var]
+        str_lstrip [pattern] [var]
 
 parameters:
 -----------
 
-    - *pattern*, a pattern is the same as in pathname expansion. Default is a space ' '
+    - *pattern*, a pattern is the same as in pathname expansion.
+      Default is a space ' '
     - *var*, a variable where the result will be saved, optional
 
 example:
@@ -442,13 +455,15 @@ to use this function, first you need to remove it from the right.
 
 usage:
 ------
+    ::
 
-    **str_strip** [pattern] [var]
+        str_strip [pattern] [var]
 
 parameters:
 -----------
 
-    - *pattern*, a pattern is the same as in pathname expansion. Default is a space ' '
+    - *pattern*, a pattern is the same as in pathname expansion.
+      Default is a space ' '
     - *var*, a variable where the result will be saved, optional
 
 example:

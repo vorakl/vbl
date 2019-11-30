@@ -53,21 +53,7 @@ Modules
 * exec
 * matrix
 
-All current versions are stored in latest.lst_. It makes it easy to check 
-the latest versions right from the code, like
-
-.. code-block:: bash
-
-    #!/bin/bash
-
-    lib_versions() ( 
-        source <(curl -sSLf http://bash.libs.cf/latest.lst)
-        for m in sys str exec matrix; do 
-            eval echo "$m: \$$m"
-        done 
-    )
-
-    lib_versions
+All current versions are stored in latest.lst_.
 
 |
 

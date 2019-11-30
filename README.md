@@ -43,19 +43,6 @@ Basically, for me using these modules help to
 All current versions are stored in [latest.lst](http://bash.libs.cf/latest.lst).
 It makes it easy to check the latest versions right from the code, like
 
-```bash
-#!/bin/bash
-
-lib_versions() (
-    source <(curl -sSLf http://bash.libs.cf/latest.lst)
-    for m in sys str exec matrix; do
-        eval echo "$m: \$$m"
-    done
-)
-
-lib_versions
-```
-
 ## Other documentation
 
 * Get started
