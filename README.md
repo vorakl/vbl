@@ -28,18 +28,33 @@ module.
 
 Basically, for me using these modules help to
 
-* reuse the same code everywhere which is checked and proved by the time
-* simplify and speed up a development
-* increase code readability
+1. reuse the same code everywhere which is checked and proved by the time
+2. simplify and speed up a development
+3. increase code readability
 
 
 ## Modules
 
 * [sys](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/sys.rst)
 * [str](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/str.rst)
-* [exec](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/exec.rst)
-* [matrix](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/matrix.rst)
+* exec
+* matrix
 
+All current versions are stored in [latest.lst](http://bash.libs.cf/latest.lst).
+It makes it easy to check the latest versions right from the code, like
+
+```bash
+#!/bin/bash
+
+lib_versions() (
+    source <(curl -sSLf http://bash.libs.cf/latest.lst)
+    for m in sys str exec matrix; do
+        eval echo "$m: \$$m"
+    done
+)
+
+lib_versions
+```
 
 ## Other documentation
 
