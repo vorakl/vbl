@@ -1,5 +1,5 @@
-str
-###
+Module: str
+###########
 
 :slug: str
 :summary: Functions for strings processing

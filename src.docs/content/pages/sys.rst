@@ -1,5 +1,5 @@
-sys
-###
+Module: sys
+###########
 
 :slug: sys
 :summary: Essential system functions

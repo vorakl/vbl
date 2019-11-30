@@ -5,18 +5,23 @@
     <changefreq>daily</changefreq>
 </url>
 <url>
+    <loc>https://bash.libs.cf/pages/info-old/</loc>
+    <changefreq>weekly</changefreq>
+    <lastmod>2019-11-30</lastmod>
+</url>
+<url>
     <loc>https://bash.libs.cf/pages/info/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-11-27</lastmod>
+    <lastmod>2019-11-30</lastmod>
 </url>
 <url>
     <loc>https://bash.libs.cf/pages/str/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-11-29</lastmod>
+    <lastmod>2019-11-30</lastmod>
 </url>
 <url>
     <loc>https://bash.libs.cf/pages/sys/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-11-29</lastmod>
+    <lastmod>2019-11-30</lastmod>
 </url>
 </urlset>
