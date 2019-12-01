@@ -201,9 +201,9 @@ exec_die() {
     #
     # examples:
     #   exec_die "A file does not exist"
-    #   exec_die --exitscode 15 "A host is not reachable"
+    #   exec_die --exitcode 15 "A host is not reachable"
     #   EXEC_DIE_FORMAT="FATAL: '%s' has failed with '%d' exitcode\n" \
-    #       exec_die --exitcode 34 "cp" "${$_rc}"
+    #       exec_die --exitcode 34 "cp" "${_rc}"
 
     declare _arg=""
     declare -i _exitcode="${EXEC_DIE_EXITCODE}"
