@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang=en> <head><meta charset=utf-8><title>Module: exec :: Vorakl's Libs: Bash</title><meta name=viewport content="width=device-width, initial-scale=1.0"><meta name=robots content=all><link href=https://bash.libs.cf/pages/exec/ rel=canonical><meta name=description content="Functions related to executing commands"><!--[if lt IE 9]>
-    <script src="https://bash.libs.cf/theme/html5.js?v=1497518378"></script>
-    <![endif]--><link rel=stylesheet href="https://bash.libs.cf/theme/bootstrap-pygments.bundle.min.css?v=1497518378"><link rel="shortcut icon" href="/favicon.ico?v=1497518378"><meta name=apple-mobile-web-app-title content="Vorakl's Libs: Bash"><meta name=application-name content="Vorakl's Libs: Bash"></head> <body> <div class=navbar> <div class=navbar-inner> <div class=container> <a href=https://bash.libs.cf/ class=brand>Vorakl's Libs: Bash</a> <a class="btn btn-navbar" data-toggle=collapse data-target=.nav-collapse> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </a> <div class=nav-collapse> <ul class="nav pull-right"> <!-- <li class="divider-vertical"></li> --> <li><a href=https://github.com/vorakl/bash-libs>repo</a></li> <li><a href=https://libs.cf/ >libs</a></li> <li><a href=https://vorakl.com/ >blog</a></li> <li><a href=https://vorakl.com/about/ >author</a></li> <!-- <li class="divider-vertical"></li> --> </ul> </div> </div> </div> </div> <div class=container> <div class=content> <div class=row> <div class=span9> <div class=article> <div class=content-title> <h1>Module: exec</h1> <h3>Functions related to executing commands</h3> </div> <div><div class=section id=api> <h2>API</h2> <ul class=simple> <li><a class="reference internal" href=#exec-version>__exec_version</a> &lt;var&gt;</li> <li><a class="reference internal" href=#exec-exported>__exec_exported</a> &lt;var&gt;</li> <li>EXEC_RUN_WARN_FORMAT &lt;var&gt;</li> <li>EXEC_RUN_ENSURE_FORMAT &lt;var&gt;</li> <li>EXEC_DIE_EXITCODE &lt;var&gt;</li> <li>EXEC_DIE_FORMAT &lt;var&gt;</li> <li>EXEC_CHECK_CMD_WARN_FORMAT &lt;var&gt;</li> <li>EXEC_CHECK_CMD_ENSURE_FORMAT &lt;var&gt;</li> <li>EXEC_RERUN_TRIES &lt;var&gt;</li> <li>EXEC_RERUN_SLEEP &lt;var&gt;</li> <li><a class="reference internal" href=#exec-init>__exec_init__</a> &lt;func&gt;</li> <li><a class="reference internal" href=#exec-run>exec_run</a> &lt;func&gt;</li> <li><a class="reference internal" href=#exec-die>exec_die</a> &lt;func&gt;</li> <li>exec_check_cmd &lt;func&gt;</li> <li>exec_rerun &lt;func&gt;</li> </ul> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=reqires> <h2>REQIRES</h2> <ul class=simple> <li>sys</li> <li>str</li> </ul> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=usage> <h2>USAGE</h2> <blockquote> <pre class=literal-block>
+    <script src="https://bash.libs.cf/theme/html5.js?v=1497518379"></script>
+    <![endif]--><link rel=stylesheet href="https://bash.libs.cf/theme/bootstrap-pygments.bundle.min.css?v=1497518379"><link rel="shortcut icon" href="/favicon.ico?v=1497518379"><meta name=apple-mobile-web-app-title content="Vorakl's Libs: Bash"><meta name=application-name content="Vorakl's Libs: Bash"></head> <body> <div class=navbar> <div class=navbar-inner> <div class=container> <a href=https://bash.libs.cf/ class=brand>Vorakl's Libs: Bash</a> <a class="btn btn-navbar" data-toggle=collapse data-target=.nav-collapse> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </a> <div class=nav-collapse> <ul class="nav pull-right"> <!-- <li class="divider-vertical"></li> --> <li><a href=https://github.com/vorakl/bash-libs>repo</a></li> <li><a href=https://libs.cf/ >libs</a></li> <li><a href=https://vorakl.com/ >blog</a></li> <li><a href=https://vorakl.com/about/ >author</a></li> <!-- <li class="divider-vertical"></li> --> </ul> </div> </div> </div> </div> <div class=container> <div class=content> <div class=row> <div class=span9> <div class=article> <div class=content-title> <h1>Module: exec</h1> <h3>Functions related to executing commands</h3> </div> <div><div class=section id=api> <h2>API</h2> <ul class=simple> <li><a class="reference internal" href=#exec-version>__exec_version</a> &lt;var&gt;</li> <li><a class="reference internal" href=#exec-exported>__exec_exported</a> &lt;var&gt;</li> <li>EXEC_RUN_WARN_FORMAT &lt;var&gt;</li> <li>EXEC_RUN_ENSURE_FORMAT &lt;var&gt;</li> <li>EXEC_DIE_EXITCODE &lt;var&gt;</li> <li>EXEC_DIE_FORMAT &lt;var&gt;</li> <li>EXEC_CHECK_CMD_WARN_FORMAT &lt;var&gt;</li> <li>EXEC_CHECK_CMD_ENSURE_FORMAT &lt;var&gt;</li> <li>EXEC_RERUN_TRIES &lt;var&gt;</li> <li>EXEC_RERUN_SLEEP &lt;var&gt;</li> <li><a class="reference internal" href=#exec-init>__exec_init__</a> &lt;func&gt;</li> <li><a class="reference internal" href=#exec-run>exec_run</a> &lt;func&gt;</li> <li><a class="reference internal" href=#exec-die>exec_die</a> &lt;func&gt;</li> <li><a class="reference internal" href=#exec-check-cmd>exec_check_cmd</a> &lt;func&gt;</li> <li><a class="reference internal" href=#exec-rerun>exec_rerun</a> &lt;func&gt;</li> </ul> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=reqires> <h2>REQIRES</h2> <ul class=simple> <li>sys</li> <li>str</li> </ul> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=usage> <h2>USAGE</h2> <blockquote> <pre class=literal-block>
 source module_name [list of functions to export]
 </pre> </blockquote> <p>By default, all functions are exported, so they can be used in sub-shells. It is also possible to specify which functions should be exported when a module is loaded by defining them as a list in the 'source' command or in the <a class="reference internal" href=#exec-exported>__exec_exported</a> variable.</p> <div class=section id=example> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
 
@@ -64,7 +64,7 @@ start<span class=o>()</span> <span class=o>{</span>
 start
 </pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=exec-die> <h2>exec_die</h2> <p>Prints an error message using <strong>'str_err'</strong> function to the STDERR and exits with an appropriate exit code.</p> <div class=section id=id3> <h3>usage:</h3> <blockquote> <pre class=literal-block>
 exec_die [--exitcode 0..255] [--] arg [...]
-</pre> </blockquote> </div> <div class=section id=id4> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>--exitcode</em>, set an exit code. Has a precedence on the EXEC_DIE_EXITCODE option</li> </ul> </blockquote> </div> <div class=section id=id5> <h3>options:</h3> <blockquote> <ul class=simple> <li><em>EXEC_DIE_EXITCODE</em>, default is &quot;1&quot;</li> <li><em>EXEC_DIE_FORMAT</em>, default is <tt class="docutils literal">&quot;%s\n&quot;</tt></li> </ul> </blockquote> </div> <div class=section id=id6> <h3>examples:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+</pre> </blockquote> </div> <div class=section id=id4> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>--exitcode</em>, set an exit code. It has a precedence on the EXEC_DIE_EXITCODE option</li> </ul> </blockquote> </div> <div class=section id=id5> <h3>options:</h3> <blockquote> <ul class=simple> <li><em>EXEC_DIE_EXITCODE</em>, default is &quot;1&quot;</li> <li><em>EXEC_DIE_FORMAT</em>, default is <tt class="docutils literal">&quot;%s\n&quot;</tt></li> </ul> </blockquote> </div> <div class=section id=id6> <h3>examples:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
 
 start<span class=o>()</span> <span class=o>{</span>
     <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
@@ -90,4 +90,72 @@ start<span class=o>()</span> <span class=o>{</span>
 <span class=o>}</span>
 
 start
-</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=exec-check-cmd> <h2>exec_check_cmd</h2> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=exec-rerun> <h2>exec_rerun</h2> <div class=line-block> <div class=line><br></div> </div> </div> </div> </div> <div class=article> <p>Share on <a href="https://twitter.com/intent/tweet?text=Module%3A%20exec:%20Functions%20related%20to%20executing%20commands&url=https://bash.libs.cf/pages/exec/">Twitter</a></p> </div> </div> <div class=span3> <div class=well style="padding: 8px 0; background-color: #FBFBFB;"> <ul class="nav nav-list"> <li class=nav-header> Modules </li> <li><a href=/pages/sys/ >sys</a></li> <li><a href=/pages/str/ >str</a></li> <li><a href=/pages/exec/ >exec</a></li> <li><a href=/pages/matrix/ >matrix</a></li> </ul> </div> </div> </div> </div> <footer> <div class=container> <div class=row> <div class=span5> <span class=pull-left> &copy; 2019 <a href=https://vorakl.com/contacts/ >Oleksii Tsvietnov</a> All Rights Reserved </span> </div> <div class=span7> <div class=pull-right> Powered by <a href=https://github.com/getpelican/pelican>Pelican</a> and <a href=https://aves.cf/ >Aves</a> theme </div> </div> </div> </div> </footer> </div> <script src="https://bash.libs.cf/theme/jquery-bootstrap-collapse.bundle.min.js?v=1497518378"></script> </body> </html>
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=exec-check-cmd> <h2>exec_check_cmd</h2> <p>Checks if commands exist. Return an error on the first absent command.</p> <div class=section id=id7> <h3>usage:</h3> <blockquote> <pre class=literal-block>
+exec_check_cmd [--warn|--ensure] [--] cmd [...]
+</pre> </blockquote> </div> <div class=section id=id8> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>--warn</em>, prints a error message about the first missing command, but doesn't return any errors, keeps checking. The message's FORMAT is made of the followinf elements: %s - command</li> <li><em>--ensure</em>, exits with an error message on the first missing command. The message's FORMAT is made of the followinf elements: %s - command</li> </ul> </blockquote> </div> <div class=section id=id9> <h3>options:</h3> <blockquote> <ul class=simple> <li><em>EXEC_CHECK_CMD_WARN_FORMAT</em>, default is <tt class="docutils literal">&quot;Command '%s' does not <span class=pre>exist.\n&quot;</span></tt></li> <li><em>EXEC_CHECK_CMD_ENSURE_FORMAT</em>, default is <tt class="docutils literal">&quot;Command '%s' does not exist. <span class=pre>Exiting...\n&quot;</span></tt></li> <li><em>EXEC_CHECK_CMD_ENSURE_EXITCODE</em>, default is &quot;1&quot;</li> </ul> </blockquote> </div> <div class=section id=id10> <h3>examples:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/exec<span class=o>)</span>
+
+    exec_check_cmd cp rm
+<span class=o>}</span>
+
+start
+</pre></div> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/exec<span class=o>)</span>
+
+    exec_check_cmd --warn touch cp nonexistent od
+<span class=o>}</span>
+
+start
+</pre></div> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+__exec_init__<span class=o>()</span> <span class=o>{</span>
+    <span class=nv>EXEC_CHECK_CMD_ENSURE_FORMAT</span><span class=o>=</span><span class=s2>&quot;FATAL: there is no &#39;%s&#39; command\n&quot;</span>
+    <span class=nv>EXEC_CHECK_CMD_ENSURE_EXITCODE</span><span class=o>=</span><span class=s2>&quot;28&quot;</span>
+<span class=o>}</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/exec<span class=o>)</span>
+
+    exec_check_cmd --ensure head tail nonexistent mv
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=exec-rerun> <h2>exec_rerun</h2> <p>Rerun a command if it fails.</p> <div class=section id=id11> <h3>usage:</h3> <blockquote> <pre class=literal-block>
+exec_rerun [--tries num] [--sleep sec] [--] cmd [args]
+</pre> </blockquote> </div> <div class=section id=id12> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>--tries</em>, a number of tries to run a command</li> <li><em>--sleep</em>, a pause in seconds between tries</li> </ul> </blockquote> </div> <div class=section id=id13> <h3>options:</h3> <blockquote> <ul class=simple> <li><em>EXEC_RERUN_TRIES</em>, default is &quot;5&quot;</li> <li><em>EXEC_RERUN_SLEEP</em>, default is &quot;0&quot;</li> </ul> </blockquote> </div> <div class=section id=id14> <h3>examples:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/exec<span class=o>)</span>
+
+    exec_rerun bash -c <span class=s1>&#39;echo fail; exit 1&#39;</span>
+<span class=o>}</span>
+
+start
+</pre></div> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+__exec_init__<span class=o>()</span> <span class=o>{</span>
+    <span class=nv>EXEC_RERUN_TRIES</span><span class=o>=</span><span class=s2>&quot;3&quot;</span>
+<span class=o>}</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/exec<span class=o>)</span>
+
+    exec_rerun --sleep <span class=m>1</span> exec_run --no-err ping hostname
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> </div> </div> <div class=article> <p>Share on <a href="https://twitter.com/intent/tweet?text=Module%3A%20exec:%20Functions%20related%20to%20executing%20commands&url=https://bash.libs.cf/pages/exec/">Twitter</a></p> </div> </div> <div class=span3> <div class=well style="padding: 8px 0; background-color: #FBFBFB;"> <ul class="nav nav-list"> <li class=nav-header> Modules </li> <li><a href=/pages/sys/ >sys</a></li> <li><a href=/pages/str/ >str</a></li> <li><a href=/pages/exec/ >exec</a></li> <li><a href=/pages/matrix/ >matrix</a></li> </ul> </div> </div> </div> </div> <footer> <div class=container> <div class=row> <div class=span5> <span class=pull-left> &copy; 2019 <a href=https://vorakl.com/contacts/ >Oleksii Tsvietnov</a> All Rights Reserved </span> </div> <div class=span7> <div class=pull-right> Powered by <a href=https://github.com/getpelican/pelican>Pelican</a> and <a href=https://aves.cf/ >Aves</a> theme </div> </div> </div> </div> </footer> </div> <script src="https://bash.libs.cf/theme/jquery-bootstrap-collapse.bundle.min.js?v=1497518379"></script> </body> </html>

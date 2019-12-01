@@ -21,8 +21,8 @@ API
 * `__exec_init__`_ <func>
 * exec_run_ <func>
 * exec_die_ <func>
-* exec_check_cmd <func>
-* exec_rerun <func>
+* exec_check_cmd_ <func>
+* exec_rerun_ <func>
 
 |
 
@@ -212,7 +212,7 @@ parameters:
 -----------
 
     - *--exitcode*,
-      set an exit code. Has a precedence on the EXEC_DIE_EXITCODE option
+      set an exit code. It has a precedence on the EXEC_DIE_EXITCODE option
 
 options:
 --------
@@ -262,10 +262,148 @@ examples:
 exec_check_cmd
 ==============
 
+Checks if commands exist. Return an error on the first absent command.
+
+usage:
+------
+    ::
+
+        exec_check_cmd [--warn|--ensure] [--] cmd [...]
+
+parameters:
+-----------
+
+    - *--warn*,
+      prints a error message about the first missing command, but doesn't return
+      any errors, keeps checking. The message's FORMAT is made of the followinf
+      elements:  %s - command
+    - *--ensure*,
+      exits with an error message on the first missing command. The message's
+      FORMAT is made of the followinf elements: %s - command
+
+options:
+--------
+
+    - *EXEC_CHECK_CMD_WARN_FORMAT*,
+      default is ``"Command '%s' does not exist.\n"``
+    - *EXEC_CHECK_CMD_ENSURE_FORMAT*,
+      default is ``"Command '%s' does not exist. Exiting...\n"``
+    - *EXEC_CHECK_CMD_ENSURE_EXITCODE*,
+      default is "1"
+
+examples:
+---------
+
+    .. code-block:: bash
+
+        #!/bin/bash
+
+        start() {
+            source <(curl -sSLf http://bash.libs.cf/latest/sys)
+            source <(curl -sSLf http://bash.libs.cf/latest/str)
+            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+
+            exec_check_cmd cp rm
+        }
+
+        start
+
+    .. code-block:: bash
+
+        #!/bin/bash
+
+        start() {
+            source <(curl -sSLf http://bash.libs.cf/latest/sys)
+            source <(curl -sSLf http://bash.libs.cf/latest/str)
+            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+
+            exec_check_cmd --warn touch cp nonexistent od
+        }
+
+        start
+
+    .. code-block:: bash
+
+        #!/bin/bash
+
+        __exec_init__() {
+            EXEC_CHECK_CMD_ENSURE_FORMAT="FATAL: there is no '%s' command\n"
+            EXEC_CHECK_CMD_ENSURE_EXITCODE="28"
+        }
+
+        start() {
+            source <(curl -sSLf http://bash.libs.cf/latest/sys)
+            source <(curl -sSLf http://bash.libs.cf/latest/str)
+            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+
+            exec_check_cmd --ensure head tail nonexistent mv
+        }
+
+        start
+
 |
 
 exec_rerun 
 ==========
+
+Rerun a command if it fails.
+
+usage:
+------
+    ::
+
+        exec_rerun [--tries num] [--sleep sec] [--] cmd [args]
+
+parameters:
+-----------
+
+    - *--tries*,
+      a number of tries to run a command
+    - *--sleep*,
+      a pause in seconds between tries 
+
+options:
+--------
+
+    - *EXEC_RERUN_TRIES*,
+      default is "5"
+    - *EXEC_RERUN_SLEEP*,
+      default is "0"
+
+examples:
+---------
+
+    .. code-block:: bash
+
+        #!/bin/bash
+
+        start() {
+            source <(curl -sSLf http://bash.libs.cf/latest/sys)
+            source <(curl -sSLf http://bash.libs.cf/latest/str)
+            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+
+            exec_rerun bash -c 'echo fail; exit 1'
+        }
+
+        start
+
+    .. code-block:: bash
+
+        #!/bin/bash
+
+        __exec_init__() {
+            EXEC_RERUN_TRIES="3"
+        }
+
+        start() {
+            source <(curl -sSLf http://bash.libs.cf/latest/sys)
+            source <(curl -sSLf http://bash.libs.cf/latest/str)
+            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+
+            exec_rerun --sleep 1 exec_run --no-err ping hostname
+        }
+
+        start
 
 |
 
