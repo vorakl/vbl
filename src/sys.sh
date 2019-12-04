@@ -11,7 +11,7 @@
 # <func> sys_cmd
 #
 # USAGE:
-# source module_name [list of functions to export]
+# source sys [list of functions to export]
 
 sys_cmd() {
     # A wrapper for the builtin 'command' for minimizing a risk of reloading

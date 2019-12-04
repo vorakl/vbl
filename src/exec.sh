@@ -25,7 +25,7 @@
 # sys, str
 #
 # USAGE:
-# source module_name [list of functions to export]
+# source exec [list of functions to export]
 
 exec_run() {
     # A wrapper to run commands and control output, exit status, etc

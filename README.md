@@ -38,7 +38,7 @@ Basically, for me using these modules help to
 * [sys](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/sys.rst)
 * [str](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/str.rst)
 * [exec](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/exec.rst)
-* matrix
+* [matrix](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/matrix.rst)
 
 All current versions are stored in [latest.lst](http://bash.libs.cf/latest.lst).
 It makes it easy to check the latest versions right from the code, like

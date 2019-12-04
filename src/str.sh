@@ -28,7 +28,7 @@
 # sys
 #
 # USAGE:
-# source module_name [list of functions to export]
+# source str [list of functions to export]
 
 str_say() {
     # Prints to stdout with an ability to set a format

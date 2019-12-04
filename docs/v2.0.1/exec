@@ -7,14 +7,14 @@
 # API:
 # <var>  __exec_version
 # <var>  __exec_exported
-# <var> EXEC_RUN_WARN_FORMAT
-# <var> EXEC_RUN_ENSURE_FORMAT
-# <var> EXEC_DIE_EXITCODE
-# <var> EXEC_DIE_FORMAT
-# <var> EXEC_CHECK_CMD_WARN_FORMAT
-# <var> EXEC_CHECK_CMD_ENSURE_FORMAT
-# <var> EXEC_RERUN_TRIES
-# <var> EXEC_RERUN_SLEEP
+# <var>  EXEC_RUN_WARN_FORMAT
+# <var>  EXEC_RUN_ENSURE_FORMAT
+# <var>  EXEC_DIE_EXITCODE
+# <var>  EXEC_DIE_FORMAT
+# <var>  EXEC_CHECK_CMD_WARN_FORMAT
+# <var>  EXEC_CHECK_CMD_ENSURE_FORMAT
+# <var>  EXEC_RERUN_TRIES
+# <var>  EXEC_RERUN_SLEEP
 # <func> __exec_init__
 # <func> exec_run
 # <func> exec_check_cmd
@@ -24,16 +24,16 @@
 # REQIRES:
 # sys, str
 #
-# USE:
-# sourse module_name [list of functions to export]
+# USAGE:
+# source exec [list of functions to export]
 
 exec_run() {
     # A wrapper to run commands and control output, exit status, etc
     #
     # usage:
-    #   exec_run [ --silent| 
-    #             (--no-out|--save-out var)|
-    #             (--no-err|--save-err var|--err-to-out)
+    #   exec_run [ --silent | \
+    #             (--no-out|--save-out var) | \
+    #             (--no-err|--save-err var|--err-to-out) \
     #            ] \
     #            [--ignore|--warn|--ensure] \
     #            [--] \
@@ -201,9 +201,9 @@ exec_die() {
     #
     # examples:
     #   exec_die "A file does not exist"
-    #   exec_die --exitscode 15 "A host is not reachable"
+    #   exec_die --exitcode 15 "A host is not reachable"
     #   EXEC_DIE_FORMAT="FATAL: '%s' has failed with '%d' exitcode\n" \
-    #       exec_die --exitcode 34 "cp" "${$_rc}"
+    #       exec_die --exitcode 34 "cp" "${_rc}"
 
     declare _arg=""
     declare -i _exitcode="${EXEC_DIE_EXITCODE}"
@@ -375,7 +375,7 @@ __exec_rerun_conf__() {
 }
 
 __exec_conf__() {
-    declare -grx __exec_version="v2.0.0"
+    declare -grx __exec_version="v2.0.1"
     declare -gx __exec_exported="exec_run exec_die exec_check_cmd exec_rerun"
 
     __exec_run_conf__

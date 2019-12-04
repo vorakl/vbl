@@ -7,12 +7,12 @@
 # API:
 # <var>  __str_version
 # <var>  __str_exported
-# <var> STR_SAY_SUPPRESS
-# <var> STR_SAY_FORMAT
-# <var> STR_DEBUG_SUPPRESS
-# <var> STR_DEBUG_FORMAT
-# <var> STR_ERR_SUPPRESS
-# <var> STR_ERR_FORMAT
+# <var>  STR_SAY_SUPPRESS
+# <var>  STR_SAY_FORMAT
+# <var>  STR_DEBUG_SUPPRESS
+# <var>  STR_DEBUG_FORMAT
+# <var>  STR_ERR_SUPPRESS
+# <var>  STR_ERR_FORMAT
 # <func> __str_init__
 # <func> str_say
 # <func> str_debug
@@ -28,7 +28,7 @@
 # sys
 #
 # USAGE:
-# source module_name [list of functions to export]
+# source str [list of functions to export]
 
 str_say() {
     # Prints to stdout with an ability to set a format
@@ -53,7 +53,7 @@ __str_say_conf__() {
 }
 
 str_debug() {
-    # Prints to stdout as 'say' does but only if debug_suppress is turned off.
+    # Prints to stdout as 'say' does but only if STR_DEBUG_SUPPRESS is turned off.
     # It's useful for having a controlled higher level of verbosity.
     #
     # usage:
@@ -368,7 +368,7 @@ str_strip() {
 }
 
 __str_conf__() {
-    declare -grx __str_version="v2.0.2"
+    declare -grx __str_version="v2.0.3"
     declare -gx __str_exported="str_say str_debug str_err str_readline \
                       str_readlines str_format str_lstrip str_rstrip str_strip"
 

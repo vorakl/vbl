@@ -17,20 +17,27 @@
 # REQIRES:
 # sys, str
 #
-# USE:
-# sourse module_name [list of functions to export]
-#
-# EXAMPLE:
-# matrix_ init my_matrix \
-#            3 2 \
-#            one two three \
-#            "1 1" "2 2" "3 3"
-# matrix_get my_matrix 1 1
-# matrix_set my_matrix 1 1 "4 4 4"
-# matrix_get my_matrix 1 1
-# matrix_destroy my_matrix
+# USAGE:
+# source matrix [list of functions to export]
 
 matrix_init() {
+    # Creates a new instance and initialize it.
+    #
+    # usage:
+    #   matrix_init name X Y value ...
+    #
+    # parameters:
+    #   name, the name of an instance
+    #   X, a number of columns
+    #   Y, a number of rows
+    #   values, all values presented row by row, accordingly to X and Y
+    #
+    # example:
+    #   matrix_init my_matrix \
+    #            3 2 \
+    #            one two three \
+    #            "1 1" "2 2" "3 3"
+ 
     declare -n self=$1
     declare -i width=$2 height=$3
     shift 3;
@@ -39,8 +46,21 @@ matrix_init() {
 }
 
 matrix_get() {
-    # options:
-    #   MATRIX_GET_FORMAT
+    # Gets an element.
+    #
+    # usage:
+    #   matrix_get name X Y
+    #
+    # parameters:
+    #   name, the name of an instance
+    #   X, a column number, starts from 0
+    #   Y, a row number, start from 0
+    #
+    # option:
+    #   MATRIX_GET_FORMAT, default is "%s\n"
+    #
+    # example:
+    #   matrix_get my_matrix 0 0
 
     declare -n self="$1"
     declare -i x="$2" y="$3"
@@ -54,6 +74,20 @@ __matrix_get_conf__() {
 }
 
 matrix_set() {
+    # Sets an element.
+    #
+    # usage:
+    #   matrix_get name X Y value
+    #
+    # parameters:
+    #   name, the name of an instance
+    #   X, a column number, starts from 0
+    #   Y, a row number, start from 0
+    #   value, a new value for the element
+    #
+    # example:
+    #   matrix_set my_matrix 1 1 "Hello World"
+
     declare -n self="$1"
     declare -i x="$2" y="$3"
     declare data="$4"
@@ -63,12 +97,23 @@ matrix_set() {
 }
 
 matrix_destroy() {
+    # Removes an instance.
+    #
+    # usage:
+    #   matrix_destroy name
+    #
+    # parameter:
+    #   name, the name of an instance
+    #
+    # example:
+    #   matrix_destroy my_matrix
+
     declare -n self="$1"
     unset self
 }
 
 __matrix_conf__() {
-    declare -rgx __matrix_version="v2.0.0"
+    declare -rgx __matrix_version="v2.0.2"
     declare -gx __matrix_exported="matrix_init matrix_get matrix_set matrix_destroy"
 
     __matrix_get_conf__

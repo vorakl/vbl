@@ -7,7 +7,7 @@
 <url>
     <loc>https://bash.libs.cf/pages/exec/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-12-01</lastmod>
+    <lastmod>2019-12-03</lastmod>
 </url>
 <url>
     <loc>https://bash.libs.cf/pages/info-old/</loc>
@@ -17,16 +17,21 @@
 <url>
     <loc>https://bash.libs.cf/pages/info/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-11-30</lastmod>
+    <lastmod>2019-12-04</lastmod>
+</url>
+<url>
+    <loc>https://bash.libs.cf/pages/matrix/</loc>
+    <changefreq>weekly</changefreq>
+    <lastmod>2019-12-04</lastmod>
 </url>
 <url>
     <loc>https://bash.libs.cf/pages/str/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-11-30</lastmod>
+    <lastmod>2019-12-03</lastmod>
 </url>
 <url>
     <loc>https://bash.libs.cf/pages/sys/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-11-30</lastmod>
+    <lastmod>2019-12-03</lastmod>
 </url>
 </urlset>

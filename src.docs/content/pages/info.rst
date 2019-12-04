@@ -51,7 +51,7 @@ Modules
 * sys_
 * str_
 * exec_
-* matrix
+* matrix_
 
 All current versions are stored in latest.lst_.
 

@@ -40,7 +40,7 @@ USAGE
 =====
     ::
 
-        source module_name [list of functions to export]
+        source str [list of functions to export]
 
 By default, all functions are exported, so they can be used in sub-shells.
 It is also possible to specify which functions should be exported when a module

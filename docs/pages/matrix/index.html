@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang=en> <head><meta charset=utf-8><title>Module: matrix :: Vorakl's Libs: Bash</title><meta name=viewport content="width=device-width, initial-scale=1.0"><meta name=robots content=all><link href=https://bash.libs.cf/pages/matrix/ rel=canonical><meta name=description content="Matrix (2D-arrays) Abstract Data Type"><!--[if lt IE 9]>
+    <script src="https://bash.libs.cf/theme/html5.js?v=1497518380"></script>
+    <![endif]--><link rel=stylesheet href="https://bash.libs.cf/theme/bootstrap-pygments.bundle.min.css?v=1497518380"><link rel="shortcut icon" href="/favicon.ico?v=1497518380"><meta name=apple-mobile-web-app-title content="Vorakl's Libs: Bash"><meta name=application-name content="Vorakl's Libs: Bash"></head> <body> <div class=navbar> <div class=navbar-inner> <div class=container> <a href=https://bash.libs.cf/ class=brand>Vorakl's Libs: Bash</a> <a class="btn btn-navbar" data-toggle=collapse data-target=.nav-collapse> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </a> <div class=nav-collapse> <ul class="nav pull-right"> <!-- <li class="divider-vertical"></li> --> <li><a href=https://github.com/vorakl/bash-libs>repo</a></li> <li><a href=https://libs.cf/ >libs</a></li> <li><a href=https://vorakl.com/ >blog</a></li> <li><a href=https://vorakl.com/about/ >author</a></li> <!-- <li class="divider-vertical"></li> --> </ul> </div> </div> </div> </div> <div class=container> <div class=content> <div class=row> <div class=span9> <div class=article> <div class=content-title> <h1>Module: matrix</h1> <h3>Matrix (2D-arrays) Abstract Data Type</h3> </div> <div><div class=section id=api> <h2>API</h2> <ul class=simple> <li><a class="reference internal" href=#matrix-version>__matrix_version</a> &lt;var&gt;</li> <li><a class="reference internal" href=#matrix-exported>__matrix_exported</a> &lt;var&gt;</li> <li>MATRIX_GET_FORMAT &lt;var&gt;</li> <li><a class="reference internal" href=#matrix-init>__matrix_init__</a> &lt;func&gt;</li> <li><a class="reference internal" href=#id2>matrix_init</a> &lt;func&gt;</li> <li><a class="reference internal" href=#matrix-get>matrix_get</a> &lt;func&gt;</li> <li><a class="reference internal" href=#matrix-set>matrix_set</a> &lt;func&gt;</li> <li><a class="reference internal" href=#matrix-destroy>matrix_destroy</a> &lt;func&gt;</li> </ul> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=reqires> <h2>REQIRES</h2> <ul class=simple> <li>sys</li> <li>str</li> </ul> </div> <div class=section id=usage> <h2>USAGE</h2> <blockquote> <pre class=literal-block>
+source matrix [list of functions to export]
+</pre> </blockquote> <p>By default, all functions are exported, so they can be used in sub-shells. It is also possible to specify which functions should be exported when a module is loaded by defining them as a list in the 'source' command or in the <a class="reference internal" href=#matrix-exported>__matrix_exported</a> variable.</p> <div class=section id=example> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/matrix<span class=o>)</span>
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=matrix-version> <h2>__matrix_version</h2> <p>This readonly variable contains a current module's version.</p> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=matrix-exported> <h2>__matrix_exported</h2> <p>This variable contains a list (separated by a space symbol) of functions that will be exported. It can be altered in the <a class="reference internal" href=#matrix-init>__matrix_init__</a> function.</p> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=matrix-init> <h2>__matrix_init__</h2> <p>This function has to be defined before the module is imported. It can be used for setting up default values for any function's variables.</p> <div class=section id=id1> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+__matrix_init__<span class=o>()</span> <span class=o>{</span>
+    <span class=nv>MATRIX_GET_FORMAT</span><span class=o>=</span><span class=s2>&quot;&#39;%s&#39;\n&quot;</span>
+<span class=o>}</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/matrix<span class=o>)</span>
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=id2> <h2>matrix_init</h2> <p>Creates a new instance and initialize it.</p> <div class=section id=id3> <h3>usage:</h3> <blockquote> <pre class=literal-block>
+matrix_init name X Y value ...
+</pre> </blockquote> </div> <div class=section id=parameters> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>name</em>, the name of an instance</li> <li><em>X</em>, a number of columns</li> <li><em>Y</em>, a number of rows</li> <li><em>values</em>, all values presented row by row, accordingly to X and Y</li> </ul> </blockquote> </div> <div class=section id=id4> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/matrix<span class=o>)</span>
+
+    matrix_init my_matrix <span class=se>\</span>
+                <span class=m>3</span> <span class=m>2</span> <span class=se>\</span>
+                one two three <span class=se>\</span>
+                <span class=s2>&quot;1 1&quot;</span> <span class=s2>&quot;2 2&quot;</span> <span class=s2>&quot;3 3&quot;</span>
+    matrix_destroy my_matrix
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=matrix-get> <h2>matrix_get</h2> <p>Gets an element.</p> <div class=section id=id5> <h3>usage:</h3> <blockquote> <pre class=literal-block>
+matrix_get name X Y
+</pre> </blockquote> </div> <div class=section id=id6> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>name</em>, the name of an instance</li> <li><em>X</em>, a column number, starts from 0</li> <li><em>Y</em>, a row number, start from 0</li> </ul> </blockquote> </div> <div class=section id=option> <h3>option:</h3> <blockquote> <ul class=simple> <li><em>MATRIX_GET_FORMAT</em>, default is &quot;%sn&quot;</li> </ul> </blockquote> </div> <div class=section id=id7> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+__matrix_init__<span class=o>()</span> <span class=o>{</span>
+    <span class=nv>MATRIX_GET_FORMAT</span><span class=o>=</span><span class=s2>&quot;&#39;%s&#39;\n&quot;</span>
+<span class=o>}</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/matrix<span class=o>)</span>
+
+    matrix_init my_matrix <span class=m>1</span> <span class=m>1</span> <span class=s2>&quot;the element&quot;</span>
+    matrix_get my_matrix <span class=m>0</span> <span class=m>0</span>
+    matrix_destroy my_matrix
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=matrix-set> <h2>matrix_set</h2> <p>Sets an element.</p> <div class=section id=id8> <h3>usage:</h3> <blockquote> <pre class=literal-block>
+matrix_get name X Y value
+</pre> </blockquote> </div> <div class=section id=id9> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>name</em>, the name of an instance</li> <li><em>X</em>, a column number, starts from 0</li> <li><em>Y</em>, a row number, start from 0</li> <li><em>value</em>, a new value for the element</li> </ul> </blockquote> </div> <div class=section id=id10> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/matrix<span class=o>)</span>
+
+    matrix_init my_matrix <span class=m>1</span> <span class=m>1</span> <span class=s2>&quot;the element&quot;</span>
+    matrix_set my_matrix <span class=m>0</span> <span class=m>0</span> <span class=s2>&quot;Hello World&quot;</span>
+    matrix_destroy my_matrix
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> <div class=section id=matrix-destroy> <h2>matrix_destroy</h2> <p>Removes an instance.</p> <div class=section id=id11> <h3>usage:</h3> <blockquote> <pre class=literal-block>
+matrix_destroy name
+</pre> </blockquote> </div> <div class=section id=parameter> <h3>parameter:</h3> <blockquote> <ul class=simple> <li><em>name</em>, the name of an instance</li> </ul> </blockquote> </div> <div class=section id=id12> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/latest/matrix<span class=o>)</span>
+
+    matrix_init my_matrix <span class=m>1</span> <span class=m>1</span> <span class=s2>&quot;the element&quot;</span>
+    matrix_destroy my_matrix
+<span class=o>}</span>
+
+start
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> </div> </div> <div class=article> <p>Share on <a href="https://twitter.com/intent/tweet?text=Module%3A%20matrix:%20Matrix%20%282D-arrays%29%20Abstract%20Data%20Type&url=https://bash.libs.cf/pages/matrix/">Twitter</a></p> </div> </div> <div class=span3> <div class=well style="padding: 8px 0; background-color: #FBFBFB;"> <ul class="nav nav-list"> <li class=nav-header> Modules </li> <li><a href=/pages/sys/ >sys</a></li> <li><a href=/pages/str/ >str</a></li> <li><a href=/pages/exec/ >exec</a></li> <li><a href=/pages/matrix/ >matrix</a></li> </ul> </div> </div> </div> </div> <footer> <div class=container> <div class=row> <div class=span5> <span class=pull-left> &copy; 2019 <a href=https://vorakl.com/contacts/ >Oleksii Tsvietnov</a> All Rights Reserved </span> </div> <div class=span7> <div class=pull-right> Powered by <a href=https://github.com/getpelican/pelican>Pelican</a> and <a href=https://aves.cf/ >Aves</a> theme </div> </div> </div> </div> </footer> </div> <script src="https://bash.libs.cf/theme/jquery-bootstrap-collapse.bundle.min.js?v=1497518380"></script> </body> </html>
