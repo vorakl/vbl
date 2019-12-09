@@ -15,7 +15,6 @@ RM_BIN ?= rm
 MKDIR_BIN ?= mkdir
 BASENAME_BIN ?= basename
 SHA256SUM_BIN ?= sha256sum 
-FIND_BIN ?= find
 
 # -------------------------------------------------------------------------
 # Set a default target
@@ -31,7 +30,7 @@ usage:
 	@${ECHO_BIN} "Examples: make test"
 	@${ECHO_BIN} "          make pub"
 	@${ECHO_BIN} "          make pub-latest"
-	@${ECHO_BIN} "          make pub-version"
+	@${ECHO_BIN} "          make pub-stable"
 	@${ECHO_BIN} ""
 
 test:
@@ -42,10 +41,10 @@ test:
 	  ${SHELL} $$(${WHICH_BIN} roundup); \
 	)
 
-pub: pub-latest pub-version
+pub: pub-latest pub-stable
 
 pub-latest:
-	@[[ -d ${DIR}/docs/latest ]] ||\
+	@[[ -d ${DIR}/docs/latest ]] || \
 	    ${MKDIR_BIN} ${DIR}/docs/latest
 	@${ECHO_BIN} "---> Publish modules to the latest dir..."
 	@(declare -A latest=(); \
@@ -62,19 +61,35 @@ pub-latest:
 	  for lib in $${!latest[*]}; do \
 	    eval echo "$${lib}=\'\$${latest[$${lib}]}\'" | \
 	       tee -a ${DIR}/docs/latest.lst; \
-	  done ;\
+	  done ; \
 	)
 
-pub-version:
+pub-stable:
+	@[[ -d ${DIR}/docs/archive ]] || \
+	    ${MKDIR_BIN} ${DIR}/docs/archive
+	@[[ -d ${DIR}/docs/stable ]] || \
+	    ${MKDIR_BIN} ${DIR}/docs/stable
 	@${ECHO_BIN} "---> Publish modules to the version dirs..."
-	@(for lib in ${LIBS_BASE} ${LIBS_MISC}; do \
+	@(declare -A stable=(); \
+	  for lib in ${LIBS_BASE} ${LIBS_MISC}; do \
 	    source ${DIR}/src/$${lib}; \
 	    eval ver="\$${__$${lib%.sh}_version}"; \
+	    stable[$${lib%.sh}]="$${ver}"; \
 	    [[ -d ${DIR}/docs/$${ver} ]] || \
 	    	${MKDIR_BIN} ${DIR}/docs/$${ver}; \
 	    ${CP_BIN} -vf ${DIR}/src/$${lib} ${DIR}/docs/$${ver}/$${lib%.sh}; \
+	    ${CP_BIN} -vf ${DIR}/src/$${lib} ${DIR}/docs/stable/$${lib%.sh}; \
 	    (cd ${DIR}/docs/$${ver}/; \
-	     ${SHA256SUM_BIN} $${lib%.sh} |\
-	     tee $${lib%.sh}.sha256); \
+	     ${SHA256SUM_BIN} $${lib%.sh} | tee $${lib%.sh}.sha256; \
+	     cd ${DIR}/docs/stable/; \
+	     ${SHA256SUM_BIN} $${lib%.sh} | tee $${lib%.sh}.sha256; \
+	    ); \
+	  done; \
+	  ${ECHO_BIN} "---> Create a stable.lst..."; \
+	  ${RM_BIN} -f ${DIR}/docs/stable.lst; \
+	  for lib in $${!stable[*]}; do \
+	     eval echo "$${lib}=\'\$${stable[$${lib}]}\'" | \
+	        tee -a ${DIR}/docs/stable.lst; \
 	  done; \
 	)
+

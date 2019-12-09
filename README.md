@@ -1,6 +1,6 @@
 # [Vorakl's Bash library](https://bash.libs.cf/)
 
-[![build-statu](https://travis-ci.org/vorakl/bash-libs.svg?branch=master)](https://travis-ci.org/vorakl/bash-libs)
+[![build-status](https://travis-ci.org/vorakl/bash-libs.svg?branch=master)](https://travis-ci.org/vorakl/bash-libs)
 
 ## Introduction
 
@@ -40,8 +40,11 @@ Basically, for me using these modules help to
 * [exec](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/exec.rst)
 * [matrix](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/matrix.rst)
 
-All current versions are stored in [latest.lst](http://bash.libs.cf/latest.lst).
-It makes it easy to check the latest versions right from the code, like
+There are two version files available:
+
+* [latest.lst](http://bash.libs.cf/latest.lst)
+* [stable.lst](http://bash.libs.cf/stable.lst)
+
 
 ## Other documentation
 

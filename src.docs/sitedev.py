@@ -11,7 +11,7 @@ AUTHOR = u'Oleksii Tsvietnov'
 SITENAME = u"Vorakl's Libs: Bash"
 SITEURL = 'https://bash.libs.cf'
 SITEDESC = u'A collection of Bash modules'
-SITE_VERSION = '1575459612'
+SITE_VERSION = '1575459613'
 SITE_KEYWORDS = 'bash,shell,library,bash-library,shell-library'
 ARTICLE_PATHS = ['articles'] # a place for articles under the content location
 PAGE_PATHS = ['pages']
@@ -33,7 +33,7 @@ PAGINATION_PATTERNS = (
 
 DELETE_OUTPUT_DIRECTORY = True  # build an output dir from scratch every time
 # these dirs and files should be kept
-OUTPUT_RETENTION = ["CNAME", "README.md", "latest", "latest.lst"] 
+OUTPUT_RETENTION = ["CNAME", "README.md", "latest", "latest.lst", "archive"] 
 OUTPUT_RETENTION.extend(map(basename, glob("/output/v*")))
 
 ### Interface configuration

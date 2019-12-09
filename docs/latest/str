@@ -368,7 +368,7 @@ str_strip() {
 }
 
 __str_conf__() {
-    declare -grx __str_version="v2.0.3"
+    declare -grx __str_version="v2.0.4"
     declare -gx __str_exported="str_say str_debug str_err str_readline \
                       str_readlines str_format str_lstrip str_rstrip str_strip"
 

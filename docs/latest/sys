@@ -47,7 +47,7 @@ __sys_export_func__() {
 }
 
 __sys_conf__() {
-    declare -grx __sys_version="v2.0.2"
+    declare -grx __sys_version="v2.0.3"
     declare -gx __sys_exported="sys_cmd"
 }
 

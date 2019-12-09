@@ -113,7 +113,7 @@ matrix_destroy() {
 }
 
 __matrix_conf__() {
-    declare -rgx __matrix_version="v2.0.2"
+    declare -rgx __matrix_version="v2.0.3"
     declare -gx __matrix_exported="matrix_init matrix_get matrix_set matrix_destroy"
 
     __matrix_get_conf__

@@ -53,9 +53,9 @@ example:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/exec) exec_run
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/exec) exec_run
         }
 
         start
@@ -95,9 +95,9 @@ example:
         }
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/exec)
         }
 
         start
@@ -163,9 +163,9 @@ examples:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/exec)
             
             set -o errexit
             # the script doesn't terminate after this command
@@ -183,9 +183,9 @@ examples:
         }
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/exec)
 
             set -o errexit 
             # the script doesn't terminate after this command
@@ -230,9 +230,9 @@ examples:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/exec)
             
             exec_die --exitcode 15 "A host is not reachable"
         }
@@ -248,9 +248,9 @@ examples:
         }
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/exec)
 
             exec_run --silent cp /from /to || exec_die --exitcode 34 "cp" "$?"
         }
@@ -299,9 +299,9 @@ examples:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/exec)
 
             exec_check_cmd cp rm
         }
@@ -313,9 +313,9 @@ examples:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/exec)
 
             exec_check_cmd --warn touch cp nonexistent od
         }
@@ -332,9 +332,9 @@ examples:
         }
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/exec)
 
             exec_check_cmd --ensure head tail nonexistent mv
         }
@@ -378,9 +378,9 @@ examples:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/exec)
 
             exec_rerun bash -c 'echo fail; exit 1'
         }
@@ -396,9 +396,9 @@ examples:
         }
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/exec)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/exec)
 
             exec_rerun --sleep 1 exec_run --no-err ping hostname
         }

@@ -43,9 +43,9 @@ example:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/matrix)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/matrix)
         }
 
         start
@@ -85,9 +85,9 @@ example:
         }
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/matrix)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/matrix)
         }
 
         start
@@ -121,9 +121,9 @@ example:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/matrix)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/matrix)
 
             matrix_init my_matrix \
                         3 2 \
@@ -171,9 +171,9 @@ example:
         }
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/matrix)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/matrix)
 
             matrix_init my_matrix 1 1 "the element"
             matrix_get my_matrix 0 0
@@ -211,9 +211,9 @@ example:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/matrix)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/matrix)
 
             matrix_init my_matrix 1 1 "the element"
             matrix_set my_matrix 0 0 "Hello World"
@@ -248,9 +248,9 @@ example:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/latest/sys)
-            source <(curl -sSLf http://bash.libs.cf/latest/str)
-            source <(curl -sSLf http://bash.libs.cf/latest/matrix)
+            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://bash.libs.cf/stable/matrix)
 
             matrix_init my_matrix 1 1 "the element"
             matrix_destroy my_matrix
