@@ -53,7 +53,10 @@ Modules
 * exec_
 * matrix_
 
-All current versions are stored in latest.lst_.
+There are two version files available:
+
+* latest.lst_
+* stable.lst_
 
 |
 
@@ -75,4 +78,5 @@ Other documentation
 .. _exec: {filename}/pages/exec.rst
 .. _matrix: {filename}/pages/matrix.rst
 .. _latest.lst: http://bash.libs.cf/latest.lst
+.. _stable.lst: http://bash.libs.cf/stable.lst
 .. _Examples: https://github.com/vorakl/bash-libs/tree/master/examples
