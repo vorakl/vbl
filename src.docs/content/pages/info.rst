@@ -53,15 +53,22 @@ Modules
 * exec_
 * matrix_
 
-There are two version files available:
+|
+
+Versions and Releases
+=====================
+
+All existing releases including archives are available on
+the Github_. Releases are always linked to stable versions.
+There are also two version files available:
 
 * latest.lst_,
   for modules located at ``http://bash.libs.cf/latest/``
 * stable.lst_,
   for modules located at ``http://bash.libs.cf/stable/``
 
-These versions allow you to stick to them in the future by addressing modules
-at ``http://bash.libs.cf/v?.?.?/`` location.
+Versions from ``latest.lst`` allow you to stick to them in the future
+by addressing modules at ``http://bash.libs.cf/v?.?.?/`` location.
 
 |
 
@@ -85,3 +92,4 @@ Other documentation
 .. _latest.lst: http://bash.libs.cf/latest.lst
 .. _stable.lst: http://bash.libs.cf/stable.lst
 .. _Examples: https://github.com/vorakl/vbl/tree/master/examples
+.. _Github: https://github.com/vorakl/vbl/releases

@@ -1,6 +1,6 @@
 # [Vorakl's Bash library](https://bash.libs.cf/)
 
-[![build-status](https://travis-ci.org/vorakl/bash-libs.svg?branch=master)](https://travis-ci.org/vorakl/bash-libs)
+[![build-status](https://travis-ci.org/vorakl/vbl.svg?branch=master)](https://travis-ci.org/vorakl/vbl)
 
 ## Introduction
 
@@ -42,7 +42,9 @@ Basically, for me using these modules help to
 
 ## Versions and Releases
 
-There are two version files available:
+All existing releases including archives are available on 
+the [Github](https://github.com/vorakl/vbl/releases). Releases are always linked
+to stable versions. There are also two version files available:
 
 * [latest.lst](http://bash.libs.cf/latest.lst),
   for modules located at `http://bash.libs.cf/latest/`
