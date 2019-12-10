@@ -45,7 +45,7 @@ exec_run() {
     #   --no-err        suppress stderr
     #   --save-out var  save stdout into array variable 'var' (up to 64 KB)
     #   --save-err var  save stderr into array variable 'var' (up to 64 KB)
-    #   --err-to-out    join stderr and stdout in one stream of stdout 
+    #   --err-to-out    join stderr and stdout in one stream of stdout
     #   --ignore        ignore non zero exit status
     #   --warn          ignore non zero exit status and print an error which
     #                   is built of the ordered FORMAT's elements:
@@ -70,20 +70,20 @@ exec_run() {
     declare _channels="" _chan_out="" _chan_err="" _rnd_eof=""
     declare -i _save_out_set="0" _save_err_set="0"
     declare -n _save_out _save_err
-    declare _pipe_out="/tmp/bash-libs-exec-run-$$-$RANDOM-out.pipe"
-    declare _pipe_err="/tmp/bash-libs-exec-run-$$-$RANDOM-err.pipe"
+    declare _pipe_out="/tmp/vbl-exec-run-$$-$RANDOM-out.pipe"
+    declare _pipe_err="/tmp/vbl-exec-run-$$-$RANDOM-err.pipe"
 
     # parse param string
     while [[ "$@" ]]; do
         case "$1" in
-            --) 
+            --)
                 shift
                 break
                 ;;
-            --*) 
+            --*)
                 _arg="${1#--}"
                 case "${_arg}" in
-                    silent|no-out|no-err|err-to-out|ignore|warn|ensure) 
+                    silent|no-out|no-err|err-to-out|ignore|warn|ensure)
                         eval _${_arg//-/_}="1"
                         ;;
                     save-out|save-err)
@@ -94,7 +94,7 @@ exec_run() {
                 esac
                 shift
                 ;;
-            *)  
+            *)
                 break
                 ;;
         esac
@@ -137,7 +137,7 @@ exec_run() {
 
     if (( _save_out_set || _save_err_set )); then
         trap 'sys_cmd -p rm -f ${_pipe_out} ${_pipe_err} &>/dev/null; \
-              trap -- RETURN' RETURN
+                trap -- RETURN' RETURN
     fi
 
     if (( _ignore )); then
@@ -158,7 +158,7 @@ exec_run() {
         sys_cmd echo "${_rnd_eof}" > ${_pipe_out}
 
         until { IFS= read -u ${_pipe_out_fd} -r _line; \
-                [[ "${_line}" == "${_rnd_eof}" ]]; } do 
+                [[ "${_line}" == "${_rnd_eof}" ]]; } do
             _save_out+=("${_line}")
         done
 
@@ -168,7 +168,7 @@ exec_run() {
     if (( _save_err_set )); then
         _rnd_eof="${RANDOM}-${RANDOM}-${RANDOM}"
         sys_cmd echo "${_rnd_eof}" > ${_pipe_err}
-        
+
         until { IFS= read -u ${_pipe_err_fd} -r _line;
                 [[ "${_line}" == "${_rnd_eof}" ]]; } do
             _save_err+=("${_line}")
@@ -211,11 +211,11 @@ exec_die() {
     # parse param string
     while [[ "$@" ]]; do
         case "$1" in
-            --) 
+            --)
                 shift
                 break
                 ;;
-            --*) 
+            --*)
                 _arg="${1#--}"
                 case "${_arg}" in
                     exitcode)
@@ -225,7 +225,7 @@ exec_die() {
                 esac
                 shift
                 ;;
-            *)  
+            *)
                 break
                 ;;
         esac
@@ -273,20 +273,20 @@ exec_check_cmd() {
     # parse param string
     while [[ "$@" ]]; do
         case "$1" in
-            --) 
+            --)
                 shift
                 break
                 ;;
-            --*) 
+            --*)
                 _arg="${1#--}"
                 case "${_arg}" in
-                    warn|ensure) 
+                    warn|ensure)
                         eval _${_arg}="1"
                         ;;
                 esac
                 shift
                 ;;
-            *)  
+            *)
                 break
                 ;;
         esac
@@ -296,7 +296,7 @@ exec_check_cmd() {
         if ! sys_cmd -v ${_cmd} &>/dev/null; then
             if (( _warn )); then
                 STR_ERR_FORMAT="${EXEC_CHECK_CMD_WARN_FORMAT}" str_err "${_cmd}"
-                continue 
+                continue
             elif (( _ensure )); then
                 EXEC_DIE_FORMAT="${EXEC_CHECK_CMD_ENSURE_FORMAT}" \
                     EXEC_DIE_EXITCODE="${EXEC_CHECK_CMD_ENSURE_EXITCODE}" \
@@ -321,7 +321,7 @@ exec_rerun() {
     #
     # parameters:
     #   --tries     a number of tries to run a command
-    #   --sleep     a pause in seconds between tries 
+    #   --sleep     a pause in seconds between tries
     #
     # options:
     #   EXEC_RERUN_TRIES
@@ -334,16 +334,16 @@ exec_rerun() {
 
     declare _arg=""
     declare -i _tries="${EXEC_RERUN_TRIES}" _sleep="${EXEC_RERUN_SLEEP}"
-    declare -i _i="0" _rc="0"                                                      
+    declare -i _i="0" _rc="0"
 
     # parse param string
     while [[ "$@" ]]; do
         case "$1" in
-            --) 
+            --)
                 shift
                 break
                 ;;
-            --*) 
+            --*)
                 _arg="${1#--}"
                 case "${_arg}" in
                     tries|sleep)
@@ -353,20 +353,20 @@ exec_rerun() {
                 esac
                 shift
                 ;;
-            *)  
+            *)
                 break
                 ;;
         esac
     done
-                                                                                
-    while (( _i++ < ${_tries} )); do                                  
-        sleep ${_sleep}                                               
-        if { ("$@"); _rc=$?; ! (( _rc )); } then                                
-            break                                                               
-        fi                                                                      
-    done                                                                        
-                                                                                
-    return ${_rc}                                                               
+
+    while (( _i++ < ${_tries} )); do
+        sleep ${_sleep}
+        if { ("$@"); _rc=$?; ! (( _rc )); } then
+            break
+        fi
+    done
+
+    return ${_rc}
 }
 
 __exec_rerun_conf__() {
@@ -375,7 +375,7 @@ __exec_rerun_conf__() {
 }
 
 __exec_conf__() {
-    declare -grx __exec_version="v2.0.2"
+    declare -grx __exec_version="v2.0.3"
     declare -gx __exec_exported="exec_run exec_die exec_check_cmd exec_rerun"
 
     __exec_run_conf__

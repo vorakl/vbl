@@ -138,11 +138,11 @@ str_readline() {
     # parse param string
     while [[ "$@" ]]; do
         case "$1" in
-            --) 
+            --)
                 shift
                 break
                 ;;
-            --*) 
+            --*)
                 _arg="${1#--}"
                 case "${_arg}" in
                     delim)
@@ -157,7 +157,7 @@ str_readline() {
                 esac
                 shift
                 ;;
-            *)  
+            *)
                 _var="$1"
                 break
                 ;;
@@ -195,11 +195,11 @@ str_readlines() {
     # parse param string
     while [[ "$@" ]]; do
         case "$1" in
-            --) 
+            --)
                 shift
                 break
                 ;;
-            --*) 
+            --*)
                 _arg="${1#--}"
                 case "${_arg}" in
                     delim)
@@ -214,7 +214,7 @@ str_readlines() {
                 esac
                 shift
                 ;;
-            *)  
+            *)
                 _arr="$1"
                 break
                 ;;
@@ -368,9 +368,9 @@ str_strip() {
 }
 
 __str_conf__() {
-    declare -grx __str_version="v2.0.4"
+    declare -grx __str_version="v2.0.5"
     declare -gx __str_exported="str_say str_debug str_err str_readline \
-                      str_readlines str_format str_lstrip str_rstrip str_strip"
+                str_readlines str_format str_lstrip str_rstrip str_strip"
 
     __str_say_conf__
     __str_debug_conf__
