@@ -40,6 +40,8 @@ Basically, for me using these modules help to
 * [exec](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/exec.rst)
 * [matrix](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/matrix.rst)
 
+## Versions and Releases
+
 There are two version files available:
 
 * [latest.lst](http://bash.libs.cf/latest.lst),
@@ -47,8 +49,8 @@ There are two version files available:
 * [stable.lst](http://bash.libs.cf/stable.lst)
   for modules located at `http://bash.libs.cf/stable/`
 
-These versions allow you to stick to them in the future by addressing modules
-at `http://bash.libs.cf/v?.?.?/` location.
+Versions from `stable.lst` allow you to stick to them in the future by addressing
+modules at `http://bash.libs.cf/v?.?.?/` location.
 
 
 ## Other documentation
