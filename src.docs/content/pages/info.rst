@@ -55,8 +55,13 @@ Modules
 
 There are two version files available:
 
-* latest.lst_
-* stable.lst_
+* latest.lst_,
+  for modules located at ``http://bash.libs.cf/latest/``
+* stable.lst_,
+  for modules located at ``http://bash.libs.cf/stable/``
+
+These versions allow you to stick to them in the future by addressing modules
+at ``http://bash.libs.cf/v?.?.?/`` location.
 
 |
 
