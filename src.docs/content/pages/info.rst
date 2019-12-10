@@ -68,8 +68,8 @@ Other documentation
 * Installation
 * Modification of a default configuration
 
-.. |build-status| image:: https://travis-ci.org/vorakl/bash-libs.svg?branch=master
-   :target: https://travis-ci.org/vorakl/bash-libs
+.. |build-status| image:: https://travis-ci.org/vorakl/vbl.svg?branch=master
+   :target: https://travis-ci.org/vorakl/vbl
    :alt: Travis CI: continuous integration status
 
 .. Links
@@ -79,4 +79,4 @@ Other documentation
 .. _matrix: {filename}/pages/matrix.rst
 .. _latest.lst: http://bash.libs.cf/latest.lst
 .. _stable.lst: http://bash.libs.cf/stable.lst
-.. _Examples: https://github.com/vorakl/bash-libs/tree/master/examples
+.. _Examples: https://github.com/vorakl/vbl/tree/master/examples

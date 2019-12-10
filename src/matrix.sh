@@ -37,7 +37,7 @@ matrix_init() {
     #            3 2 \
     #            one two three \
     #            "1 1" "2 2" "3 3"
- 
+
     declare -n self=$1
     declare -i width=$2 height=$3
     shift 3;

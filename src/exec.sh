@@ -70,8 +70,8 @@ exec_run() {
     declare _channels="" _chan_out="" _chan_err="" _rnd_eof=""
     declare -i _save_out_set="0" _save_err_set="0"
     declare -n _save_out _save_err
-    declare _pipe_out="/tmp/bash-libs-exec-run-$$-$RANDOM-out.pipe"
-    declare _pipe_err="/tmp/bash-libs-exec-run-$$-$RANDOM-err.pipe"
+    declare _pipe_out="/tmp/vbl-exec-run-$$-$RANDOM-out.pipe"
+    declare _pipe_err="/tmp/vbl-exec-run-$$-$RANDOM-err.pipe"
 
     # parse param string
     while [[ "$@" ]]; do
