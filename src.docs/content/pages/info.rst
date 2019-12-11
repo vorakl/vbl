@@ -75,7 +75,7 @@ by addressing modules at ``http://bash.libs.cf/v?.?.?/`` location.
 Other documentation
 ===================
 
-* Get started
+* `Get started`_
 * Examples_
 * Installation
 * Modification of a default configuration
@@ -93,3 +93,4 @@ Other documentation
 .. _stable.lst: http://bash.libs.cf/stable.lst
 .. _Examples: https://github.com/vorakl/vbl/tree/master/examples
 .. _Github: https://github.com/vorakl/vbl/releases
+.. _`Get started`: {filename}/pages/get-started.rst

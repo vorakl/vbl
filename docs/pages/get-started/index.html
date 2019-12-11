@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang=en> <head><meta charset=utf-8><title>Get started :: Vorakl's Libs: Bash</title><meta name=viewport content="width=device-width, initial-scale=1.0"><meta name=robots content=all><link href=https://bash.libs.cf/pages/get-started/ rel=canonical><meta name=description content="All useful functions in one example."><!--[if lt IE 9]>
+    <script src="https://bash.libs.cf/theme/html5.js?v=1575459620"></script>
+    <![endif]--><link rel=stylesheet href="https://bash.libs.cf/theme/bootstrap-pygments.bundle.min.css?v=1575459620"><link rel="shortcut icon" href="/favicon.ico?v=1575459620"><meta name=apple-mobile-web-app-title content="Vorakl's Libs: Bash"><meta name=application-name content="Vorakl's Libs: Bash"></head> <body> <div class=navbar> <div class=navbar-inner> <div class=container> <a href=https://bash.libs.cf/ class=brand>Vorakl's Libs: Bash</a> <a class="btn btn-navbar" data-toggle=collapse data-target=.nav-collapse> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </a> <div class=nav-collapse> <ul class="nav pull-right"> <!-- <li class="divider-vertical"></li> --> <li><a href=https://github.com/vorakl/vbl>repo</a></li> <li><a href=https://libs.cf/ >libs</a></li> <li><a href=https://vorakl.com/ >blog</a></li> <li><a href=https://vorakl.com/about/ >author</a></li> <!-- <li class="divider-vertical"></li> --> </ul> </div> </div> </div> </div> <div class=container> <div class=content> <div class=row> <div class=span9> <div class=article> <div class=content-title> <h1>Get started</h1> <h3>All useful functions in one example.</h3> </div> <div><p>First of all, let's take a look at a &quot;Hello World&quot; example in terms of this library:</p> <div class=line-block> <div class=line><br></div> </div> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span>
+
+    str_say <span class=s2>&quot;Hello World&quot;</span>
+<span class=o>}</span>
+
+start
+</pre></div> <div class=line-block> <div class=line><br></div> </div> <p>In this example, I'm gonna import a few modules and show some common use cases, all in one script:</p> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
+
+__str_init__<span class=o>()</span> <span class=o>{</span>
+    <span class=nv>STR_SAY_FORMAT</span><span class=o>=</span><span class=s2>&quot;INFO: %s\n&quot;</span>
+    <span class=nv>STR_ERR_FORMAT</span><span class=o>=</span><span class=s2>&quot;ERROR: %s\n&quot;</span>
+<span class=o>}</span>
+
+__exec_init__<span class=o>()</span> <span class=o>{</span>
+    <span class=nv>EXEC_RUN_WARN_FORMAT</span><span class=o>=</span><span class=s2>&quot;WARN: &#39;%s&#39; has exited with status code %d\n&quot;</span>
+    <span class=nv>EXEC_DIE_FORMAT</span><span class=o>=</span><span class=s2>&quot;FATAL: &#39;%s&#39; has failed with an exit code &#39;%d&#39;\n&quot;</span>
+    <span class=nv>EXEC_CHECK_CMD_ENSURE_FORMAT</span><span class=o>=</span><span class=s2>&quot;FATAL: there is no &#39;%s&#39; command\n&quot;</span>
+    <span class=nv>EXEC_CHECK_CMD_ENSURE_EXITCODE</span><span class=o>=</span><span class=s2>&quot;28&quot;</span>
+    <span class=nv>EXEC_RERUN_TRIES</span><span class=o>=</span><span class=s2>&quot;3&quot;</span>
+<span class=o>}</span>
+
+start<span class=o>()</span> <span class=o>{</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/exec<span class=o>)</span>
+
+    <span class=c1># Ensures that these tools exist</span>
+    exec_check_cmd --ensure cat cp
+
+    <span class=c1># Runs a failing command with no output and only warns about an error</span>
+    exec_run --silent --warn cat /nonexistent
+
+    <span class=c1># Runs a command silently but if it fails, then exits with an error</span>
+    exec_run --silent cp /etc/resolv.conf /tmp/ <span class=o>||</span> <span class=se>\</span>
+        exec_die --exitcode <span class=m>34</span> <span class=s2>&quot;cp&quot;</span> <span class=s2>&quot;</span><span class=nv>$?</span><span class=s2>&quot;</span>
+
+    <span class=c1># Runs a wrong command 3 times and 1 sec sleep, and ignores a non-zero</span>
+    <span class=c1># exit code after the last try</span>
+    exec_run --ignore <span class=se>\</span>
+        exec_rerun --sleep <span class=m>1</span> bash -c <span class=s1>&#39;echo &quot;fail&quot;; exit 1&#39;</span>
+
+    <span class=nb>false</span> <span class=o>||</span> str_err <span class=s2>&quot;A false state occured!&quot;</span>
+
+    <span class=c1># Reads strings which end with &#39;\0&#39; symbol instead of &#39;\n&#39;</span>
+    cat /proc/self/environ <span class=p>|</span> <span class=se>\</span>
+        <span class=k>while</span> str_readline --delim <span class=s1>&#39;&#39;</span> str<span class=p>;</span> <span class=k>do</span> <span class=nb>echo</span> <span class=s2>&quot;[</span><span class=si>${</span><span class=nv>str</span><span class=si>}</span><span class=s2>]&quot;</span><span class=p>;</span> <span class=k>done</span>
+
+    <span class=c1># Another way to read strings which end with &#39;\0&#39; symbol instead of &#39;\n&#39;</span>
+    str_readlines --delim <span class=s1>$&#39;\0&#39;</span> myenv &lt; /proc/self/environ <span class=o>&amp;&amp;</span> <span class=se>\</span>
+        <span class=nb>echo</span> <span class=s2>&quot;</span><span class=si>${</span><span class=nv>myenv</span><span class=p>[0]</span><span class=si>}</span><span class=s2>&quot;</span>
+
+    <span class=c1># Saves a formated fp-number in a variable</span>
+    str_format <span class=s2>&quot;%014.2f&quot;</span> my_float <span class=s2>&quot;1.48732599&quot;</span> <span class=o>&amp;&amp;</span> <span class=nb>echo</span> <span class=si>${</span><span class=nv>my_float</span><span class=si>}</span>
+
+    <span class=c1># Takes a current time in Unix-time format and prints it for human</span>
+    str_format <span class=s2>&quot;The current time: %(%H:%M:%S)T\n&quot;</span> - <span class=s2>&quot;</span><span class=k>$(</span>date <span class=s1>&#39;+%s&#39;</span><span class=k>)</span><span class=s2>&quot;</span>
+
+    <span class=c1># Removes all &#39;\n&#39; from the right side</span>
+    str_rstrip &lt; &lt;<span class=o>(</span><span class=nb>printf</span> <span class=s2>&quot;Hello\n\n\n\n&quot;</span><span class=o>)</span>
+
+    <span class=c1># Removes all leading spaces</span>
+    str_lstrip <span class=o>&lt;&lt;&lt;</span> <span class=s2>&quot;     Hello&quot;</span>
+
+    <span class=c1># First, remove &#39;\n&#39; on the right, then &#39; &#39; from both sides</span>
+    <span class=o>{</span> str_rstrip <span class=p>|</span> str_strip<span class=p>;</span> <span class=o>}</span> <span class=o>&lt;&lt;&lt;</span> <span class=s2>&quot;   Hello   &quot;</span>
+<span class=o>}</span>
+
+start
+</pre></div> </div> </div> <div class=article> <p>Share on <a href="https://twitter.com/intent/tweet?text=Get%20started:%20All%20useful%20functions%20in%20one%20example.&url=https://bash.libs.cf/pages/get-started/">Twitter</a></p> </div> </div> <div class=span3> <div class=well style="padding: 8px 0; background-color: #FBFBFB;"> <ul class="nav nav-list"> <li class=nav-header> Modules </li> <li><a href=/pages/sys/ >sys</a></li> <li><a href=/pages/str/ >str</a></li> <li><a href=/pages/exec/ >exec</a></li> <li><a href=/pages/matrix/ >matrix</a></li> </ul> </div> </div> </div> </div> <footer> <div class=container> <div class=row> <div class=span5> <span class=pull-left> &copy; 2019 <a href=https://vorakl.com/contacts/ >Oleksii Tsvietnov</a> All Rights Reserved </span> </div> <div class=span7> <div class=pull-right> Powered by <a href=https://github.com/getpelican/pelican>Pelican</a> and <a href=https://aves.cf/ >Aves</a> theme </div> </div> </div> </div> </footer> </div> <script src="https://bash.libs.cf/theme/jquery-bootstrap-collapse.bundle.min.js?v=1575459620"></script> </body> </html>

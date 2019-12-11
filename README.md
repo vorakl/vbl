@@ -57,7 +57,7 @@ modules at `http://bash.libs.cf/v?.?.?/` location.
 
 ## Other documentation
 
-* Get started
+* [Get started](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/get-started.rst)
 * [Examples](https://github.com/vorakl/bash-libs/tree/master/examples)
 * Installation
 * Modification of a default configuration
