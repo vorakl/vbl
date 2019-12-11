@@ -2,7 +2,7 @@ Get started
 ###########
 
 :slug: get-started
-:summary: All useful functions in one example.
+:summary: All useful functions in one example
 
 |
 
@@ -77,13 +77,13 @@ all in one script:
         str_format "The current time: %(%H:%M:%S)T\n" - "$(date '+%s')"
 
         # Removes all '\n' from the right side
-        str_rstrip < <(printf "Hello\n\n\n\n")
+        str_rstrip < <(printf "Hello\n\n\n\n"); echo
 
         # Removes all leading spaces
         str_lstrip <<< "     Hello"
 
         # First, remove '\n' on the right, then ' ' from both sides
-        { str_rstrip | str_strip; } <<< "   Hello   "
+        { str_rstrip | str_strip; } <<< "   Hello   "; echo
     }
 
     start

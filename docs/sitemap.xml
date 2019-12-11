@@ -15,12 +15,12 @@
     <lastmod>2019-12-11</lastmod>
 </url>
 <url>
-    <loc>https://bash.libs.cf/pages/info-old/</loc>
+    <loc>https://bash.libs.cf/pages/info/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-11-30</lastmod>
+    <lastmod>2019-12-11</lastmod>
 </url>
 <url>
-    <loc>https://bash.libs.cf/pages/info/</loc>
+    <loc>https://bash.libs.cf/pages/installation/</loc>
     <changefreq>weekly</changefreq>
     <lastmod>2019-12-11</lastmod>
 </url>
@@ -28,6 +28,11 @@
     <loc>https://bash.libs.cf/pages/matrix/</loc>
     <changefreq>weekly</changefreq>
     <lastmod>2019-12-09</lastmod>
+</url>
+<url>
+    <loc>https://bash.libs.cf/pages/info-old/</loc>
+    <changefreq>weekly</changefreq>
+    <lastmod>2019-11-30</lastmod>
 </url>
 <url>
     <loc>https://bash.libs.cf/pages/str/</loc>
