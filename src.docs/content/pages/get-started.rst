@@ -4,10 +4,10 @@ Get started
 :slug: get-started
 :summary: All useful functions in one example.
 
+|
+
 First of all, let's take a look at a "Hello World" example in terms of this
 library:
-
-|
 
 .. code-block:: bash
 
@@ -67,10 +67,6 @@ all in one script:
         false || str_err "A false state occured!"
 
         # Reads strings which end with '\0' symbol instead of '\n'
-        cat /proc/self/environ | \
-            while str_readline --delim '' str; do echo "[${str}]"; done
-
-        # Another way to read strings which end with '\0' symbol instead of '\n'
         str_readlines --delim $'\0' myenv < /proc/self/environ && \
             echo "${myenv[0]}"
 
