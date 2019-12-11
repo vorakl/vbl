@@ -78,7 +78,7 @@ Other documentation
 * `Get started`_
 * Examples_
 * Installation_
-* Modification of a default configuration
+* Configuration_
 
 .. |build-status| image:: https://travis-ci.org/vorakl/vbl.svg?branch=master
    :target: https://travis-ci.org/vorakl/vbl
@@ -95,4 +95,4 @@ Other documentation
 .. _Github: https://github.com/vorakl/vbl/releases
 .. _`Get started`: {filename}/pages/get-started.rst
 .. _Installation: {filename}/pages/installation.rst
-.. _`Modification of a default configuration`: {filename}/pages/setup.rst
+.. _Configuration: {filename}/pages/configuration.rst
