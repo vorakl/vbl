@@ -88,7 +88,7 @@ str_err() {
     #
     # examples:
     #   str_err "The connection has been closed"
-    #   STR_ERR_FORMAT="WARN: %s\n" str_err "too much arguments"
+    #   STR_ERR_FORMAT="WARN: %s\n" str_err "too many arguments"
 
     (( STR_ERR_SUPPRESS )) || sys_cmd printf "${STR_ERR_FORMAT}" "$@" >&2
 }

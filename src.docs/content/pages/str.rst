@@ -228,7 +228,7 @@ example:
 
             str_err "the connection has been closed!"
             STR_ERR_FORMAT="WARN: %s\n" \
-                str_err "too much arguments."
+                str_err "too many arguments."
         }
 
         start

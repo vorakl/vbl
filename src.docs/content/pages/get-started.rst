@@ -6,7 +6,7 @@ Get started
 
 |
 
-First of all, let's take a look at a "Hello World" example in terms of this
+First of all, let's take a look at the "Hello World" example in terms of this
 library:
 
 .. code-block:: bash
