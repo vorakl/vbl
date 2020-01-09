@@ -9,9 +9,9 @@ from os.path import basename
 
 AUTHOR = u'Oleksii Tsvietnov'
 SITENAME = u"Vorakl's Libs: Bash"
-SITEURL = 'https://bash.libs.cf'
+SITEURL = 'https://vbl.vorakl.com'
 SITEDESC = u'A collection of Bash modules'
-SITE_VERSION = '1575459624'
+SITE_VERSION = '1575459625'
 SITE_KEYWORDS = 'bash,shell,library,bash-library,shell-library'
 ARTICLE_PATHS = ['articles'] # a place for articles under the content location
 PAGE_PATHS = ['pages']

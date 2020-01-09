@@ -55,8 +55,8 @@ example:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
-            source <(curl -sSLf http://bash.libs.cf/stable/str) str_say str_err
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/str) str_say str_err
         }
 
         start
@@ -96,8 +96,8 @@ example:
         }
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
-            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/str)
         }
 
         start
@@ -133,8 +133,8 @@ examples:
         }
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
-            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/str)
 
             str_say "Hello World"
         }
@@ -146,8 +146,8 @@ examples:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
-            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/str)
 
             STR_SAY_FORMAT="INFO [%s]: %s\n" \
                 str_say "main" "Loading to memory..."
@@ -183,8 +183,8 @@ example:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
-            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/str)
 
             STR_DEBUG_SUPPRESS="0" STR_DEBUG_FORMAT="DEBUG: %s\n" \
               str_debug "The queue is empty"
@@ -223,8 +223,8 @@ example:
         }
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
-            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/str)
 
             str_err "the connection has been closed!"
             STR_ERR_FORMAT="WARN: %s\n" \
@@ -265,8 +265,8 @@ examples:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
-            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/str)
 
             # the result should contain all 3 strings and first 2 start with spaces
             printf '  Hi!\n    How are you?\nBye' | \
@@ -309,8 +309,8 @@ example:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
-            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/str)
 
             # reads strings which end with '\0' symbol instead of '\n'
             str_readlines --delim $'\0' myenv < /proc/self/environ && \
@@ -354,8 +354,8 @@ examples:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
-            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/str)
 
             str_format "%014.2f" my_float "1.48732599" && echo ${my_float}
             str_format "The current time: %(%H:%M:%S)T\n" - "$(date '+%s')"
@@ -396,8 +396,8 @@ example:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
-            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/str)
 
             str_rstrip < <(printf "Hello\n\n\n\n")
         }
@@ -436,8 +436,8 @@ example:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
-            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/str)
 
             str_lstrip <<< "     Hello"
         }
@@ -474,8 +474,8 @@ example:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
-            source <(curl -sSLf http://bash.libs.cf/stable/str)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/str)
 
             { str_rstrip | str_strip | str_format "[%s]\n"; } <<< "   Hello   "
         }

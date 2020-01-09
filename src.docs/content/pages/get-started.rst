@@ -14,8 +14,8 @@ library:
     #!/bin/bash
 
     start() {
-        source <(curl -sSLf http://bash.libs.cf/stable/sys)
-        source <(curl -sSLf http://bash.libs.cf/stable/str)
+        source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+        source <(curl -sSLf http://vbl.vorakl.com/stable/str)
 
         str_say "Hello World"
     }
@@ -45,9 +45,9 @@ all in one script:
     }
 
     start() {
-        source <(curl -sSLf http://bash.libs.cf/stable/sys)
-        source <(curl -sSLf http://bash.libs.cf/stable/str)
-        source <(curl -sSLf http://bash.libs.cf/stable/exec)
+        source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+        source <(curl -sSLf http://vbl.vorakl.com/stable/str)
+        source <(curl -sSLf http://vbl.vorakl.com/stable/exec)
 
         # Ensures that these tools exist
         exec_check_cmd --ensure cat cp

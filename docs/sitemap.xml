@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-    <loc>https://bash.libs.cf/</loc>
+    <loc>https://vbl.vorakl.com/</loc>
     <changefreq>daily</changefreq>
 </url>
 <url>
-    <loc>https://bash.libs.cf/pages/configuration/</loc>
+    <loc>https://vbl.vorakl.com/pages/configuration/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-12-11</lastmod>
+    <lastmod>2020-01-09</lastmod>
 </url>
 <url>
-    <loc>https://bash.libs.cf/pages/exec/</loc>
+    <loc>https://vbl.vorakl.com/pages/exec/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-12-09</lastmod>
+    <lastmod>2020-01-09</lastmod>
 </url>
 <url>
-    <loc>https://bash.libs.cf/pages/get-started/</loc>
+    <loc>https://vbl.vorakl.com/pages/get-started/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-12-17</lastmod>
+    <lastmod>2020-01-09</lastmod>
 </url>
 <url>
-    <loc>https://bash.libs.cf/pages/info/</loc>
+    <loc>https://vbl.vorakl.com/pages/info/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-12-11</lastmod>
+    <lastmod>2020-01-09</lastmod>
 </url>
 <url>
-    <loc>https://bash.libs.cf/pages/installation/</loc>
+    <loc>https://vbl.vorakl.com/pages/installation/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-12-11</lastmod>
+    <lastmod>2020-01-09</lastmod>
 </url>
 <url>
-    <loc>https://bash.libs.cf/pages/matrix/</loc>
+    <loc>https://vbl.vorakl.com/pages/matrix/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-12-09</lastmod>
+    <lastmod>2020-01-09</lastmod>
 </url>
 <url>
-    <loc>https://bash.libs.cf/pages/str/</loc>
+    <loc>https://vbl.vorakl.com/pages/str/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-12-17</lastmod>
+    <lastmod>2020-01-09</lastmod>
 </url>
 <url>
-    <loc>https://bash.libs.cf/pages/sys/</loc>
+    <loc>https://vbl.vorakl.com/pages/sys/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2019-12-09</lastmod>
+    <lastmod>2020-01-09</lastmod>
 </url>
 </urlset>

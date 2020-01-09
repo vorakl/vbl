@@ -1,7 +1,7 @@
 OUTPUTDIR ?= /home/vorakl/repos/my/github/vbl/docs
 THEMEDIR ?= /home/vorakl/repos/my/github/aves/theme
 PLUGINSDIR ?= /home/vorakl/repos/others/pelican-plugins
-SITEMAP ?= https%3A%2F%2Fbash.libs.cf%2Fsitemap.xml
+SITEMAP ?= https%3A%2F%2Fvbl.vorakl.com%2Fsitemap.xml
 
 PY ?= python
 PELICAN ?= pelican

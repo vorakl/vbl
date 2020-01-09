@@ -17,22 +17,22 @@ In general, the installation process looks as follows:
 1. Download the ``latest``, ``stable``, or a version of a module from the library.
     The URL of a module's file should be constructed of three parts:
     
-    - **The base URL**. It is ``http://bash.libs.cf/`` (https is also supported)
+    - **The base URL**. It is ``http://vbl.vorakl.com/`` (https is also supported)
     - **The version**. A version can be ``latest/``, ``stable/`` or one 
       of published versions (e.g. ``v2.0.3/``)
     - **The name of a module** (e.g. ``sys``)
 
     For example:
 
-    - ``http://bash.libs.cf/latest/sys``
-    - ``http://bash.libs.cf/stable/exec``
-    - ``http://bash.libs.cf/v2.0.3/str``
+    - ``http://vbl.vorakl.com/latest/sys``
+    - ``http://vbl.vorakl.com/stable/exec``
+    - ``http://vbl.vorakl.com/v2.0.3/str``
    
     In addition, each module comes with a sha256 hash (``${module}.sha256``).
     For example, these all are possible URLs of sha256 hashes: 
     
-    - ``http://bash.libs.cf/latest/exec.sha256``
-    - ``http://bash.libs.cf/v2.0.2/sys.sha256``
+    - ``http://vbl.vorakl.com/latest/exec.sha256``
+    - ``http://vbl.vorakl.com/v2.0.2/sys.sha256``
 
 2. Include it into your script.
     Usually, external files with Bash code are included by
@@ -50,7 +50,7 @@ save it localy:
 
 .. code-block:: bash
 
-    source <(curl -sSLf http://bash.libs.cf/latest/sys)
+    source <(curl -sSLf http://vbl.vorakl.com/latest/sys)
 
 |
 
@@ -71,9 +71,9 @@ message. To simplify things, it's represented as a separate function ``import_li
 
         _lib_name="${1?The lib name is empty}"
         [[ -n "$2" ]] && _ver="$2/" || _ver="latest/"
-        _lib_content="$(curl -sSLf http://bash.libs.cf/${_ver}${_lib_name})"
+        _lib_content="$(curl -sSLf http://vbl.vorakl.com/${_ver}${_lib_name})"
         _lib_hash="$(set -- $(sha256sum <(echo "${_lib_content}") ); echo "$1")"
-        _origlib_hash="$(set -- $(curl -sSLf http://bash.libs.cf/${_ver}${_lib_name}.sha256); echo "$1")"
+        _origlib_hash="$(set -- $(curl -sSLf http://vbl.vorakl.com/${_ver}${_lib_name}.sha256); echo "$1")"
         if [[ "${_lib_hash}" == "${_origlib_hash}" ]]; then
             source <(echo "${_lib_content}")
         else
@@ -100,9 +100,9 @@ This is how it can be used in code:
 
         _lib_name="${1?The lib name is empty}"
         [[ -n "$2" ]] && _ver="$2/" || _ver="latest/"
-        _lib_content="$(curl -sSLf http://bash.libs.cf/${_ver}${_lib_name})"
+        _lib_content="$(curl -sSLf http://vbl.vorakl.com/${_ver}${_lib_name})"
         _lib_hash="$(set -- $(sha256sum <(echo "${_lib_content}") ); echo "$1")"
-        _origlib_hash="$(set -- $(curl -sSLf http://bash.libs.cf/${_ver}${_lib_name}.sha256); echo "$1")"
+        _origlib_hash="$(set -- $(curl -sSLf http://vbl.vorakl.com/${_ver}${_lib_name}.sha256); echo "$1")"
         if [[ "${_lib_hash}" == "${_origlib_hash}" ]]; then
             source <(echo "${_lib_content}")
         else
@@ -126,8 +126,8 @@ store a file on a disk:
 
     lib_name="latest/sys" 
     source <(
-        exec 3<>/dev/tcp/bash.libs.cf/80
-        printf "GET /${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3
+        exec 3<>/dev/tcp/vbl.vorakl.com/80
+        printf "GET /${lib_name} HTTP/1.1\nHost: vbl.vorakl.com\nConnection: close\n\n" >&3
         body=0;
         while IFS= read -u 3 -r str; do
             if (( body )); then
@@ -143,7 +143,7 @@ or in a shorter form, as a one-liner:
 
 .. code-block:: bash
 
-   lib_name="latest/sys"; source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+   lib_name="latest/sys"; source <(exec 3<>/dev/tcp/vbl.vorakl.com/80; printf "GET /${lib_name} HTTP/1.1\nHost: vbl.vorakl.com\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
 This is the example of how the snippet can be used in code:
 
@@ -153,7 +153,7 @@ This is the example of how the snippet can be used in code:
 
     start() {
         lib_name="latest/sys"
-        source <(exec 3<>/dev/tcp/bash.libs.cf/80; printf "GET /${lib_name} HTTP/1.1\nHost: bash.libs.cf\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+        source <(exec 3<>/dev/tcp/vbl.vorakl.com/80; printf "GET /${lib_name} HTTP/1.1\nHost: vbl.vorakl.com\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
 
     start "$@"
 

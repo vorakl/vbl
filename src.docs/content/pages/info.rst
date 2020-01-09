@@ -63,12 +63,12 @@ the Github_. Releases are always linked to stable versions.
 There are also two version files available:
 
 * latest.lst_,
-  for modules located at ``http://bash.libs.cf/latest/``
+  for modules located at ``http://vbl.vorakl.com/latest/``
 * stable.lst_,
-  for modules located at ``http://bash.libs.cf/stable/``
+  for modules located at ``http://vbl.vorakl.com/stable/``
 
 Versions from ``latest.lst`` allow you to stick to them in the future
-by addressing modules at ``http://bash.libs.cf/v?.?.?/`` location.
+by addressing modules at ``http://vbl.vorakl.com/v?.?.?/`` location.
 
 |
 
@@ -89,8 +89,8 @@ Other documentation
 .. _str: {filename}/pages/str.rst
 .. _exec: {filename}/pages/exec.rst
 .. _matrix: {filename}/pages/matrix.rst
-.. _latest.lst: http://bash.libs.cf/latest.lst
-.. _stable.lst: http://bash.libs.cf/stable.lst
+.. _latest.lst: http://vbl.vorakl.com/latest.lst
+.. _stable.lst: http://vbl.vorakl.com/stable.lst
 .. _Examples: https://github.com/vorakl/vbl/tree/master/examples
 .. _Github: https://github.com/vorakl/vbl/releases
 .. _`Get started`: {filename}/pages/get-started.rst

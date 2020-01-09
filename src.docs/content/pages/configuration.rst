@@ -37,8 +37,8 @@ Example
     #!/bin/bash
 
     start() {
-        source <(curl -sSLf http://bash.libs.cf/stable/sys)
-        source <(curl -sSLf http://bash.libs.cf/stable/str)
+        source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
+        source <(curl -sSLf http://vbl.vorakl.com/stable/str)
         
         str_say "Booting..."
         str_err "Something went wrong!"

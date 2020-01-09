@@ -1,12 +1,12 @@
-<!DOCTYPE html><html lang=en> <head><meta charset=utf-8><title>Module: str :: Vorakl's Libs: Bash</title><meta name=viewport content="width=device-width, initial-scale=1.0"><meta name=robots content=all><link href=https://bash.libs.cf/pages/str/ rel=canonical><meta name=description content="Functions for strings processing"><!--[if lt IE 9]>
-    <script src="https://bash.libs.cf/theme/html5.js?v=1575459624"></script>
-    <![endif]--><link rel=stylesheet href="https://bash.libs.cf/theme/bootstrap-pygments.bundle.min.css?v=1575459624"><link rel="shortcut icon" href="/favicon.ico?v=1575459624"><meta name=apple-mobile-web-app-title content="Vorakl's Libs: Bash"><meta name=application-name content="Vorakl's Libs: Bash"></head> <body> <div class=navbar> <div class=navbar-inner> <div class=container> <a href=https://bash.libs.cf/ class=brand>Vorakl's Libs: Bash</a> <a class="btn btn-navbar" data-toggle=collapse data-target=.nav-collapse> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </a> <div class=nav-collapse> <ul class="nav pull-right"> <!-- <li class="divider-vertical"></li> --> <li><a href=https://github.com/vorakl/vbl>repo</a></li> <li><a href=https://libs.cf/ >libs</a></li> <li><a href=https://vorakl.com/ >blog</a></li> <li><a href=https://vorakl.com/about/ >author</a></li> <!-- <li class="divider-vertical"></li> --> </ul> </div> </div> </div> </div> <div class=container> <div class=content> <div class=row> <div class=span9> <div class=article> <div class=content-title> <h1>Module: str</h1> <h3>Functions for strings processing</h3> </div> <div><div class=section id=api> <h2>API</h2> <ul class=simple> <li><a class="reference internal" href=#str-version>__str_version</a> &lt;var&gt;</li> <li><a class="reference internal" href=#str-exported>__str_exported</a> &lt;var&gt;</li> <li>STR_SAY_SUPPRESS &lt;var&gt;</li> <li>STR_SAY_FORMAT &lt;var&gt;</li> <li>STR_DEBUG_SUPPRESS &lt;var&gt;</li> <li>STR_DEBUG_FORMAT &lt;var&gt;</li> <li>STR_ERR_SUPPRESS &lt;var&gt;</li> <li>STR_ERR_FORMAT &lt;var&gt;</li> <li><a class="reference internal" href=#str-init>__str_init__</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-say>str_say</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-debug>str_debug</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-err>str_err</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-readline>str_readline</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-readlines>str_readlines</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-format>str_format</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-rstrip>str_rstrip</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-lstrip>str_lstrip</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-strip>str_strip</a> &lt;func&gt;</li> </ul> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=reqires> <h2>REQIRES</h2> <ul class=simple> <li>sys</li> </ul> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=usage> <h2>USAGE</h2> <blockquote> <pre class=literal-block>
+<!DOCTYPE html><html lang=en> <head><meta charset=utf-8><title>Module: str :: Vorakl's Libs: Bash</title><meta name=viewport content="width=device-width, initial-scale=1.0"><meta name=robots content=all><link href=https://vbl.vorakl.com/pages/str/ rel=canonical><meta name=description content="Functions for strings processing"><!--[if lt IE 9]>
+    <script src="https://vbl.vorakl.com/theme/html5.js?v=1575459625"></script>
+    <![endif]--><link rel=stylesheet href="https://vbl.vorakl.com/theme/bootstrap-pygments.bundle.min.css?v=1575459625"><link rel="shortcut icon" href="/favicon.ico?v=1575459625"><meta name=apple-mobile-web-app-title content="Vorakl's Libs: Bash"><meta name=application-name content="Vorakl's Libs: Bash"></head> <body> <div class=navbar> <div class=navbar-inner> <div class=container> <a href=https://vbl.vorakl.com/ class=brand>Vorakl's Libs: Bash</a> <a class="btn btn-navbar" data-toggle=collapse data-target=.nav-collapse> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </a> <div class=nav-collapse> <ul class="nav pull-right"> <!-- <li class="divider-vertical"></li> --> <li><a href=https://github.com/vorakl/vbl>repo</a></li> <li><a href=https://libs.cf/ >libs</a></li> <li><a href=https://vorakl.com/ >blog</a></li> <li><a href=https://vorakl.com/about/ >author</a></li> <!-- <li class="divider-vertical"></li> --> </ul> </div> </div> </div> </div> <div class=container> <div class=content> <div class=row> <div class=span9> <div class=article> <div class=content-title> <h1>Module: str</h1> <h3>Functions for strings processing</h3> </div> <div><div class=section id=api> <h2>API</h2> <ul class=simple> <li><a class="reference internal" href=#str-version>__str_version</a> &lt;var&gt;</li> <li><a class="reference internal" href=#str-exported>__str_exported</a> &lt;var&gt;</li> <li>STR_SAY_SUPPRESS &lt;var&gt;</li> <li>STR_SAY_FORMAT &lt;var&gt;</li> <li>STR_DEBUG_SUPPRESS &lt;var&gt;</li> <li>STR_DEBUG_FORMAT &lt;var&gt;</li> <li>STR_ERR_SUPPRESS &lt;var&gt;</li> <li>STR_ERR_FORMAT &lt;var&gt;</li> <li><a class="reference internal" href=#str-init>__str_init__</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-say>str_say</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-debug>str_debug</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-err>str_err</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-readline>str_readline</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-readlines>str_readlines</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-format>str_format</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-rstrip>str_rstrip</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-lstrip>str_lstrip</a> &lt;func&gt;</li> <li><a class="reference internal" href=#str-strip>str_strip</a> &lt;func&gt;</li> </ul> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=reqires> <h2>REQIRES</h2> <ul class=simple> <li>sys</li> </ul> <div class=line-block> <div class=line><br></div> </div> </div> <div class=section id=usage> <h2>USAGE</h2> <blockquote> <pre class=literal-block>
 source str [list of functions to export]
 </pre> </blockquote> <p>By default, all functions are exported, so they can be used in sub-shells. It is also possible to specify which functions should be exported when a module is loaded by defining them as a list in the <strong>'source'</strong> command or in the <a class="reference internal" href=#str-exported>__str_exported</a> variable.</p> <div class=section id=example> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
 
 start<span class=o>()</span> <span class=o>{</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span> str_say str_err
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/str<span class=o>)</span> str_say str_err
 <span class=o>}</span>
 
 start
@@ -17,8 +17,8 @@ __str_init__<span class=o>()</span> <span class=o>{</span>
 <span class=o>}</span>
 
 start<span class=o>()</span> <span class=o>{</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/str<span class=o>)</span>
 <span class=o>}</span>
 
 start
@@ -31,8 +31,8 @@ __str_init__<span class=o>()</span> <span class=o>{</span>
 <span class=o>}</span>
 
 start<span class=o>()</span> <span class=o>{</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/str<span class=o>)</span>
 
     str_say <span class=s2>&quot;Hello World&quot;</span>
 <span class=o>}</span>
@@ -41,8 +41,8 @@ start
 </pre></div> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
 
 start<span class=o>()</span> <span class=o>{</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/str<span class=o>)</span>
 
     <span class=nv>STR_SAY_FORMAT</span><span class=o>=</span><span class=s2>&quot;INFO [%s]: %s\n&quot;</span> <span class=se>\</span>
         str_say <span class=s2>&quot;main&quot;</span> <span class=s2>&quot;Loading to memory...&quot;</span>
@@ -54,8 +54,8 @@ str_debug arg [...]
 </pre> </blockquote> </div> <div class=section id=id4> <h3>options:</h3> <blockquote> <ul class=simple> <li><em>STR_DEBUG_SUPPRESS</em>, default is &quot;1&quot;</li> <li><em>STR_DEBUG_FORMAT</em>, defalt is <tt class="docutils literal">&quot;%s\n&quot;</tt></li> </ul> </blockquote> </div> <div class=section id=id5> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
 
 start<span class=o>()</span> <span class=o>{</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/str<span class=o>)</span>
 
     <span class=nv>STR_DEBUG_SUPPRESS</span><span class=o>=</span><span class=s2>&quot;0&quot;</span> <span class=nv>STR_DEBUG_FORMAT</span><span class=o>=</span><span class=s2>&quot;DEBUG: %s\n&quot;</span> <span class=se>\</span>
       str_debug <span class=s2>&quot;The queue is empty&quot;</span>
@@ -71,8 +71,8 @@ __str_init__<span class=o>()</span> <span class=o>{</span>
 <span class=o>}</span>
 
 start<span class=o>()</span> <span class=o>{</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/str<span class=o>)</span>
 
     str_err <span class=s2>&quot;the connection has been closed!&quot;</span>
     <span class=nv>STR_ERR_FORMAT</span><span class=o>=</span><span class=s2>&quot;WARN: %s\n&quot;</span> <span class=se>\</span>
@@ -85,8 +85,8 @@ str_readline [--delim char] [--fd num] [--] var
 </pre> </blockquote> </div> <div class=section id=parameters> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>--delim</em>, a delimiter of a string (default is <tt class="docutils literal">&quot;\n&quot;</tt>)</li> <li><em>--fd</em>, a file descriptor to read from (default is 0)</li> <li><em>var</em>, a variable for storing a result</li> </ul> </blockquote> </div> <div class=section id=id10> <h3>examples:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
 
 start<span class=o>()</span> <span class=o>{</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/str<span class=o>)</span>
 
     <span class=c1># the result should contain all 3 strings and first 2 start with spaces</span>
     <span class=nb>printf</span> <span class=s1>&#39;  Hi!\n    How are you?\nBye&#39;</span> <span class=p>|</span> <span class=se>\</span>
@@ -103,8 +103,8 @@ str_readlines [--delim char] [--fd num] [--] arr
 </pre> </blockquote> </div> <div class=section id=id12> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>--delim</em>, a delimiter of a string (default is <tt class="docutils literal">&quot;\n&quot;</tt>)</li> <li><em>--fd</em>, a file descriptor to read from (default is 0)</li> <li><em>arr</em>, an array variable for storing the result</li> </ul> </blockquote> </div> <div class=section id=id13> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
 
 start<span class=o>()</span> <span class=o>{</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/str<span class=o>)</span>
 
     <span class=c1># reads strings which end with &#39;\0&#39; symbol instead of &#39;\n&#39;</span>
     str_readlines --delim <span class=s1>$&#39;\0&#39;</span> myenv &lt; /proc/self/environ <span class=o>&amp;&amp;</span> <span class=se>\</span>
@@ -117,8 +117,8 @@ str_format format_string [output_var|-] [input]
 </pre> </blockquote> </div> <div class=section id=id15> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>format_string</em>, a common printf's format string</li> <li><em>output_var</em> or <em>-</em>, a variable for saving the output. If it's empty or '-', then prints to the stdout</li> <li><em>input</em>, if it's set, then it's used as a source of data. In this case, the second parameter cannot be empty!</li> </ul> </blockquote> </div> <div class=section id=id16> <h3>examples:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
 
 start<span class=o>()</span> <span class=o>{</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/str<span class=o>)</span>
 
     str_format <span class=s2>&quot;%014.2f&quot;</span> my_float <span class=s2>&quot;1.48732599&quot;</span> <span class=o>&amp;&amp;</span> <span class=nb>echo</span> <span class=si>${</span><span class=nv>my_float</span><span class=si>}</span>
     str_format <span class=s2>&quot;The current time: %(%H:%M:%S)T\n&quot;</span> - <span class=s2>&quot;</span><span class=k>$(</span>date <span class=s1>&#39;+%s&#39;</span><span class=k>)</span><span class=s2>&quot;</span>
@@ -131,8 +131,8 @@ str_rstrip [pattern] [var]
 </pre> </blockquote> </div> <div class=section id=id18> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>pattern</em>, a pattern is the same as in pathname expansion. Default is a new line <tt class="docutils literal">&quot;\n&quot;</tt></li> <li><em>var</em>, a variable where the result will be saved, optional</li> </ul> </blockquote> </div> <div class=section id=id19> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
 
 start<span class=o>()</span> <span class=o>{</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/str<span class=o>)</span>
 
     str_rstrip &lt; &lt;<span class=o>(</span><span class=nb>printf</span> <span class=s2>&quot;Hello\n\n\n\n&quot;</span><span class=o>)</span>
 <span class=o>}</span>
@@ -143,8 +143,8 @@ str_lstrip [pattern] [var]
 </pre> </blockquote> </div> <div class=section id=id21> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>pattern</em>, a pattern is the same as in pathname expansion. Default is a space ' '</li> <li><em>var</em>, a variable where the result will be saved, optional</li> </ul> </blockquote> </div> <div class=section id=id22> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
 
 start<span class=o>()</span> <span class=o>{</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/str<span class=o>)</span>
 
     str_lstrip <span class=o>&lt;&lt;&lt;</span> <span class=s2>&quot;     Hello&quot;</span>
 <span class=o>}</span>
@@ -155,11 +155,11 @@ str_strip [pattern] [var]
 </pre> </blockquote> </div> <div class=section id=id24> <h3>parameters:</h3> <blockquote> <ul class=simple> <li><em>pattern</em>, a pattern is the same as in pathname expansion. Default is a space ' '</li> <li><em>var</em>, a variable where the result will be saved, optional</li> </ul> </blockquote> </div> <div class=section id=id25> <h3>example:</h3> <blockquote> <div class=highlight><pre><span></span><span class=ch>#!/bin/bash</span>
 
 start<span class=o>()</span> <span class=o>{</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/sys<span class=o>)</span>
-    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://bash.libs.cf/stable/str<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/sys<span class=o>)</span>
+    <span class=nb>source</span> &lt;<span class=o>(</span>curl -sSLf http://vbl.vorakl.com/stable/str<span class=o>)</span>
 
     <span class=o>{</span> str_rstrip <span class=p>|</span> str_strip <span class=p>|</span> str_format <span class=s2>&quot;[%s]\n&quot;</span><span class=p>;</span> <span class=o>}</span> <span class=o>&lt;&lt;&lt;</span> <span class=s2>&quot;   Hello   &quot;</span>
 <span class=o>}</span>
 
 start
-</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> </div> </div> <div class=article> <p>Share on <a href="https://twitter.com/intent/tweet?text=Module%3A%20str:%20Functions%20for%20strings%20processing&url=https://bash.libs.cf/pages/str/">Twitter</a></p> </div> </div> <div class=span3> <div class=well style="padding: 8px 0; background-color: #FBFBFB;"> <ul class="nav nav-list"> <li class=nav-header> Modules </li> <li><a href=/pages/sys/ >sys</a></li> <li><a href=/pages/str/ >str</a></li> <li><a href=/pages/exec/ >exec</a></li> <li><a href=/pages/matrix/ >matrix</a></li> </ul> </div> </div> </div> </div> <footer> <div class=container> <div class=row> <div class=span5> <span class=pull-left> &copy; 2019 <a href=https://vorakl.com/contacts/ >Oleksii Tsvietnov</a> All Rights Reserved </span> </div> <div class=span7> <div class=pull-right> Powered by <a href=https://github.com/getpelican/pelican>Pelican</a> and <a href=https://aves.cf/ >Aves</a> theme </div> </div> </div> </div> </footer> </div> <script src="https://bash.libs.cf/theme/jquery-bootstrap-collapse.bundle.min.js?v=1575459624"></script> </body> </html>
+</pre></div> </blockquote> <div class=line-block> <div class=line><br></div> </div> </div> </div> </div> </div> <div class=article> <p>Share on <a href="https://twitter.com/intent/tweet?text=Module%3A%20str:%20Functions%20for%20strings%20processing&url=https://vbl.vorakl.com/pages/str/">Twitter</a></p> </div> </div> <div class=span3> <div class=well style="padding: 8px 0; background-color: #FBFBFB;"> <ul class="nav nav-list"> <li class=nav-header> Modules </li> <li><a href=/pages/sys/ >sys</a></li> <li><a href=/pages/str/ >str</a></li> <li><a href=/pages/exec/ >exec</a></li> <li><a href=/pages/matrix/ >matrix</a></li> </ul> </div> </div> </div> </div> <footer> <div class=container> <div class=row> <div class=span5> <span class=pull-left> &copy; 2020 <a href=https://vorakl.com/contacts/ >Oleksii Tsvietnov</a> All Rights Reserved </span> </div> <div class=span7> <div class=pull-right> Powered by <a href=https://github.com/getpelican/pelican>Pelican</a> and <a href=https://aves.cf/ >Aves</a> theme </div> </div> </div> </div> </footer> </div> <script src="https://vbl.vorakl.com/theme/jquery-bootstrap-collapse.bundle.min.js?v=1575459625"></script> </body> </html>

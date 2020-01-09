@@ -34,7 +34,7 @@ example:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys) sys_cmd
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys) sys_cmd
         }
 
         start
@@ -74,7 +74,7 @@ example:
         }
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
         }
 
         start
@@ -114,7 +114,7 @@ example:
         #!/bin/bash
 
         start() {
-            source <(curl -sSLf http://bash.libs.cf/stable/sys)
+            source <(curl -sSLf http://vbl.vorakl.com/stable/sys)
 
             sys_cmd echo "Hello World"
             sys_cmd -v cp

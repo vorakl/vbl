@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /unknown/
 
-Sitemap: https://bash.libs.cf/sitemap.xml
+Sitemap: https://vbl.vorakl.com/sitemap.xml
