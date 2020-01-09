@@ -1,4 +1,4 @@
-# [Vorakl's Bash library](https://bash.libs.cf/)
+# [Vorakl's Bash library](https://vbl.vorakl.com/)
 
 [![build-status](https://travis-ci.org/vorakl/vbl.svg?branch=master)](https://travis-ci.org/vorakl/vbl)
 
@@ -46,13 +46,13 @@ All existing releases including archives are available on
 the [Github](https://github.com/vorakl/vbl/releases). Releases are always linked
 to stable versions. There are also two version files available:
 
-* [latest.lst](http://bash.libs.cf/latest.lst),
-  for modules located at `http://bash.libs.cf/latest/`
-* [stable.lst](http://bash.libs.cf/stable.lst)
-  for modules located at `http://bash.libs.cf/stable/`
+* [latest.lst](http://vbl.vorakl.com/latest.lst),
+  for modules located at `http://vbl.vorakl.com/latest/`
+* [stable.lst](http://vbl.vorakl.com/stable.lst)
+  for modules located at `http://vbl.vorakl.com/stable/`
 
 Versions from `stable.lst` allow you to stick to them in the future by addressing
-modules at `http://bash.libs.cf/v?.?.?/` location.
+modules at `http://vbl.vorakl.com/v?.?.?/` location.
 
 
 ## Other documentation

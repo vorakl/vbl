@@ -1,9 +1,9 @@
 #!/bin/bash
 
 start() {
-    source <(curl -sSLf http://bash.libs.cf/latest/sys)
-    source <(curl -sSLf http://bash.libs.cf/latest/str)
-    source <(curl -sSLf http://bash.libs.cf/latest/exec)
+    source <(curl -sSLf http://vbl.vorakl.com/latest/sys)
+    source <(curl -sSLf http://vbl.vorakl.com/latest/str)
+    source <(curl -sSLf http://vbl.vorakl.com/latest/exec)
 
     set -e  # `exec_run` is able to control behavior on errors  
 

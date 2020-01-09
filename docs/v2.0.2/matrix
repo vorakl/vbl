@@ -1,7 +1,7 @@
 #!/bin/echo This file has to be soursed. Use: source
 # ---[matrix]---------------------------------------------------------(begin)---
 # Matrix (2D-arrays) Abstract Data Type
-# https://bash.libs.cf/
+# https://vbl.vorakl.com/
 # Copyright (c) 2019 by Oleksii Tsvietnov, vorakl@protonmail.com
 
 # API:

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 start() {
-    source <(curl -sSLf http://bash.libs.cf/latest/sys)
-    source <(curl -sSLf http://bash.libs.cf/latest/str)
-    source <(curl -sSLf http://bash.libs.cf/latest/exec)
+    source <(curl -sSLf http://vbl.vorakl.com/latest/sys)
+    source <(curl -sSLf http://vbl.vorakl.com/latest/str)
+    source <(curl -sSLf http://vbl.vorakl.com/latest/exec)
 
     STR_SAY_FORMAT="\n>>> %s\n" \
         str_say "Stdout goes to the pipe, stderr goes to the terminal"

@@ -1,7 +1,7 @@
 #!/bin/echo This file has to be soursed. Use: source
 # ---[sys]------------------------------------------------------------(begin)---
 # Essential system functions
-# https://bash.libs.cf/
+# https://vbl.vorakl.com/
 # Copyright (c) 2016,17,19 by Oleksii Tsvietnov, vorakl@protonmail.com
 
 # API:

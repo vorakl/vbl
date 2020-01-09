@@ -1,7 +1,7 @@
 #!/bin/bash
 
 start() {
-    source <(curl -sSLf http://bash.libs.cf/latest/sys)
+    source <(curl -sSLf http://vbl.vorakl.com/latest/sys)
 
     sys_cmd echo "Hello World"
     sys_cmd -v cp

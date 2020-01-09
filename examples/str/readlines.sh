@@ -1,8 +1,8 @@
 #!/bin/bash
 
 start() {
-    source <(curl -sSLf http://bash.libs.cf/latest/sys)
-    source <(curl -sSLf http://bash.libs.cf/latest/str)
+    source <(curl -sSLf http://vbl.vorakl.com/latest/sys)
+    source <(curl -sSLf http://vbl.vorakl.com/latest/str)
 
     local _myvar
 
