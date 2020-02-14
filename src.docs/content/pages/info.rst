@@ -59,7 +59,7 @@ Versions and Releases
 =====================
 
 All existing releases including archives are available on
-the Github_. Releases are always linked to stable versions.
+the `Github Releases`_ page. Releases are always linked to stable versions.
 There are also two version files available:
 
 * latest.lst_,
@@ -92,7 +92,7 @@ Other documentation
 .. _latest.lst: http://vbl.vorakl.com/latest.lst
 .. _stable.lst: http://vbl.vorakl.com/stable.lst
 .. _Examples: https://github.com/vorakl/vbl/tree/master/examples
-.. _Github: https://github.com/vorakl/vbl/releases
+.. _`Github Releases`: https://github.com/vorakl/vbl/releases
 .. _`Get started`: {filename}/pages/get-started.rst
 .. _Installation: {filename}/pages/installation.rst
 .. _Configuration: {filename}/pages/configuration.rst

@@ -154,6 +154,7 @@ This is the example of how the snippet can be used in code:
     start() {
         lib_name="latest/sys"
         source <(exec 3<>/dev/tcp/vbl.vorakl.com/80; printf "GET /${lib_name} HTTP/1.1\nHost: vbl.vorakl.com\nConnection: close\n\n" >&3; body=0; while IFS= read -u 3 -r str; do if (( body )); then printf "%s\n" "${str}"; else [[ -z "${str%$'\r'}" ]] && body=1; fi done; exec 3>&-)
+    }
 
     start "$@"
 
