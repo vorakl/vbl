@@ -7,17 +7,17 @@ from os.path import basename
 ### Basic configuration
 ########################
 
-AUTHOR = u'Oleksii Tsvietnov'
+AUTHOR = u'vorakl'
 SITENAME = u"Vorakl's Libs: Bash"
 SITEURL = 'https://vbl.vorakl.com'
 SITEDESC = u'A collection of Bash modules'
-SITE_VERSION = '1575459626'
+SITE_VERSION = '1575459627'
 SITE_KEYWORDS = 'bash,shell,library,bash-library,shell-library'
 ARTICLE_PATHS = ['articles'] # a place for articles under the content location
 PAGE_PATHS = ['pages']
 CONTACT_URL = 'https://vorakl.com/contacts/'
 START_URL = 'pages/info/' # What's a start point of a site (like 'news/' or 'pages/about/')?
-TIMEZONE = 'Europe/Berlin'
+TIMEZONE = 'America/Chicago'
 DEFAULT_LANG = u'en'
 RELATIVE_URLS = True  # disable in public version
 DEFAULT_DATE = 'fs'
@@ -83,7 +83,6 @@ DISPLAY_AUTHORS_IN_SITE = False
 
 MENUITEMS = [
     ("repo", "https://github.com/vorakl/vbl"),
-    ("libs", "https://libs.cf/"),
     ("blog", "https://vorakl.com/"),
     ("author", "https://vorakl.com/about/"),
     ]
