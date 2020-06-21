@@ -1,9 +1,10 @@
-#!/bin/echo This file has to be soursed. Use: source
+#!/bin/echo This file has to be sourced. Use: source
 # ---[str]------------------------------------------------------------(begin)---
+# Copyright (c) 2016 by Oleksii Tsvietnov
+# SPDX-License-Identifier: MIT
+#
 # Functions for strings processing
-# https://vbl.vorakl.com/
-# Copyright (c) 2016,17,19 by Oleksii Tsvietnov, vorakl@protonmail.com
-
+#
 # API:
 # <var>  __str_version
 # <var>  __str_exported
@@ -88,7 +89,7 @@ str_err() {
     #
     # examples:
     #   str_err "The connection has been closed"
-    #   STR_ERR_FORMAT="WARN: %s\n" str_err "too much arguments"
+    #   STR_ERR_FORMAT="WARN: %s\n" str_err "too many arguments"
 
     (( STR_ERR_SUPPRESS )) || sys_cmd printf "${STR_ERR_FORMAT}" "$@" >&2
 }

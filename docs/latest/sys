@@ -1,9 +1,10 @@
-#!/bin/echo This file has to be soursed. Use: source
+#!/bin/echo This file has to be sourced. Use: source
 # ---[sys]------------------------------------------------------------(begin)---
+# Copyright (c) 2016 by Oleksii Tsvietnov
+# SPDX-License-Identifier: MIT
+#
 # Essential system functions
-# https://vbl.vorakl.com/
-# Copyright (c) 2016,17,19 by Oleksii Tsvietnov, vorakl@protonmail.com
-
+#
 # API:
 # <var>  __sys_version
 # <var>  __sys_exported

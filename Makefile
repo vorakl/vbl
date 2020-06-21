@@ -1,5 +1,3 @@
-# (c) Oleksii Tsvietnov, vorakl@protonmail.com
-#
 # Variables:
 
 # The order of modules in the list is important!

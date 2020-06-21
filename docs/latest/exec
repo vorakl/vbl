@@ -1,9 +1,10 @@
-#!/bin/echo This file has to be soursed. Use: source
+#!/bin/echo This file has to be sourced. Use: source
 # ---[exec]-----------------------------------------------------------(begin)---
+# Copyright (c) 2016 by Oleksii Tsvietnov
+# SPDX-License-Identifier: MIT
+#
 # Functions related to executing commands
-# https://vbl.vorakl.com/
-# Copyright (c) 2016,17,19 by Oleksii Tsvietnov, vorakl@protonmail.com
-
+#
 # API:
 # <var>  __exec_version
 # <var>  __exec_exported
