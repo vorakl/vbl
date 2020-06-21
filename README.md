@@ -26,13 +26,6 @@ This makes possible to download them using simple tools or even a pure Bash,
 always have the latest version of each module or even get stuck to a specific
 version if a reproducibility is needed.
 
-Basically, for me using these modules help to
-
-1. reuse the same code everywhere which is checked and proved by the time
-2. simplify and speed up a development
-3. increase code readability
-
-
 ## Modules
 
 * [sys](https://github.com/vorakl/bash-libs/tree/master/src.docs/content/pages/sys.rst)
