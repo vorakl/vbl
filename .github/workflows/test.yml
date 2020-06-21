@@ -1,0 +1,23 @@
+name: CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install RoundUp test framework
+      run: |
+        curl -sSLf https://github.com/bmizerany/roundup/tarball/v0.0.5 | tar xvzf -
+        cd bmizerany-roundup-*
+        ./configure
+        make
+        sudo make install
+        cd ..
+    - name: Run test
+      run: make test
