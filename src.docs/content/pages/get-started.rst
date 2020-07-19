@@ -3,6 +3,7 @@ Get started
 
 :slug: get-started
 :summary: All useful functions in one example
+:sidebar: False
 
 |
 

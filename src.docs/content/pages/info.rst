@@ -3,6 +3,7 @@ Vorakl's Bash library
 
 :slug: info
 :summary: Collection of useful modules to simplify everyday programming
+:sidebar: False
 
 |build-status|
 
@@ -37,16 +38,6 @@ version if a reproducibility is needed.
 
 |
 
-Modules
-=======
-
-* sys_
-* str_
-* exec_
-* matrix_
-
-|
-
 Versions and Releases
 =====================
 
@@ -64,9 +55,10 @@ by addressing modules at ``http://vbl.vorakl.com/v?.?.?/`` location.
 
 |
 
-Other documentation
-===================
+Additional documentation
+========================
 
+* Modules_
 * `Get started`_
 * Examples_
 * Installation_
@@ -77,6 +69,7 @@ Other documentation
    :alt: Travis CI: continuous integration status
 
 .. Links
+.. _Modules: {filename}/pages/modules.rst
 .. _sys: {filename}/pages/sys.rst
 .. _str: {filename}/pages/str.rst
 .. _exec: {filename}/pages/exec.rst

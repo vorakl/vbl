@@ -17,7 +17,6 @@ GID = $(shell id -g)
 
 GITHUB_PAGES_BRANCH=master
 
-PORT ?= 8000
 DEBUG ?= 0
 ifeq ($(DEBUG), 1)
 	PELICANOPTS += -D
@@ -81,11 +80,11 @@ prod:
 
 run:
 	@if docker version &>/dev/null; then \
-		echo 'Launching a docker container with Nginx on the port $(PORT)'; \
+		echo 'Launching a docker container with Nginx on the http://localhost/'; \
 		docker run \
 		    --rm \
 		    -it \
-		    -p $(PORT):80 \
+		    --net host \
 		    -v $(OUTPUTDIR):/usr/share/nginx/html \
 		    nginx:mainline-alpine; \
 	else \

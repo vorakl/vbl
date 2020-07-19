@@ -3,6 +3,7 @@ Installation
 
 :slug: installation
 :summary: Several ways to install the library
+:sidebar: False
 
 * `General information`_
 * `Download a module at run-time using curl`_

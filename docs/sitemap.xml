@@ -7,7 +7,7 @@
 <url>
     <loc>https://vbl.vorakl.com/pages/configuration/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2020-01-09</lastmod>
+    <lastmod>2020-07-19</lastmod>
 </url>
 <url>
     <loc>https://vbl.vorakl.com/pages/exec/</loc>
@@ -17,22 +17,27 @@
 <url>
     <loc>https://vbl.vorakl.com/pages/get-started/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2020-01-09</lastmod>
+    <lastmod>2020-07-19</lastmod>
 </url>
 <url>
     <loc>https://vbl.vorakl.com/pages/info/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2020-06-21</lastmod>
+    <lastmod>2020-07-19</lastmod>
 </url>
 <url>
     <loc>https://vbl.vorakl.com/pages/installation/</loc>
     <changefreq>weekly</changefreq>
-    <lastmod>2020-02-14</lastmod>
+    <lastmod>2020-07-19</lastmod>
 </url>
 <url>
     <loc>https://vbl.vorakl.com/pages/matrix/</loc>
     <changefreq>weekly</changefreq>
     <lastmod>2020-01-09</lastmod>
+</url>
+<url>
+    <loc>https://vbl.vorakl.com/pages/modules/</loc>
+    <changefreq>weekly</changefreq>
+    <lastmod>2020-07-19</lastmod>
 </url>
 <url>
     <loc>https://vbl.vorakl.com/pages/str/</loc>

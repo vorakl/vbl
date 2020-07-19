@@ -8,10 +8,10 @@ from os.path import basename
 ########################
 
 AUTHOR = u'vorakl'
-SITENAME = u"Vorakl's Libs: Bash"
+SITENAME = u"vbl"
 SITEURL = 'https://vbl.vorakl.com'
 SITEDESC = u'A collection of Bash modules'
-SITE_VERSION = '1575459627'
+SITE_VERSION = '1575459628'
 SITE_KEYWORDS = 'bash,shell,library,bash-library,shell-library'
 ARTICLE_PATHS = ['articles'] # a place for articles under the content location
 PAGE_PATHS = ['pages']
@@ -73,6 +73,8 @@ DISPLAY_SIDEBAR_LINKS_NAME = "Modules"
 DISPLAY_SIDEBAR_MENUITEMS_NAME = "Menu" 
 
 # SIDEBAR.SITE                                                                  
+DISPLAY_INDEX_SIDEBAR = True
+DISPLAY_PAGE_SIDEBAR = True
 DISPLAY_ARCHIVES_IN_SITE = True # It also turns on/off an appropriate section in a sitemap.xml
 DISPLAY_ALLARTICLES_IN_SITE = False                                              
 DISPLAY_CATEGORIES_IN_SITE = True # It also turns on/off an appropriate section in a sitemap.xml
@@ -82,6 +84,7 @@ DISPLAY_SUBSCRIBES_IN_SITE = False
 DISPLAY_AUTHORS_IN_SITE = False
 
 MENUITEMS = [
+    ("modules", "/pages/modules/"),
     ("repo", "https://github.com/vorakl/vbl"),
     ("blog", "https://vorakl.com/"),
     ("author", "https://vorakl.com/about/"),

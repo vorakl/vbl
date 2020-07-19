@@ -3,6 +3,7 @@ Configuration
 
 :slug: configuration
 :summary: Changing default values of functions' options
+:sidebar: False
 
 General information
 ===================
