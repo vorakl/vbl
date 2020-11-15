@@ -7,6 +7,14 @@ Vorakl's Bash library
 
 |build-status|
 
+Community
+=========
+
+There are a few options for the communication:
+
+* ``IRC``: `#vbl`_, channel on the Freenode network
+* ``Mailing list``: vbl-dev@freelists.org, subscribe_
+
 Introduction
 ============
 
@@ -81,3 +89,5 @@ Additional documentation
 .. _`Get started`: {filename}/pages/get-started.rst
 .. _Installation: {filename}/pages/installation.rst
 .. _Configuration: {filename}/pages/configuration.rst
+.. _`#vbl`: https://webchat.freenode.net/?channels=vbl
+.. _subscribe: https://www.freelists.org/list/vbl-dev

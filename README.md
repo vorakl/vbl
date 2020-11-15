@@ -2,6 +2,13 @@
 
 [![build-status](https://travis-ci.org/vorakl/vbl.svg?branch=master)](https://travis-ci.org/vorakl/vbl)
 
+## Community
+
+There are a few options for the communication:
+
+* ``IRC``: [#vbl](https://webchat.freenode.net/?channels=vbl), channel on the Freenode network
+* ``Mailing list``: vbl-dev@freelists.org, [subscribe](https://www.freelists.org/list/vbl-dev)
+
 ## Introduction
 
 This Bash library aims to minimize the complexity of Bash programming by abstracting
