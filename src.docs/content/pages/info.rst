@@ -7,6 +7,8 @@ Vorakl's Bash library
 
 |build-status|
 
+|
+
 Community
 =========
 
@@ -14,6 +16,8 @@ There are a few options for the communication:
 
 * ``IRC``: `#vbl`_, channel on the Freenode network
 * ``Mailing list``: vbl-dev@freelists.org, subscribe_
+
+|
 
 Introduction
 ============
